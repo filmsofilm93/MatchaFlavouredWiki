@@ -66,21 +66,15 @@ jobs:
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         run: npm run update
 
-      - name: Verify protected recipes
+      - name: Verify nothing is withheld
         if: steps.gate.outputs.publish == 'true'
         run: |
-          node -e "
-            const data = require('./app/data/wiki-data.json');
-            const leaks = data.recipes.filter(
-              (recipe) =>
-                recipe.secret &&
-                (recipe.ingredients.length ||
-                  recipe.grid.length ||
-                  recipe.ingredientKeys.length)
-            );
-            if (leaks.length) {
-              throw new Error('A protected recipe contains publishable details.');
-            }
+          node --input-type=module -e "
+            import fs from 'node:fs';
+            import { findWithheldData } from './scripts/update-matcha.mjs';
+            const data = JSON.parse(fs.readFileSync('app/data/wiki-data.json', 'utf8'));
+            const withheld = findWithheldData(data);
+            if (withheld) throw new Error('Generated data withholds ' + withheld);
           "
 
       - name: Save synchronized data

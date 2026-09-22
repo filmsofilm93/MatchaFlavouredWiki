@@ -32,7 +32,7 @@ type Recipe = {
   category: string;
   family: string;
   changeKind: "added" | "changed";
-  secret: boolean;
+  secret?: boolean;
   result: { key: string; count: number };
   ingredientKeys: string[];
   ingredients: Ingredient[];
@@ -62,7 +62,7 @@ type FishEntry = {
   itemKey: string;
   tier: string;
   stars: number;
-  obscured: boolean;
+  obscured?: boolean;
   saleCount: number;
 };
 

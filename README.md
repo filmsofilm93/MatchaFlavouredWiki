@@ -34,12 +34,17 @@ npm run lint
 npm test
 ```
 
-New or modified recipe files fail closed: their ingredients remain withheld
-until their hashes are reviewed in `app/data/recipe-visibility.json`. Release
-decisions can be recorded in `app/data/recipe-review.json` and applied with:
+Every recipe, item, and advancement is extracted and published in full,
+including after automatic updates. Spoilers are handled only in the display,
+using the editable flags in `app/data/spoilers.json` (regenerated on each
+update; hand-edited entries are kept).
+
+When Modrinth is unreachable, or to preview unreleased changes, build from the
+official GitHub repository instead:
 
 ```bash
-node scripts/apply-recipe-review.mjs
+node scripts/build-from-github.mjs --ref=<commit|branch> --vanilla=mcmeta
+node scripts/audit-pipeline.mjs <packRoot> app/data/wiki-data.json
 ```
 
 ## Automatic publishing
@@ -51,7 +56,7 @@ changes, it:
 
 1. verifies the release archive;
 2. rebuilds the generated data and textures;
-3. preserves secret-recipe protections;
+3. verifies that no data was withheld and refreshes the spoiler flags;
 4. commits the synchronized snapshot; and
 5. deploys the refreshed static site.
 

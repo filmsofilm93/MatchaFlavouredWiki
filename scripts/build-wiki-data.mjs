@@ -1,10 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import crypto from "node:crypto";
-import {
-  recipeContentSha1,
-  recipeSemanticSha1,
-} from "./recipe-fingerprint.mjs";
+import { recipeSemanticSha1 } from "./recipe-fingerprint.mjs";
 
 const projectRoot = process.cwd();
 const packRoot = process.argv[2] || "/tmp/matcha-flavoured-1.02";
@@ -12,23 +8,15 @@ const outputFile =
   process.argv[3] || path.join(projectRoot, "app/data/wiki-data.json");
 const releaseMetadataFile = process.argv[4] || "";
 const publicRoot = process.argv[5] || path.join(projectRoot, "public");
-const visibilityManifestFile =
-  process.argv[6] || path.join(projectRoot, "app/data/recipe-visibility.json");
+// argv[6] is reserved (it held the old recipe-visibility manifest) so existing
+// callers keep working. Nothing is withheld from the generated data any more:
+// spoiler handling happens only in the display layer (see app/data/spoilers.json).
 const vanillaRoot = process.argv[7] || "";
 const releaseMetadata = releaseMetadataFile
   ? readJson(releaseMetadataFile)
   : null;
 const assetRevision =
   releaseMetadata?.versionId || releaseMetadata?.version || "";
-
-const secretRecipeIds = new Set([
-  "food:chorus_mochi",
-  "food:gnocchi",
-  "food:puerquito",
-  "food:pupusa",
-  "food:sweet_berry_toast",
-  "food:warped_stroganoff",
-]);
 
 const stationLabels = {
   crafting: "Crafting Table",
@@ -110,8 +98,14 @@ function stripFormatting(value) {
     .trim();
 }
 
-const lang =
-  readJson(path.join(packRoot, "assets/minecraft/lang/en_us.json")) || {};
+// Pack translations override Minecraft's own; vanilla names are used for
+// vanilla items instead of guessing them from the ID.
+const lang = {
+  ...(vanillaRoot
+    ? readJson(path.join(vanillaRoot, "assets/minecraft/lang/en_us.json")) || {}
+    : {}),
+  ...(readJson(path.join(packRoot, "assets/minecraft/lang/en_us.json")) || {}),
+};
 
 function translated(key) {
   return stripFormatting(lang[key] || "");
@@ -368,7 +362,6 @@ function ensureItem(id, overrides = {}) {
     properties: [],
     outputOf: [],
     usedIn: [],
-    obscured: false,
     rarity: null,
   };
 
@@ -520,37 +513,6 @@ const progressionRules = hasPackFile(
     }
   : null;
 
-const tagFallbacks = {
-  "minecraft:acacia_logs": ["minecraft:acacia_log"],
-  "minecraft:bamboo_blocks": ["minecraft:bamboo_block"],
-  "minecraft:birch_logs": ["minecraft:birch_log"],
-  "minecraft:cherry_logs": ["minecraft:cherry_log"],
-  "minecraft:coals": ["minecraft:coal"],
-  "minecraft:copper_tool_materials": ["minecraft:copper_ingot"],
-  "minecraft:crimson_stems": ["minecraft:crimson_stem"],
-  "minecraft:dark_oak_logs": ["minecraft:dark_oak_log"],
-  "minecraft:diamond_tool_materials": ["minecraft:diamond"],
-  "minecraft:eggs": ["minecraft:egg"],
-  "minecraft:fishes": ["minecraft:cod", "minecraft:salmon"],
-  "minecraft:gold_tool_materials": ["minecraft:gold_ingot"],
-  "minecraft:iron_tool_materials": ["minecraft:iron_ingot"],
-  "minecraft:jungle_logs": ["minecraft:jungle_log"],
-  "minecraft:logs": ["minecraft:oak_log"],
-  "minecraft:logs_that_burn": ["minecraft:oak_log"],
-  "minecraft:mangrove_logs": ["minecraft:mangrove_log"],
-  "minecraft:oak_logs": ["minecraft:oak_log"],
-  "minecraft:pale_oak_logs": ["minecraft:pale_oak_log"],
-  "minecraft:planks": ["minecraft:oak_planks"],
-  "minecraft:sand": ["minecraft:sand", "minecraft:red_sand"],
-  "minecraft:soul_fire_base_blocks": ["minecraft:soul_sand"],
-  "minecraft:spruce_logs": ["minecraft:spruce_log"],
-  "minecraft:stone_crafting_materials": ["minecraft:cobblestone"],
-  "minecraft:terracotta": ["minecraft:terracotta"],
-  "minecraft:warped_stems": ["minecraft:warped_stem"],
-  "minecraft:wool": ["minecraft:white_wool"],
-  "minecraft:wooden_tool_materials": ["minecraft:oak_planks"],
-};
-
 const tagCache = new Map();
 
 function expandTag(tagId, seen = new Set()) {
@@ -560,12 +522,35 @@ function expandTag(tagId, seen = new Set()) {
   seen.add(normalized);
 
   const [namespace, tagPath] = splitId(normalized);
-  const candidates = [
+  // Pack tags win over vanilla tags (a datapack tag without "replace" merges
+  // with vanilla, so both are read and combined).
+  const packTag = [
     path.join(packRoot, "data", namespace, "tags/item", `${tagPath}.json`),
     path.join(packRoot, "data", namespace, "tags/items", `${tagPath}.json`),
-  ];
-  const tag = candidates.map(readJson).find(Boolean);
-  const values = tag?.values || tagFallbacks[normalized] || [];
+  ]
+    .map(readJson)
+    .find(Boolean);
+  const vanillaTag = vanillaRoot
+    ? readJson(
+        path.join(
+          vanillaRoot,
+          "data",
+          namespace,
+          "tags/item",
+          `${tagPath}.json`,
+        ),
+      )
+    : null;
+  const tag =
+    packTag || vanillaTag
+      ? {
+          values: [
+            ...(packTag?.values || []),
+            ...(packTag?.replace ? [] : vanillaTag?.values || []),
+          ],
+        }
+      : null;
+  const values = tag?.values || [];
   const expanded = [];
   for (const rawValue of values) {
     const value = typeof rawValue === "string" ? rawValue : rawValue?.id || "";
@@ -616,6 +601,9 @@ function makeIngredient(raw, defaultNamespace = "minecraft") {
           ? itemMap.get(keys[0])?.name
           : "Unknown ingredient",
     tag: isTag ? normalizeId(rawTag, defaultNamespace) : null,
+    // A tag that exists in neither the pack nor Minecraft cannot be expanded;
+    // the UI shows it as "needs verification".
+    ...(keys.length ? {} : { unresolved: true }),
   };
 }
 
@@ -797,57 +785,6 @@ const vanillaRecipeNames = new Set(
   vanillaRecipeFiles.map((file) => path.basename(file, ".json")),
 );
 
-const visibilityManifest = readJson(visibilityManifestFile)?.recipes || {};
-const hasVisibilityManifest = Object.keys(visibilityManifest).length > 0;
-const visibilityByHash = new Map();
-for (const recipe of Object.values(visibilityManifest)) {
-  if (!recipe?.visibility) continue;
-  const fingerprint = recipe.contentSha1 || recipe.sha1;
-  if (!fingerprint) continue;
-  const decisions = visibilityByHash.get(fingerprint) || new Set();
-  decisions.add(recipe.visibility);
-  visibilityByHash.set(fingerprint, decisions);
-}
-
-function visibilityForRecipe(id, file) {
-  if (!hasVisibilityManifest) {
-    return {
-      secret: secretRecipeIds.has(id),
-      reviewPending: false,
-    };
-  }
-  const hash = crypto
-    .createHash("sha1")
-    .update(fs.readFileSync(file))
-    .digest("hex");
-  const approved = visibilityManifest[id];
-  if (approved?.sha1 === hash) {
-    return {
-      secret: approved.visibility === "secret",
-      reviewPending: false,
-    };
-  }
-  const movedRecipeDecisions = visibilityByHash.get(hash);
-  const contentHash = recipeContentSha1(readJson(file));
-  const movedContentDecisions = visibilityByHash.get(contentHash);
-  const inheritedDecision =
-    movedRecipeDecisions?.size === 1
-      ? movedRecipeDecisions
-      : movedContentDecisions?.size === 1
-        ? movedContentDecisions
-        : null;
-  if (inheritedDecision) {
-    return {
-      secret: inheritedDecision.has("secret"),
-      reviewPending: false,
-    };
-  }
-  return {
-    secret: true,
-    reviewPending: true,
-  };
-}
-
 const recipes = [];
 const excludedVanillaRecipeIds = [];
 
@@ -863,11 +800,9 @@ for (const file of recipeFiles) {
     continue;
   }
   const station = stationFor(recipe, namespace);
-  const visibility = visibilityForRecipe(id, file);
-  const secret = visibility.secret;
   const result = recipeResult(recipe, "minecraft");
-  const ingredients = secret ? [] : recipeIngredients(recipe, "minecraft");
-  const grid = secret ? [] : recipeGrid(recipe, "minecraft");
+  const ingredients = recipeIngredients(recipe, "minecraft");
+  const grid = recipeGrid(recipe, "minecraft");
   const ingredientKeys = [
     ...new Set(ingredients.flatMap((ingredient) => ingredient.keys)),
   ];
@@ -895,8 +830,6 @@ for (const file of recipeFiles) {
     changeKind: vanillaRecipeNames.has(path.basename(file, ".json"))
       ? "changed"
       : "added",
-    secret,
-    reviewPending: visibility.reviewPending,
     result,
     ingredientKeys,
     ingredients,
@@ -919,33 +852,126 @@ function advancementIcon(display) {
   return ensureItem(id, { model });
 }
 
-const advancements = walk(path.join(packRoot, "data/main/advancement"))
-  .filter((file) => file.endsWith(".json"))
+// Summarise one advancement criterion without interpreting it: the trigger
+// plus any item IDs, item models, recipes, entities, or dimensions it names.
+function criterionSummary(name, criterion) {
+  const conditions = criterion?.conditions || {};
+  const items = [];
+  const models = [];
+  const collect = (node) => {
+    if (!node || typeof node !== "object") return;
+    if (Array.isArray(node)) return node.forEach(collect);
+    if (typeof node.items === "string") items.push(normalizeId(node.items));
+    if (Array.isArray(node.items)) {
+      for (const value of node.items) {
+        if (typeof value === "string") items.push(normalizeId(value));
+        else collect(value);
+      }
+    }
+    const model = node.components?.["minecraft:item_model"];
+    if (typeof model === "string") models.push(normalizeId(model));
+    for (const value of Object.values(node)) {
+      if (value && typeof value === "object") collect(value);
+    }
+  };
+  collect(conditions);
+  const summary = {
+    name,
+    trigger: criterion?.trigger || "",
+  };
+  if (items.length) summary.items = [...new Set(items)];
+  if (models.length) summary.models = [...new Set(models)];
+  const recipe = conditions.recipe_id || conditions.recipe;
+  if (typeof recipe === "string") summary.recipe = normalizeId(recipe);
+  if (conditions.entity) summary.entity = conditions.entity;
+  if (conditions.to || conditions.from) {
+    summary.dimension = { from: conditions.from, to: conditions.to };
+  }
+  return summary;
+}
+
+const advancementFiles = walk(path.join(packRoot, "data"))
+  .filter(
+    (file) =>
+      file.endsWith(".json") && file.split(path.sep).includes("advancement"),
+  )
   .map((file) => {
-    const advancement = readJson(file);
-    const display = advancement?.display;
-    if (!display || display.hidden === true) return null;
-    const relative = path
-      .relative(path.join(packRoot, "data/main/advancement"), file)
-      .replaceAll(path.sep, "/")
-      .replace(/\.json$/, "");
+    const relative = path.relative(packRoot, file).replaceAll(path.sep, "/");
+    const [, namespace, , ...parts] = relative.split("/");
     return {
-      id: `main:${relative}`,
+      file,
+      id: `${namespace}:${parts.join("/").replace(/\.json$/, "")}`,
+      json: readJson(file),
+    };
+  })
+  .filter((entry) => entry.json);
+
+function advancementCommon(entry) {
+  const advancement = entry.json;
+  const rewards = advancement.rewards || {};
+  return {
+    parent: advancement.parent ? normalizeId(advancement.parent) : null,
+    criteria: Object.entries(advancement.criteria || {}).map(
+      ([name, criterion]) => criterionSummary(name, criterion),
+    ),
+    requirements: advancement.requirements || [
+      Object.keys(advancement.criteria || {}),
+    ],
+    rewards: {
+      recipes: (rewards.recipes || []).map((id) => normalizeId(id)),
+      loot: (rewards.loot || []).map((id) => normalizeId(id)),
+      experience: Number(rewards.experience || 0),
+      function: rewards.function ? normalizeId(rewards.function) : null,
+    },
+    sourceFile: path.relative(packRoot, entry.file).replaceAll(path.sep, "/"),
+  };
+}
+
+const advancements = advancementFiles
+  .filter((entry) => entry.json.display)
+  .map((entry) => {
+    const display = entry.json.display;
+    const relative = entry.id.split(":")[1];
+    return {
+      id: entry.id,
       section: relative.split("/")[0] || "progression",
       title: textComponent(display.title) || titleCase(relative),
       description: textComponent(display.description),
       frame: display.frame || "task",
+      hidden: display.hidden === true,
+      showToast: display.show_toast !== false,
+      announceToChat: display.announce_to_chat !== false,
       iconKey: advancementIcon(display),
-      parent: advancement.parent || null,
+      ...advancementCommon(entry),
     };
   })
-  .filter(Boolean);
+  .sort((a, b) => a.id.localeCompare(b.id));
+
+// Advancements without a display are the pack's recipe-book unlockers (and a
+// few technical hooks). They are kept so the site can show what unlocks each
+// recipe.
+const recipeUnlocks = advancementFiles
+  .filter((entry) => !entry.json.display)
+  .map((entry) => ({ id: entry.id, ...advancementCommon(entry) }))
+  .sort((a, b) => a.id.localeCompare(b.id));
+
+const unlockedBy = new Map();
+for (const entry of [...advancements, ...recipeUnlocks]) {
+  for (const recipeId of entry.rewards.recipes) {
+    const list = unlockedBy.get(recipeId) || [];
+    list.push(entry.id);
+    unlockedBy.set(recipeId, list);
+  }
+}
+for (const recipe of recipes) {
+  recipe.unlockedBy = unlockedBy.get(recipe.id) || [];
+}
 
 const fishTiers = {
-  1: { label: "Common", stars: 1, obscured: false },
-  2: { label: "Uncommon", stars: 2, obscured: false },
-  3: { label: "Rare", stars: 3, obscured: true },
-  4: { label: "Epic", stars: 4, obscured: true },
+  1: { label: "Common", stars: 1 },
+  2: { label: "Uncommon", stars: 2 },
+  3: { label: "Rare", stars: 3 },
+  4: { label: "Epic", stars: 4 },
 };
 
 const fish = [];
@@ -959,57 +985,26 @@ for (const [levelText, tier] of Object.entries(fishTiers)) {
     )
     .sort();
 
-  tradeFiles.forEach((file, index) => {
+  tradeFiles.forEach((file) => {
     const trade = readJson(file);
     const wanted = trade?.wants || {};
     const components = wanted.components || {};
-    let itemKey;
-    if (tier.obscured) {
-      itemKey = `matcha:hidden_fish_${level}_${index + 1}`;
-      const actualName =
-        textComponent(components["minecraft:item_name"]) ||
-        titleCase(path.basename(file, ".json"));
-      const actualModel = normalizeId(
-        components["minecraft:item_model"] || path.basename(file, ".json"),
-      );
-      itemMap.set(itemKey, {
-        key: itemKey,
-        id: normalizeId(wanted.id || "minecraft:cod"),
-        model: itemKey,
-        name: `${tier.label} Fish`,
-        texture: resolveItemTexture(actualModel, wanted.id),
-        color: tier.label === "Epic" ? "#b983d0" : "#63b7d4",
-        lore: [],
-        effects: [],
-        properties: [`${tier.stars}-star catch`],
-        outputOf: [],
-        usedIn: [],
-        obscured: true,
-        rarity: tier.label,
-        sga: [...actualName.toLowerCase()]
-          .filter((character) => character === " " || /[a-z]/.test(character))
-          .map((character) => character.charCodeAt(0)),
-      });
-    } else {
-      const model = normalizeId(
-        components["minecraft:item_model"] || path.basename(file, ".json"),
-      );
-      itemKey = ensureItem(wanted.id || "minecraft:cod", {
-        model,
-        name:
-          textComponent(components["minecraft:item_name"]) || titleCase(model),
-        lore: (components["minecraft:lore"] || [])
-          .map(textComponent)
-          .filter(Boolean),
-        obscured: false,
-        rarity: tier.label,
-      });
-    }
+    const model = normalizeId(
+      components["minecraft:item_model"] || path.basename(file, ".json"),
+    );
+    const itemKey = ensureItem(wanted.id || "minecraft:cod", {
+      model,
+      name:
+        textComponent(components["minecraft:item_name"]) || titleCase(model),
+      lore: (components["minecraft:lore"] || [])
+        .map(textComponent)
+        .filter(Boolean),
+      rarity: tier.label,
+    });
     fish.push({
       itemKey,
       tier: tier.label,
       stars: tier.stars,
-      obscured: tier.obscured,
       saleCount: Number(wanted.count || 1),
     });
   });
@@ -1191,7 +1186,7 @@ addLocation(["data/minecraft/loot_table/gameplay/fishing.json"], {
   findings: [
     `${waterRegionTags.length / 2} freshwater climates and ${waterRegionTags.length / 2} saltwater climates give you ten ordinary rosters to complete.`,
     `Swamps mix their own five-fish set. The Deep Dark, Pale Garden, and Sulfur Caves make up the other ${specialFishingTables.length - 1} special stops, each interrupting the normal catch with something local.`,
-    "Common and uncommon names are written plainly. Rare and epic specimens keep their real texture but answer to enchanting-table script here.",
+    "Fisherman trades rank every catch from Common to Epic; rare and epic specimens are the ones worth a special trip.",
   ],
   facts: [
     { label: "Ordinary regions", value: "5 freshwater + 5 saltwater" },
@@ -1199,7 +1194,7 @@ addLocation(["data/minecraft/loot_table/gameplay/fishing.json"], {
       label: "Base roster",
       value: `${mainFishingPoolSize} species per region`,
     },
-    { label: "Names protected", value: "Rare and epic catches" },
+    { label: "Catch tiers", value: "Common · Uncommon · Rare · Epic" },
   ],
   sections: [
     {
@@ -1212,10 +1207,10 @@ addLocation(["data/minecraft/loot_table/gameplay/fishing.json"], {
       ],
     },
     {
-      title: "Keeping discoveries intact",
-      body: "This wiki shows the real fish textures, but it does not print the names of higher-tier catches before you discover them. Their labels stay in enchanting-table script throughout the site.",
+      title: "Catch tiers",
+      body: "Fisherman trades rank every catch from Common to Epic.",
       points: [
-        "Common and uncommon fish are safe to browse by name.",
+        "Common and uncommon fish are the everyday catches.",
         "Fisherman progression expects lower tiers before higher tiers.",
         "The Angler's Almanac is the in-game checklist for finishing each region.",
       ],
@@ -1223,7 +1218,7 @@ addLocation(["data/minecraft/loot_table/gameplay/fishing.json"], {
   ],
   markerKey: ensureItem("minecraft:fishing_rod"),
   itemKeys: fish
-    .filter((entry) => !entry.obscured)
+    .filter((entry) => entry.stars <= 2)
     .slice(0, 5)
     .map((entry) => entry.itemKey),
   tone: "water",
@@ -1387,7 +1382,7 @@ addLocation(
       },
       {
         title: "Rewards and warnings",
-        body: "The tower and barracks use their own loot. Archaeology at Abbey graves adds a separate small pool. One recipe can be found somewhere in the structure, but this wiki leaves that discovery sealed.",
+        body: "The tower and barracks use their own loot. Archaeology at Abbey graves adds a separate small pool. The original wiki notes a recipe placed in the structure; it is not in the loot tables (needs verification against the structure files).",
         points: [
           "Tower gear can include a Compound Bow or an iron sword with Anemos I.",
           "A tower chest always includes either the Quran or the Tanakh, plus 16 to 32 arrows.",
@@ -1719,12 +1714,12 @@ addLocation(
     findings: [
       "An expert Cartographer can sell the explorer map that points the way.",
       "City chests add three special finds to watch for: Topaz, Crystal Hearts, and Divine Fragments.",
-      "Deep Dark water has one local catch layered over an ordinary freshwater pool. Its name stays in enchanting-table script.",
+      "Deep Dark water has one local catch layered over an ordinary freshwater pool.",
     ],
     facts: [
       { label: "Map seller", value: "Expert Cartographer" },
       { label: "Matcha chest finds", value: "Topaz, Heart, Fragment" },
-      { label: "Local fishing", value: "1 protected-name catch" },
+      { label: "Local fishing", value: "1 local catch" },
     ],
     sections: [
       {
@@ -1746,10 +1741,9 @@ addLocation(
       },
       {
         title: "Fishing in the Deep Dark",
-        body: "Deep Dark water adds one local high-tier catch over a normal freshwater route. Its texture remains visible here, but its name stays in enchanting-table script.",
+        body: "Deep Dark water adds one local high-tier catch over a normal freshwater route.",
         points: [
           "This is a location-specific fishing discovery, not a replacement for the full freshwater pool.",
-          "The wiki will not print the protected name before discovery.",
         ],
       },
     ],
@@ -1778,18 +1772,18 @@ addLocation(
     name: "Ruins worth stopping for",
     kicker: "Check the chest before calling it clutter",
     summary:
-      "The small stops on a long walk now carry real reasons to dismount. Five familiar landmark families hide books, equipment, food, and one sealed note.",
-    metric: "5 stops · 1 secret",
+      "The small stops on a long walk now carry real reasons to dismount. Five familiar landmark families hide books, equipment, food, and one cooking recipe.",
+    metric: "5 stops · 1 recipe note",
     findings: [
       "Desert Pyramid chests can hold The Avesta.",
       "Simple Dungeon chests can hold The Book of Enoch or a Crystal Heart.",
       "Buried treasure and shipwrecks are the places to check for special books, tridents, sturdy gear, and Titanium Compasses.",
-      "Abandoned Mineshafts can hold one secret. This notebook has suddenly run out of ink.",
+      "Abandoned Mineshaft chests can hold the Gnocchi Cooking Recipe note.",
     ],
     facts: [
       { label: "Landmarks covered", value: "5 familiar ruin types" },
       { label: "Books to watch for", value: "Avesta + Enoch" },
-      { label: "Mineshaft recipe", value: "Secret" },
+      { label: "Mineshaft recipe", value: "Gnocchi (Cooking Recipe)" },
     ],
     sections: [
       {
@@ -1809,9 +1803,9 @@ addLocation(
         ],
       },
       {
-        title: "The sealed Mineshaft note",
-        body: "Abandoned Mineshafts can contain a recipe intended to be discovered in play. Its ingredients and result remain secret here.",
-        points: ["The page confirms that a secret exists and stops there."],
+        title: "The Mineshaft recipe note",
+        body: "Abandoned Mineshaft chests can contain a Cooking Recipe note for Gnocchi (loot table kleis_items/gnocchi_recipe).",
+        points: ["The pack intends this recipe to be discovered in play."],
       },
     ],
     markerKey: ensureItem("minecraft:compass"),
@@ -1925,23 +1919,14 @@ addLocation(["data/minecraft/loot_table/chests/end_city_treasure.json"], {
   tone: "end",
 });
 
+// Every item and recipe is published. Items whose texture could not be
+// resolved from the pack or Minecraft assets get a placeholder and a flag so the
+// UI can mark them "needs verification" instead of silently dropping them.
+const missingTextureUrl = versionedAssetUrl("/wiki/missing-texture.png");
 const untexturedItemKeys = new Set(
   [...itemMap.values()].filter((item) => !item.texture).map((item) => item.key),
 );
-const brokenPublicRecipe = recipes.find(
-  (recipe) => !recipe.secret && untexturedItemKeys.has(recipe.result.key),
-);
-if (brokenPublicRecipe) {
-  throw new Error(
-    `Public recipe output has no pack or Minecraft texture: ${brokenPublicRecipe.id}`,
-  );
-}
-const quarantinedRecipes = recipes.filter(
-  (recipe) => recipe.secret && untexturedItemKeys.has(recipe.result.key),
-);
-const publishableRecipes = recipes.filter(
-  (recipe) => !untexturedItemKeys.has(recipe.result.key),
-);
+const publishableRecipes = recipes;
 
 publishableRecipes.sort((a, b) => {
   if (a.station !== b.station) {
@@ -1952,9 +1937,10 @@ publishableRecipes.sort((a, b) => {
 });
 
 const items = [...itemMap.values()]
-  .filter((item) => item.texture)
   .map((item) => ({
     ...item,
+    texture: item.texture || missingTextureUrl,
+    textureMissing: !item.texture,
     outputOf: [...new Set(item.outputOf)],
     usedIn: [...new Set(item.usedIn)],
   }))
@@ -1998,11 +1984,9 @@ const output = {
     textureCount: walk(
       path.join(publicRoot, "minecraft/assets/minecraft/textures"),
     ).filter((file) => file.endsWith(".png")).length,
-    reviewPendingRecipeCount: publishableRecipes.filter(
-      (recipe) => recipe.reviewPending,
-    ).length,
+    hiddenAdvancementCount: advancements.filter((entry) => entry.hidden).length,
+    recipeUnlockCount: recipeUnlocks.length,
     excludedVanillaRecipeCount: excludedVanillaRecipeIds.length,
-    quarantinedRecipeCount: quarantinedRecipes.length,
     untexturedItemCount: untexturedItemKeys.size,
     stationCounts,
   },
@@ -2017,6 +2001,7 @@ const output = {
   recipes: publishableRecipes,
   items,
   advancements,
+  recipeUnlocks,
   fish,
   locations,
   progressionRules,
@@ -2027,7 +2012,7 @@ fs.writeFileSync(outputFile, JSON.stringify(output));
 console.log(
   `Generated ${publishableRecipes.length} recipes, ${items.length} items, and ${advancements.length} advancements.` +
     ` Excluded ${excludedVanillaRecipeIds.length} unchanged Minecraft recipes.` +
-    (quarantinedRecipes.length
-      ? ` Quarantined ${quarantinedRecipes.length} hidden recipes with missing source textures.`
+    (untexturedItemKeys.size
+      ? ` ${untexturedItemKeys.size} items use the placeholder texture.`
       : ""),
 );

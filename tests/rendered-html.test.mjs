@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { recipeSemanticSha1 } from "../scripts/recipe-fingerprint.mjs";
+import { findWithheldData } from "../scripts/update-matcha.mjs";
 
 const projectRoot = new URL("../", import.meta.url);
 
@@ -22,6 +23,36 @@ test("recipe comparison ignores presentation-only and ordering differences", () 
 
   assert.equal(recipeSemanticSha1(vanilla), recipeSemanticSha1(copied));
   assert.notEqual(recipeSemanticSha1(vanilla), recipeSemanticSha1(changed));
+});
+
+test("the withheld-data guard catches redacted records", () => {
+  const ok = {
+    recipes: [{ id: "a", station: "crafting", ingredients: [{ keys: ["x"] }] }],
+    items: [{ key: "x", name: "X" }],
+    fish: [],
+  };
+  assert.equal(findWithheldData(ok), null);
+  assert.match(
+    findWithheldData({
+      ...ok,
+      recipes: [{ ...ok.recipes[0], secret: true }],
+    }),
+    /recipe a/,
+  );
+  assert.match(
+    findWithheldData({
+      ...ok,
+      recipes: [{ ...ok.recipes[0], ingredients: [] }],
+    }),
+    /recipe a/,
+  );
+  assert.match(
+    findWithheldData({
+      ...ok,
+      items: [{ key: "x", name: "X", obscured: true }],
+    }),
+    /item x/,
+  );
 });
 
 test("builds a GitHub Pages-ready static site", async () => {
@@ -46,7 +77,7 @@ test("builds a GitHub Pages-ready static site", async () => {
   ]);
 });
 
-test("generated data preserves secrets, changelogs, and texture links", async () => {
+test("generated data is complete, with changelogs and texture links", async () => {
   const raw = await readFile(
     new URL("../app/data/wiki-data.json", import.meta.url),
     "utf8",
@@ -78,8 +109,11 @@ test("generated data preserves secrets, changelogs, and texture links", async ()
     data.items.find((item) => item.key.endsWith(":cheerful_clay_statue"))?.name,
     "Clay Fetish",
   );
-  assert.ok(Number.isInteger(data.stats.quarantinedRecipeCount));
   assert.ok(Number.isInteger(data.stats.untexturedItemCount));
+  assert.equal(
+    data.items.filter((item) => item.textureMissing).length,
+    data.stats.untexturedItemCount,
+  );
   assert.ok(data.stats.excludedVanillaRecipeCount > 0);
   assert.ok(data.progressionRules);
   assert.ok(data.progressionRules.deathHeartLoss > 0);
@@ -157,11 +191,10 @@ test("generated data preserves secrets, changelogs, and texture links", async ()
   );
   assert.ok(
     data.recipes
-      .filter((recipe) => !recipe.secret)
       .flatMap((recipe) => recipe.ingredients)
       .every(
         (ingredient) =>
-          ingredient.keys.length > 0 &&
+          (ingredient.keys.length > 0 || ingredient.unresolved === true) &&
           ingredient.keys.every((key) =>
             data.items.some((item) => item.key === key),
           ),
@@ -182,28 +215,101 @@ test("generated data preserves secrets, changelogs, and texture links", async ()
     ),
   );
 
-  const secrets = data.recipes.filter((recipe) => recipe.secret);
-  const pendingReview = data.recipes.filter((recipe) => recipe.reviewPending);
-  assert.ok(secrets.length >= 6);
-  assert.equal(pendingReview.length, data.stats.reviewPendingRecipeCount);
-  assert.ok(pendingReview.every((recipe) => recipe.secret));
-  assert.ok(data.recipes.filter((recipe) => !recipe.secret).length > 500);
+  // Nothing is withheld: spoilers are a display concern only.
+  assert.equal(findWithheldData(data), null);
   assert.ok(
-    secrets.every(
+    data.recipes.every(
       (recipe) =>
-        recipe.ingredients.length === 0 &&
-        recipe.grid.length === 0 &&
-        recipe.ingredientKeys.length === 0,
+        !("secret" in recipe) &&
+        !("reviewPending" in recipe) &&
+        recipe.ingredients.length > 0,
     ),
   );
-
-  const obscuredFish = data.items.filter((item) => item.obscured);
-  assert.ok(obscuredFish.length >= 20);
-  assert.ok(obscuredFish.every((item) => item.sga.length > 0));
-  assert.equal(
-    new Set(obscuredFish.map((item) => item.texture)).size,
-    obscuredFish.length,
+  assert.ok(
+    data.recipes
+      .filter((recipe) => recipe.type.includes("crafting"))
+      .every((recipe) => recipe.grid.length === 9),
   );
+  for (const id of [
+    "main:food/crafting/chorus_mochi",
+    "main:food/crafting/gnocchi",
+    "main:food/crafting/puerquito",
+    "main:food/crafting/pupusa",
+    "main:food/crafting/sweet_berry_toast",
+    "main:food/crafting/warped_stroganoff",
+  ]) {
+    const recipe = data.recipes.find((entry) => entry.id === id);
+    assert.ok(recipe, `${id} is published`);
+    assert.ok(recipe.ingredients.length > 0, `${id} lists its ingredients`);
+  }
+  assert.equal(data.stats.recipeCount, data.recipes.length);
+  assert.ok(data.advancements.some((entry) => entry.hidden === true));
+  assert.equal(
+    data.advancements.filter((entry) => entry.hidden).length,
+    data.stats.hiddenAdvancementCount,
+  );
+  assert.ok(
+    data.items.every((item) => !("obscured" in item) && !("sga" in item)),
+  );
+  assert.ok(data.fish.every((entry) => !("obscured" in entry)));
+  assert.ok(data.fish.filter((entry) => entry.stars >= 3).length >= 20);
+  const rareFishNames = data.fish
+    .filter((entry) => entry.stars >= 3)
+    .map(
+      (entry) => data.items.find((item) => item.key === entry.itemKey)?.name,
+    );
+  assert.ok(
+    rareFishNames.every((name) => name && !/^(Rare|Epic) Fish$/.test(name)),
+  );
+  assert.doesNotMatch(
+    raw,
+    /enchanting-table script|withheld|leaves that discovery sealed/i,
+  );
+});
+
+test("spoilers.json flags every entry with a reason and a safe hint", async () => {
+  const [data, spoilers] = await Promise.all(
+    ["../app/data/wiki-data.json", "../app/data/spoilers.json"].map(
+      async (file) =>
+        JSON.parse(await readFile(new URL(file, import.meta.url), "utf8")),
+    ),
+  );
+  const entries = spoilers.entries;
+  for (const key of [
+    ...data.items.map((item) => `item:${item.key}`),
+    ...data.recipes.map((recipe) => `recipe:${recipe.id}`),
+    ...data.advancements.map((entry) => `advancement:${entry.id}`),
+  ]) {
+    assert.ok(entries[key], `${key} has a spoiler flag`);
+    assert.equal(typeof entries[key].spoiler, "boolean");
+    assert.ok(entries[key].reason, `${key} has a reason`);
+  }
+  const flagged = Object.entries(entries).filter(([, entry]) => entry.spoiler);
+  assert.ok(flagged.length > 100);
+  assert.ok(flagged.every(([, entry]) => entry.hint && entry.reason));
+  for (const entry of data.advancements.filter((adv) => adv.hidden)) {
+    assert.equal(entries[`advancement:${entry.id}`].spoiler, true);
+  }
+  const spoilerNames = new Set(
+    flagged
+      .map(([key]) =>
+        key.startsWith("item:")
+          ? data.items.find((item) => item.key === key.slice(5))?.name
+          : key.startsWith("advancement:")
+            ? data.advancements.find((adv) => adv.id === key.slice(12))?.title
+            : null,
+      )
+      .filter((name) => name && name.length > 2)
+      .map((name) => name.toLowerCase()),
+  );
+  for (const [key, entry] of flagged) {
+    for (const name of spoilerNames) {
+      assert.ok(
+        !entry.hint.toLowerCase().includes(name),
+        `hint for ${key} names the spoiler "${name}"`,
+      );
+    }
+  }
 });
 
 test("source keeps the recipe UX, exact slots, and low-compute deployment", async () => {
@@ -250,8 +356,11 @@ test("source keeps the recipe UX, exact slots, and low-compute deployment", asyn
 
   assert.match(updater, /include_changelog=true/);
   assert.match(updater, /failed its SHA-1 check/);
-  assert.match(updater, /reviewPendingRecipeCount/);
-  assert.match(updater, /recipeContentSha1/);
+  assert.match(updater, /findWithheldData/);
+  assert.doesNotMatch(
+    updater,
+    /recipe-visibility|recipeContentSha1|ensureVisibilityManifest/,
+  );
   assert.match(updater, /Location item link was not generated/);
   assert.match(updater, /check-exit-code/);
   assert.match(devUpdater, /MATCHA_UPDATE_INTERVAL_MINUTES/);
@@ -267,4 +376,13 @@ test("source keeps the recipe UX, exact slots, and low-compute deployment", asyn
   assert.match(workflow, /actions\/deploy-pages@v4/);
 
   await assert.rejects(access(new URL("app/_sites-preview", projectRoot)));
+  for (const removed of [
+    "app/data/recipe-visibility.json",
+    "app/data/recipe-review.json",
+    "scripts/apply-recipe-review.mjs",
+  ]) {
+    await assert.rejects(access(new URL(removed, projectRoot)));
+  }
+  assert.doesNotMatch(workflow, /protected recipe/i);
+  assert.match(workflow, /findWithheldData/);
 });

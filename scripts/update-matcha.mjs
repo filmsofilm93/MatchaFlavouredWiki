@@ -5,7 +5,6 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
-import { recipeContentSha1 } from "./recipe-fingerprint.mjs";
 
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -13,10 +12,6 @@ const projectRoot = path.resolve(
 );
 const cacheRoot = path.join(projectRoot, ".matcha-cache");
 const liveDataFile = path.join(projectRoot, "app/data/wiki-data.json");
-const visibilityManifestFile = path.join(
-  projectRoot,
-  "app/data/recipe-visibility.json",
-);
 const updaterStateFile = path.join(cacheRoot, "current.json");
 const projectSlug = "matcha-flavoured";
 const modrinthApi = "https://api.modrinth.com/v2";
@@ -24,7 +19,7 @@ const mojangManifestUrl =
   "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
 const userAgent = "matcha-flavoured-field-wiki/0.1.0 (local-development)";
 
-function readJson(file) {
+export function readJson(file) {
   try {
     return JSON.parse(fs.readFileSync(file, "utf8"));
   } catch {
@@ -32,19 +27,11 @@ function readJson(file) {
   }
 }
 
-function writeJsonAtomic(file, value) {
+export function writeJsonAtomic(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const temporary = `${file}.next`;
   fs.writeFileSync(temporary, `${JSON.stringify(value, null, 2)}\n`);
   fs.renameSync(temporary, file);
-}
-
-function walk(directory) {
-  if (!fs.existsSync(directory)) return [];
-  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const absolute = path.join(directory, entry.name);
-    return entry.isDirectory() ? walk(absolute) : [absolute];
-  });
 }
 
 function sha1File(file) {
@@ -151,7 +138,7 @@ function releaseHighlights(changelog) {
     : [
         "Wiki data and textures synchronized from Modrinth",
         "Recipes, items, and advancements rebuilt locally",
-        "Secret and unreviewed recipes remain protected",
+        "All pack data extracted in full",
       ];
 }
 
@@ -173,7 +160,7 @@ function cleanChangelogText(line) {
     .trim();
 }
 
-function changelogBlocks(changelog) {
+export function changelogBlocks(changelog) {
   return String(changelog || "")
     .split(/\r?\n/)
     .map((rawLine) => {
@@ -269,87 +256,7 @@ async function ensurePack(version) {
   };
 }
 
-function recipeId(packRoot, file) {
-  const relative = path.relative(packRoot, file).replaceAll(path.sep, "/");
-  const [, namespace, , ...recipePathParts] = relative.split("/");
-  return `${namespace}:${recipePathParts.join("/").replace(/\.json$/, "")}`;
-}
-
-async function ensureVisibilityManifest(packRoot, currentData, latestFile) {
-  const existingManifest = readJson(visibilityManifestFile);
-  let visibilityPackRoot = packRoot;
-  if (currentData?.release?.sha1 !== latestFile.hashes.sha1) {
-    const currentRelease = currentData?.release;
-    if (!currentRelease?.downloadUrl || !currentRelease?.sha1) {
-      throw new Error(
-        "Recipe privacy cannot be seeded without the current release archive.",
-      );
-    }
-    const seedPack = await ensurePack({
-      id:
-        currentRelease.versionId || `seed-${currentRelease.sha1.slice(0, 10)}`,
-      files: [
-        {
-          url: currentRelease.downloadUrl,
-          filename: `Matcha_Flavoured-${currentRelease.version}.zip`,
-          primary: true,
-          hashes: { sha1: currentRelease.sha1 },
-        },
-      ],
-    });
-    visibilityPackRoot = seedPack.packRoot;
-  }
-  const visibilityRecipeFiles = walk(
-    path.join(visibilityPackRoot, "data"),
-  ).filter(
-    (candidate) =>
-      candidate.endsWith(".json") &&
-      candidate.split(path.sep).includes("recipe"),
-  );
-
-  if (existingManifest?.recipes) {
-    let changed = false;
-    for (const file of visibilityRecipeFiles) {
-      const id = recipeId(visibilityPackRoot, file);
-      const approved = existingManifest.recipes[id];
-      if (!approved || approved.contentSha1) continue;
-      if ((await sha1File(file)) !== approved.sha1) continue;
-      approved.contentSha1 = recipeContentSha1(readJson(file));
-      changed = true;
-    }
-    if (changed) {
-      writeJsonAtomic(visibilityManifestFile, {
-        ...existingManifest,
-        schema: 2,
-      });
-    }
-    return;
-  }
-
-  const currentVisibility = new Map(
-    (currentData.recipes || []).map((recipe) => [
-      recipe.id,
-      recipe.secret ? "secret" : "public",
-    ]),
-  );
-  const recipes = {};
-  for (const file of visibilityRecipeFiles) {
-    const id = recipeId(visibilityPackRoot, file);
-    recipes[id] = {
-      sha1: await sha1File(file),
-      contentSha1: recipeContentSha1(readJson(file)),
-      visibility: currentVisibility.get(id) || "secret",
-    };
-  }
-  writeJsonAtomic(visibilityManifestFile, {
-    schema: 2,
-    seededFromVersion: currentData.release.version,
-    note: "Changed or new recipe files are hidden automatically until this manifest is reviewed.",
-    recipes,
-  });
-}
-
-async function minecraftVersionFor(version) {
+export async function minecraftVersionFor(version) {
   const manifest = await fetchJson(mojangManifestUrl);
   const supported = new Set(version.game_versions || []);
   const selected = manifest.versions.find((entry) => supported.has(entry.id));
@@ -364,7 +271,7 @@ async function minecraftVersionFor(version) {
   };
 }
 
-async function ensureVanillaAssets(gameVersion, metadata) {
+export async function ensureVanillaAssets(gameVersion, metadata) {
   const client = metadata.downloads?.client;
   if (!client?.url || !client?.sha1) {
     throw new Error(`Minecraft ${gameVersion} has no client download.`);
@@ -385,15 +292,19 @@ async function ensureVanillaAssets(gameVersion, metadata) {
       "assets/minecraft/models/*",
       "assets/minecraft/textures/*",
       "data/minecraft/recipe/*",
+      "data/minecraft/tags/item/*",
     ]);
   }
   if (!fs.existsSync(path.join(extractedRoot, "data/minecraft/recipe"))) {
     unzip(archive, extractedRoot, ["data/minecraft/recipe/*"]);
   }
+  if (!fs.existsSync(path.join(extractedRoot, "data/minecraft/tags/item"))) {
+    unzip(archive, extractedRoot, ["data/minecraft/tags/item/*"]);
+  }
   return extractedRoot;
 }
 
-function preparePublicAssets(packRoot, vanillaRoot, versionId) {
+export function preparePublicAssets(packRoot, vanillaRoot, versionId) {
   const stagingRoot = path.join(cacheRoot, "staging", versionId);
   const stagingPublic = path.join(stagingRoot, "public");
   fs.rmSync(stagingRoot, { recursive: true, force: true });
@@ -431,7 +342,7 @@ function preparePublicAssets(packRoot, vanillaRoot, versionId) {
   return { stagingPublic, stagingRoot };
 }
 
-function runGenerator({
+export function runGenerator({
   packRoot,
   releaseMetadataFile,
   stagingPublic,
@@ -446,7 +357,7 @@ function runGenerator({
       stagedData,
       releaseMetadataFile,
       stagingPublic,
-      visibilityManifestFile,
+      "",
       vanillaRoot,
     ],
     { cwd: projectRoot, stdio: "inherit" },
@@ -457,7 +368,27 @@ function runGenerator({
   }
 }
 
-function validateGeneratedData(file, versionId) {
+// The wiki publishes every recipe, item, and advancement in full. Spoiler
+// handling is a display concern (app/data/spoilers.json), so any record that
+// looks redacted means the generator regressed.
+export function findWithheldData(data) {
+  const redactedRecipe = data.recipes.find(
+    (recipe) =>
+      "secret" in recipe ||
+      "reviewPending" in recipe ||
+      (recipe.station !== "chemistry" && recipe.ingredients.length === 0),
+  );
+  if (redactedRecipe) return `recipe ${redactedRecipe.id}`;
+  const redactedItem = data.items.find(
+    (item) => "obscured" in item || "sga" in item || !item.name,
+  );
+  if (redactedItem) return `item ${redactedItem.key}`;
+  const redactedFish = (data.fish || []).find((entry) => "obscured" in entry);
+  if (redactedFish) return `fish ${redactedFish.itemKey}`;
+  return null;
+}
+
+export function validateGeneratedData(file, versionId) {
   const data = readJson(file);
   if (
     !data ||
@@ -480,15 +411,9 @@ function validateGeneratedData(file, versionId) {
       `Location item link was not generated: ${brokenLocation.id}`,
     );
   }
-  const exposedSecret = data.recipes.find(
-    (recipe) =>
-      recipe.secret &&
-      (recipe.ingredients.length ||
-        recipe.grid.length ||
-        recipe.ingredientKeys.length),
-  );
-  if (exposedSecret) {
-    throw new Error(`Secret recipe payload was exposed: ${exposedSecret.id}`);
+  const withheld = findWithheldData(data);
+  if (withheld) {
+    throw new Error(`Generated data withholds content: ${withheld}`);
   }
   return data;
 }
@@ -513,7 +438,21 @@ function replaceGeneratedDirectory(source, target) {
   fs.rmSync(previous, { recursive: true, force: true });
 }
 
-function publishUpdate(stagingPublic, stagedData, releaseMetadata) {
+// Re-derive spoiler flags for the freshly published data. Hand edits in
+// app/data/spoilers.json are preserved by the script itself.
+export function refreshSpoilers(packRoot) {
+  const result = spawnSync(
+    process.execPath,
+    [path.join(projectRoot, "scripts/build-spoilers.mjs"), packRoot],
+    { cwd: projectRoot, stdio: "inherit" },
+  );
+  if (result.error) throw result.error;
+  if (result.status !== 0) {
+    throw new Error("The spoiler flag generator failed.");
+  }
+}
+
+export function publishUpdate(stagingPublic, stagedData, releaseMetadata) {
   replaceGeneratedDirectory(
     path.join(stagingPublic, "minecraft"),
     path.join(projectRoot, "public/minecraft"),
@@ -558,7 +497,6 @@ export async function checkForMatchaUpdate({
   }
 
   const pack = await ensurePack(version);
-  await ensureVisibilityManifest(pack.packRoot, currentData, pack.file);
   if (!changed) {
     writeJsonAtomic(updaterStateFile, {
       release: currentData.release,
@@ -600,18 +538,19 @@ export async function checkForMatchaUpdate({
   });
   const generated = validateGeneratedData(stagedData, version.id);
   publishUpdate(stagingPublic, stagedData, releaseMetadata);
+  refreshSpoilers(pack.packRoot);
   if (!quiet) {
-    const pending = generated.stats.reviewPendingRecipeCount;
     console.log(
-      `Wiki updated to ${version.version_number}. ` +
-        `${pending} changed recipes remain hidden for review.`,
+      `Wiki updated to ${version.version_number}: ` +
+        `${generated.stats.recipeCount} recipes, ` +
+        `${generated.stats.itemCount} items, ` +
+        `${generated.stats.advancementCount} advancements (all published in full).`,
     );
   }
   return {
     changed: true,
     updated: true,
     version,
-    reviewPendingRecipeCount: generated.stats.reviewPendingRecipeCount,
   };
 }
 

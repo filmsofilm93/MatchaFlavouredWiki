@@ -1,9 +1,5 @@
 import crypto from "node:crypto";
 
-export function recipeContentSha1(recipe) {
-  return crypto.createHash("sha1").update(JSON.stringify(recipe)).digest("hex");
-}
-
 function sortObjectKeys(value) {
   if (Array.isArray(value)) return value.map(sortObjectKeys);
   if (!value || typeof value !== "object") return value;

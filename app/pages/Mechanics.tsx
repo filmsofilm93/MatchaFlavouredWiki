@@ -59,6 +59,7 @@ export function MechanicsPage() {
       ) : null}
       {data.mechanics.gamerules.length ? (
         <Panel kicker="GAME RULES" title="Game rules the pack sets">
+          <div className="scrollx">
           <table className="data">
             <tbody>
               {data.mechanics.gamerules.map((rule) => (
@@ -72,6 +73,7 @@ export function MechanicsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </Panel>
       ) : null}
       {groups.map((group) => {

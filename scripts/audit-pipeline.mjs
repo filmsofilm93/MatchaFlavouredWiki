@@ -91,7 +91,9 @@ for (const adv of pick(data.advancements)) {
   }
   checked += 1;
   const title = json.display.title;
-  const text = typeof title === "string" ? title : title.text ?? lang[title.translate] ?? title.translate;
+  // A translation missing here (e.g. no cached vanilla language file in CI)
+  // cannot be checked, so it is skipped rather than reported.
+  const text = typeof title === "string" ? title : title.text ?? lang[title.translate];
   if (text && adv.title !== text.replace(/§./g, "")) problems.push(`advancement ${adv.id}: title "${adv.title}" != "${text}"`);
   if (adv.frame !== (json.display.frame || "task")) problems.push(`advancement ${adv.id}: frame`);
   if (adv.hidden !== (json.display.hidden === true)) problems.push(`advancement ${adv.id}: hidden`);

@@ -48,13 +48,30 @@ people do not know of or endorse Matcha Flavoured.
   [Looting Shears](https://modrinth.com/datapack/purpurpacks-looting-shears)
   datapack provided a framework for looting shears.
 
+Later releases credit more contributors (translations, code, music, food
+ideas and more); those credits are published with each release's notes on
+[Modrinth](https://modrinth.com/datapack/matcha-flavoured/changelog) and on the
+wiki's Changelog page.
+
+## Font and interface art
+
+- The interface font is [Monocraft](https://github.com/IdreesInc/Monocraft) by
+  Idrees Hassan, used under the SIL Open Font License 1.1 (see
+  [`app/fonts/Monocraft-OFL.txt`](app/fonts/Monocraft-OFL.txt)). No Minecraft
+  font files are used.
+- All interface art (panels, buttons, slots, arrows, flames, background tiles
+  and the landscape banner) is original and drawn in code. No Minecraft GUI
+  textures are used.
+
 ## Minecraft material
 
 Minecraft, its names, and vanilla game assets are the property of Mojang
-Studios and Microsoft. Any vanilla material displayed by this wiki remains
-subject to its original terms and is not relicensed under this repository's
-Creative Commons license. This project is not an official Minecraft product or
-service.
+Studios and Microsoft. The wiki shows vanilla **item and block textures** only
+to identify the vanilla items the pack's recipes, loot and trades use, and
+reads Minecraft's data files at build time to work out drop chances and world
+generation. That material remains subject to its original terms and is not
+relicensed under this repository's Creative Commons license. This project is
+not an official Minecraft product or service.
 
 See the [Minecraft Usage Guidelines](https://www.minecraft.net/usage-guidelines)
 for Mojang's current terms.

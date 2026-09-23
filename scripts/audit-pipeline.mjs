@@ -1,341 +1,134 @@
-// Audit the generated wiki data against a raw pack checkout.
+// Independent spot checks of the published data against the raw pack files.
+// It deliberately re-reads the pack with its own small parser instead of the
+// pipeline's code, so a pipeline bug cannot hide itself.
 //
-//   node scripts/audit-pipeline.mjs <packRoot> [wiki-data.json] [--json=<out>]
-//
-// It (1) counts what the pack contains versus what the generator extracted,
-// (2) spot-checks recipes and advancements by re-reading the raw files with a
-// deliberately independent parser, and (3) prints a Markdown report.
+//   node scripts/audit-pipeline.mjs [--version=<id from versions.json>] [--sample=40]
 import fs from "node:fs";
 import path from "node:path";
+import { ensureGithubPack, ensureModrinthPack, modrinthReleases } from "./pipeline/sources.mjs";
+import { arg, projectRoot, stripBom } from "./pipeline/util.mjs";
 
-const packRoot = path.resolve(process.argv[2] || "");
-const dataFile = path.resolve(
-  process.argv.find((v, i) => i > 2 && !v.startsWith("--")) ||
-    "app/data/wiki-data.json",
-);
-const jsonOut = (process.argv.find((v) => v.startsWith("--json=")) || "").slice(
-  7,
-);
-if (!fs.existsSync(path.join(packRoot, "data"))) {
-  console.error("Usage: node scripts/audit-pipeline.mjs <packRoot> [data]");
-  process.exit(1);
+const index = JSON.parse(fs.readFileSync(path.join(projectRoot, "public/data/versions.json"), "utf8"));
+const entry = index.versions.find((version) => version.id === arg("version", index.default));
+const data = JSON.parse(fs.readFileSync(path.join(projectRoot, "public", entry.file), "utf8"));
+const pack = entry.kind === "github"
+  ? ensureGithubPack(entry.commit)
+  : await ensureModrinthPack((await modrinthReleases()).find((release) => release.version === entry.version));
+const sample = Number(arg("sample", "40"));
+
+const raw = (type, id) => {
+  const [namespace, resource] = id.split(":");
+  const file = path.join(pack.dataRoot, namespace, type, `${resource}.json`);
+  return fs.existsSync(file) ? JSON.parse(stripBom(fs.readFileSync(file, "utf8"))) : null;
+};
+const ns = (value) => (value.includes(":") ? value : `minecraft:${value}`);
+// Deterministic sample spread over the whole list.
+const pick = (list) => list.filter((_, i) => i % Math.max(1, Math.floor(list.length / sample)) === 0).slice(0, sample);
+
+const problems = [];
+let checked = 0;
+
+// ---------------------------------------------------------------- recipes
+const itemKey = (stack) => ns(stack?.components?.["minecraft:item_model"] || stack?.id || stack?.item || stack || "");
+const cellKeys = (value) => {
+  const values = Array.isArray(value) ? value : [value];
+  return values.map((v) => (typeof v === "string" ? v : v?.item || v?.id || (v?.tag ? `#${v.tag}` : ""))).filter(Boolean).map((v) => (v.startsWith("#") ? `#${ns(v.slice(1))}` : ns(v)));
+};
+for (const recipe of pick(data.recipes.filter((r) => r.origin !== "vanilla"))) {
+  const json = raw("recipe", recipe.id);
+  if (!json) {
+    problems.push(`recipe ${recipe.id}: raw file not found`);
+    continue;
+  }
+  checked += 1;
+  const wantCount = Number(json.result?.count || 1);
+  const modelOrId = itemKey(json.result);
+  if (recipe.result.count !== wantCount) problems.push(`recipe ${recipe.id}: count ${recipe.result.count} != ${wantCount}`);
+  if (recipe.result.baseId !== ns(json.result.id || json.result.item || json.result)) problems.push(`recipe ${recipe.id}: base item ${recipe.result.baseId}`);
+  if (json.result?.components?.["minecraft:item_model"] && recipe.result.key !== modelOrId) problems.push(`recipe ${recipe.id}: key ${recipe.result.key} != ${modelOrId}`);
+  const expected = [];
+  if (json.type.endsWith("crafting_shaped")) {
+    const rows = json.pattern;
+    const width = Math.max(...rows.map((row) => row.length));
+    const top = Math.floor((3 - rows.length) / 2);
+    const left = Math.floor((3 - width) / 2);
+    const grid = Array(9).fill(null);
+    rows.forEach((row, r) => [...row].forEach((symbol, c) => { if (symbol !== " ") grid[(r + top) * 3 + c + left] = cellKeys(json.key[symbol]); }));
+    expected.push(...grid);
+  } else if (json.type.endsWith("crafting_shapeless")) {
+    expected.push(...json.ingredients.map(cellKeys), ...Array(9 - json.ingredients.length).fill(null));
+  } else if (json.type.includes("smithing")) {
+    expected.push(...[json.template, json.base, json.addition].map((v) => (v === undefined ? null : cellKeys(v))));
+  } else expected.push(cellKeys(json.ingredient));
+  const actual = recipe.grid || recipe.slots || [recipe.input];
+  expected.forEach((want, i) => {
+    const got = actual[i];
+    if (!want) {
+      if (got) problems.push(`recipe ${recipe.id}: slot ${i} should be empty`);
+      return;
+    }
+    if (!got) return problems.push(`recipe ${recipe.id}: slot ${i} missing`);
+    for (const value of want) {
+      if (value.startsWith("#") ? got.tag !== value.slice(1) && !got.keys.length : !got.keys.includes(value)) {
+        problems.push(`recipe ${recipe.id}: slot ${i} lacks ${value}`);
+      }
+    }
+  });
+  if (json.cookingtime !== undefined && recipe.seconds * 20 !== json.cookingtime) problems.push(`recipe ${recipe.id}: cook time`);
 }
 
-const data = JSON.parse(fs.readFileSync(dataFile, "utf8"));
-const read = (file) => {
-  try {
-    return JSON.parse(fs.readFileSync(file, "utf8"));
-  } catch {
-    return null;
-  }
-};
-const walk = (dir) =>
-  fs.existsSync(dir)
-    ? fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
-        const p = path.join(dir, e.name);
-        return e.isDirectory() ? walk(p) : [p];
-      })
-    : [];
-const rel = (file) => path.relative(packRoot, file).split(path.sep).join("/");
-const ns = (id, d = "minecraft") =>
-  !id
-    ? ""
-    : id.replace(/^#/, "").includes(":")
-      ? id.replace(/^#/, "")
-      : `${d}:${id.replace(/^#/, "")}`;
-
-// ---------------------------------------------------------------- inventory
-const files = walk(path.join(packRoot, "data")).map(rel);
-const byKind = (kind) =>
-  files.filter((f) => f.split("/")[2] === kind && f.endsWith(".json"));
-const vanillaArg = (
-  process.argv.find((v) => v.startsWith("--vanilla-dir=")) || ""
-).slice(14);
+// ---------------------------------------------------------------- advancements
+const vanillaLang = path.join(projectRoot, ".matcha-cache", "minecraft", entry.minecraft, "root", "assets", "minecraft", "lang", "en_us.json");
 const lang = {
-  ...(vanillaArg
-    ? read(path.join(vanillaArg, "assets/minecraft/lang/en_us.json")) || {}
-    : {}),
-  ...(read(path.join(packRoot, "assets/minecraft/lang/en_us.json")) || {}),
+  ...(fs.existsSync(vanillaLang) ? JSON.parse(fs.readFileSync(vanillaLang, "utf8")) : {}),
+  ...JSON.parse(fs.readFileSync(path.join(pack.assetsRoot, "minecraft/lang/en_us.json"), "utf8")),
 };
-
-const recipeFiles = byKind("recipe");
-const advancementFiles = byKind("advancement");
-const advancements = advancementFiles.map((f) => ({
-  file: f,
-  id: `${f.split("/")[1]}:${f
-    .split("/")
-    .slice(3)
-    .join("/")
-    .replace(/\.json$/, "")}`,
-  json: read(path.join(packRoot, f)),
-}));
-const displayed = advancements.filter((a) => a.json?.display);
-const hidden = displayed.filter((a) => a.json.display.hidden === true);
-const rewardRecipes = advancements.filter(
-  (a) => a.json?.rewards?.recipes?.length,
-);
-const lootFiles = byKind("loot_table");
-const lootByFolder = {};
-for (const f of lootFiles) {
-  const folder = f.split("/")[3]?.replace(/\.json$/, "") || "(root)";
-  lootByFolder[folder] = (lootByFolder[folder] || 0) + 1;
-}
-const tradeFiles = byKind("villager_trade");
-const tradeByProfession = {};
-for (const f of tradeFiles) {
-  const prof = f.split("/")[3];
-  tradeByProfession[prof] = (tradeByProfession[prof] || 0) + 1;
-}
-const worldgen = {};
-for (const f of files.filter((x) => x.split("/")[2] === "worldgen")) {
-  const kind = f.split("/")[3];
-  worldgen[kind] = (worldgen[kind] || 0) + 1;
-}
-const functionFiles = files.filter((f) => f.endsWith(".mcfunction"));
-const itemLangKeys = Object.keys(lang).filter((k) =>
-  /^item\.|^block\./.test(k),
-);
-
-const inventory = {
-  recipes: { pack: recipeFiles.length, generated: data.recipes.length },
-  advancements: {
-    packFiles: advancementFiles.length,
-    withDisplay: displayed.length,
-    hidden: hidden.length,
-    noDisplay: advancementFiles.length - displayed.length,
-    rewardingRecipes: rewardRecipes.length,
-    generated: data.advancements.length,
-    generatedHidden: data.advancements.filter((a) => a.hidden).length,
-  },
-  items: {
-    generated: data.items.length,
-    langItemAndBlockKeys: itemLangKeys.length,
-    placeholderTexture: data.items.filter((i) => i.textureMissing).length,
-  },
-  lootTables: { pack: lootFiles.length, byFolder: lootByFolder, generated: 0 },
-  villagerTrades: {
-    pack: tradeFiles.length,
-    tradeSets: byKind("trade_set").length,
-    byProfession: tradeByProfession,
-    generated: (data.fish || []).length,
-    generatedNote: "only fisherman trades, used for the fish list",
-  },
-  worldgen: { pack: worldgen, generated: 0 },
-  functions: { pack: functionFiles.length, generated: 0 },
-  structures: { packNbt: files.filter((f) => f.endsWith(".nbt")).length },
-  handWrittenLocations: (data.locations || []).length,
-};
-
-// ------------------------------------------------------- recipe spot checks
-function rawIngredientTokens(raw, d = "minecraft") {
-  if (Array.isArray(raw))
-    return [
-      raw
-        .map((x) => rawIngredientTokens(x, d))
-        .flat()
-        .sort()
-        .join("|"),
-    ];
-  if (typeof raw === "string")
-    return [raw.startsWith("#") ? `#${ns(raw, d)}` : ns(raw, d)];
-  if (raw?.tag) return [`#${ns(raw.tag, d)}`];
-  if (raw?.item || raw?.id) return [ns(raw.item || raw.id, d)];
-  return ["?"];
-}
-function rawTokens(recipe) {
-  const t = recipe.type || "";
-  if (t.includes("crafting_shaped")) {
-    const out = [];
-    for (const row of recipe.pattern || [])
-      for (const ch of row)
-        if (ch !== " ") out.push(...rawIngredientTokens(recipe.key[ch]));
-    return out;
+for (const adv of pick(data.advancements)) {
+  const json = raw("advancement", adv.id);
+  if (!json) {
+    problems.push(`advancement ${adv.id}: raw file not found`);
+    continue;
   }
-  if (t.includes("crafting_shapeless"))
-    return (recipe.ingredients || []).flatMap((x) => rawIngredientTokens(x));
-  if (t.includes("smithing"))
-    return [recipe.template, recipe.base, recipe.addition]
-      .filter(Boolean)
-      .flatMap((x) => rawIngredientTokens(x));
-  return rawIngredientTokens(recipe.ingredient ?? recipe.input);
+  checked += 1;
+  const title = json.display.title;
+  const text = typeof title === "string" ? title : title.text ?? lang[title.translate] ?? title.translate;
+  if (text && adv.title !== text.replace(/§./g, "")) problems.push(`advancement ${adv.id}: title "${adv.title}" != "${text}"`);
+  if (adv.frame !== (json.display.frame || "task")) problems.push(`advancement ${adv.id}: frame`);
+  if (adv.hidden !== (json.display.hidden === true)) problems.push(`advancement ${adv.id}: hidden`);
+  if ((adv.parent || null) !== (json.parent ? ns(json.parent) : null)) problems.push(`advancement ${adv.id}: parent`);
 }
-function generatedTokens(recipe) {
-  return recipe.ingredients.map((g) =>
-    g.tag ? `#${g.tag}` : [...g.keys].sort().join("|"),
-  );
-}
-const expectedStation = (type) =>
-  type.includes("crafting")
-    ? "crafting"
-    : type.includes("stonecut")
-      ? "stonecutting"
-      : type.includes("smithing")
-        ? "smithing"
-        : type.includes("blasting")
-          ? "blasting"
-          : type.includes("smoking")
-            ? "smoking"
-            : type.includes("campfire")
-              ? "campfire"
-              : type.includes("smelting")
-                ? "furnace"
-                : "?";
 
-const recipesById = new Map(data.recipes.map((r) => [r.id, r]));
-const itemsByKey = new Map(data.items.map((i) => [i.key, i]));
-// Deterministic stratified sample: every 7th recipe of each station, plus
-// named edge cases (alloys, smithing, custom stations, secret foods).
-const stations = [...new Set(data.recipes.map((r) => r.station))].sort();
-const sample = new Set([
-  "main:food/crafting/gnocchi",
-  "main:food/crafting/chorus_mochi",
-  "main:crafting/electrum_alloy",
-  "main:crafting/bronze_alloy",
-  "main:crafting/bookshelf",
-  "main:crafting/wooden_hoe",
-]);
-for (const station of stations) {
-  const list = data.recipes.filter((r) => r.station === station);
-  for (
-    let i = 3;
-    i < list.length &&
-    [...sample].filter((id) => recipesById.get(id)?.station === station)
-      .length < 3;
-    i += 7
-  ) {
-    sample.add(list[i].id);
-  }
-}
-function checkRecipe(id) {
-  const g = recipesById.get(id);
-  const [namespace, p] = id.split(":");
-  const file = path.join(packRoot, "data", namespace, "recipe", `${p}.json`);
-  const raw = read(file);
-  if (!g || !raw) {
-    return {
-      id,
-      ok: false,
-      notes: [!g ? "missing from generated data" : "raw file missing"],
-    };
-  }
-  const notes = [];
-  const rawResultId = ns(
-    typeof raw.result === "string"
-      ? raw.result
-      : raw.result?.id || raw.result?.item,
-  );
-  const rawModel = raw.result?.components?.["minecraft:item_model"];
-  const item = itemsByKey.get(g.result.key);
-  if (item?.id !== rawResultId)
-    notes.push(`result id ${item?.id} ≠ ${rawResultId}`);
-  if (rawModel && g.result.key !== ns(rawModel))
-    notes.push(`result model ${g.result.key} ≠ ${rawModel}`);
-  const rawCount = Number(raw.result?.count || 1);
-  if (g.result.count !== rawCount)
-    notes.push(`count ${g.result.count} ≠ ${rawCount}`);
-  const a = rawTokens(raw).sort();
-  const b = generatedTokens(g).sort();
-  // Tags expand on the generated side, so compare tag tokens to tag tokens and
-  // plain items to plain items.
-  if (JSON.stringify(a) !== JSON.stringify(b))
-    notes.push(`ingredients ${JSON.stringify(b)} ≠ raw ${JSON.stringify(a)}`);
-  if (g.station !== expectedStation(raw.type))
-    notes.push(`station ${g.station} ≠ ${expectedStation(raw.type)}`);
-  if ((raw.cookingtime || 0) !== g.cookingTime)
-    notes.push(`cook ${g.cookingTime} ≠ ${raw.cookingtime}`);
-  const rawName = raw.result?.components?.["minecraft:item_name"];
-  return {
-    id,
-    station: g.stationLabel,
-    output: `${g.result.count}× ${item?.name}`,
-    inputs: g.ingredients.map((x) => x.label).join(", "),
-    cook: g.cookingTime ? `${g.cookingTime / 20}s` : "",
-    nameSource: rawName ? "item_name component" : "lang/id",
-    ok: notes.length === 0,
-    notes,
+// ---------------------------------------------------------------- loot
+for (const table of pick(data.loot.filter((t) => t.origin === "pack"))) {
+  const json = raw("loot_table", table.id);
+  if (!json) continue;
+  checked += 1;
+  // Every direct item entry must show up among the drops (by base item or model).
+  const direct = [];
+  const visit = (node) => {
+    if (!node || typeof node !== "object") return;
+    if (Array.isArray(node)) return node.forEach(visit);
+    if (node.type === "minecraft:item" && typeof node.name === "string") {
+      const model = (node.functions || []).find((fn) => fn.function?.endsWith("set_components"))?.components?.["minecraft:item_model"];
+      direct.push(ns(model || node.name));
+    }
+    Object.values(node).forEach(visit);
   };
+  visit(json.pools);
+  const keys = new Set(table.drops.map((drop) => drop.key));
+  for (const key of direct) if (!keys.has(key)) problems.push(`loot ${table.id}: ${key} missing from drops`);
+  // Pool weights must match the file.
+  json.pools?.forEach((pool, i) => {
+    const weights = (pool.entries || []).map((e) => Number(e.weight ?? 1));
+    const got = table.pools[i]?.entries.map((e) => e.weight) || [];
+    if (JSON.stringify(weights) !== JSON.stringify(got)) problems.push(`loot ${table.id}: pool ${i} weights ${got} != ${weights}`);
+  });
 }
-const recipeChecks = [...sample].map(checkRecipe);
-const sweep = data.recipes.map((r) => checkRecipe(r.id));
-const sweepFailures = sweep.filter((c) => !c.ok);
 
-// -------------------------------------------------- advancement spot checks
-const text = (c) =>
-  typeof c === "string"
-    ? c
-    : Array.isArray(c)
-      ? c.map(text).join("")
-      : (c?.text ??
-        (c?.translate ? (lang[c.translate] ?? `[${c.translate}]`) : "") +
-          (c?.extra ? text(c.extra) : ""));
-const advById = new Map(data.advancements.map((a) => [a.id, a]));
-const advSample = [
-  ...displayed
-    .filter((a) => !a.json.display.hidden)
-    .filter((_, i) => i % 9 === 2)
-    .slice(0, 8),
-  ...hidden.filter((_, i) => i % 25 === 1).slice(0, 4),
-  ...displayed.filter((a) => a.json.rewards?.recipes?.length).slice(0, 2),
-];
-const advChecks = advSample.map((a) => {
-  const g = advById.get(a.id);
-  const d = a.json.display;
-  const notes = [];
-  if (!g)
-    return { id: a.id, ok: false, notes: ["missing from generated data"] };
-  const title = text(d.title).replace(/§./g, "").trim();
-  if (g.title !== title) notes.push(`title "${g.title}" ≠ "${title}"`);
-  if ((d.frame || "task") !== g.frame)
-    notes.push(`frame ${g.frame} ≠ ${d.frame || "task"}`);
-  if ((d.hidden === true) !== g.hidden)
-    notes.push(`hidden ${g.hidden} ≠ ${d.hidden === true}`);
-  if ((a.json.parent || null) !== g.parent)
-    notes.push(`parent ${g.parent} ≠ ${a.json.parent}`);
-  const missing = [];
-  if (a.json.criteria && !("criteria" in g))
-    missing.push(`${Object.keys(a.json.criteria).length} criteria`);
-  if (a.json.rewards?.recipes && !("unlocks" in g))
-    missing.push(`${a.json.rewards.recipes.length} recipe rewards`);
-  if (a.json.rewards?.loot && !("rewards" in g)) missing.push("loot reward");
-  return {
-    id: a.id,
-    title: g.title,
-    frame: g.frame,
-    hidden: g.hidden,
-    parent: g.parent,
-    ok: notes.length === 0,
-    notes,
-    notExtracted: missing,
-  };
-});
-
-// ------------------------------------------------------------------ output
-const report = {
-  packRoot,
-  dataFile,
-  inventory,
-  recipeChecks,
-  sweepFailures,
-  advChecks,
-};
-if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(report, null, 2));
-const pass = (l) => `${l.filter((x) => x.ok).length}/${l.length}`;
-console.log(`# Pipeline audit\n`);
-console.log(
-  "## Inventory\n```json\n" + JSON.stringify(inventory, null, 2) + "\n```\n",
-);
-console.log(`## Recipe spot checks (${pass(recipeChecks)} match)\n`);
-for (const c of recipeChecks)
-  console.log(
-    `- ${c.ok ? "✅" : "❌"} \`${c.id}\` — ${c.station || ""}: ${c.inputs || ""} → ${c.output || ""} ${c.cook || ""} ${c.notes.join("; ")}`,
-  );
-console.log(
-  `\nFull sweep of all ${sweep.length} generated recipes: ${sweep.length - sweepFailures.length} match the raw files.`,
-);
-for (const c of sweepFailures.slice(0, 20))
-  console.log(`- ❌ \`${c.id}\` ${c.notes.join("; ")}`);
-console.log(`\n## Advancement spot checks (${pass(advChecks)} match)\n`);
-for (const c of advChecks)
-  console.log(
-    `- ${c.ok ? "✅" : "❌"} \`${c.id}\` "${c.title}" [${c.frame}${c.hidden ? ", hidden" : ""}] parent=${c.parent} ${c.notes.join("; ")}${c.notExtracted?.length ? ` · not extracted: ${c.notExtracted.join(", ")}` : ""}`,
-  );
+console.log(`Audited ${entry.label}: ${checked} records checked against the raw pack.`);
+if (problems.length) {
+  console.log(`${problems.length} problem(s):\n  ${problems.slice(0, 40).join("\n  ")}`);
+  process.exitCode = 1;
+} else {
+  console.log("No differences.");
+}

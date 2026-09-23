@@ -200,7 +200,7 @@ export class Items {
       const baseId = primary?.baseId || [...item.baseIds][0];
       const summary = primary ? this.summarize(primary.baseId, primary.components) : {};
       const [namespace] = splitId(item.key);
-      const custom = item.key !== baseId || Boolean(primary);
+      const custom = item.key !== baseId || Boolean(primary) || namespace !== "minecraft";
       const name = summary.name || this.text.nameFor(item.key) || this.text.nameFor(baseId) || titleCase(item.key);
       const texture = this.assets.itemTexture(item.key) || (item.key !== baseId ? this.assets.itemTexture(baseId) : null);
       // Names that differ between definitions (the same model reused for two

@@ -18,10 +18,14 @@ export function walk(directory) {
   });
 }
 
+// Some pack files start with a UTF-8 byte order mark.
+export function stripBom(text) {
+  return text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
+}
+
 export function readJson(file) {
   try {
-    // Some pack files carry a UTF-8 BOM.
-    return JSON.parse(fs.readFileSync(file, "utf8").replace(/^﻿/, ""));
+    return JSON.parse(stripBom(fs.readFileSync(file, "utf8")));
   } catch {
     return null;
   }

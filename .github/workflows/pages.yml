@@ -19,7 +19,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -31,9 +31,14 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
+      - name: Install build dependencies
+        run: npm ci
+
+      # Scheduled runs only rebuild when Modrinth has a new release or GitHub
+      # main has new commits (exit code 10 means "changed").
       - name: Check whether publishing is needed
         id: gate
         shell: bash
@@ -42,12 +47,10 @@ jobs:
             echo "publish=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-
           set +e
-          node scripts/update-matcha.mjs --check --quiet --check-exit-code
+          npm run --silent update:check -- --check-exit-code
           status=$?
           set -e
-
           if [[ "$status" -eq 0 ]]; then
             echo "publish=false" >> "$GITHUB_OUTPUT"
           elif [[ "$status" -eq 10 ]]; then
@@ -56,26 +59,20 @@ jobs:
             exit "$status"
           fi
 
-      - name: Install build dependencies
-        if: steps.gate.outputs.publish == 'true'
-        run: npm ci
-
-      - name: Refresh from Modrinth
+      # Builds the latest Modrinth release and GitHub main. Fails loudly if a
+      # category (recipes, fish, death system...) collapses or drops sharply.
+      - name: Rebuild the data
         if: >-
           steps.gate.outputs.publish == 'true' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         run: npm run update
 
-      - name: Verify nothing is withheld
+      - name: Lint, test and audit
         if: steps.gate.outputs.publish == 'true'
         run: |
-          node --input-type=module -e "
-            import fs from 'node:fs';
-            import { findWithheldData } from './scripts/update-matcha.mjs';
-            const data = JSON.parse(fs.readFileSync('app/data/wiki-data.json', 'utf8'));
-            const withheld = findWithheldData(data);
-            if (withheld) throw new Error('Generated data withholds ' + withheld);
-          "
+          npm run lint
+          npm test
+          npm run audit -- --sample=80
 
       - name: Save synchronized data
         if: >-
@@ -85,17 +82,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/data public
+          git add public/data public/tex app/data/spoilers.json
           if ! git diff --cached --quiet; then
-            git commit -m "Update wiki from Modrinth"
+            git commit -m "Update wiki data from Modrinth and GitHub"
             git push
           fi
-
-      - name: Build the static site
-        if: steps.gate.outputs.publish == 'true'
-        env:
-          BASE_PATH: /MatchaFlavouredWiki/
-        run: npm run build
 
       - name: Configure GitHub Pages
         if: steps.gate.outputs.publish == 'true'

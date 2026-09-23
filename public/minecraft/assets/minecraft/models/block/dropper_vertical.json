@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable_vertical_with_bottom",
-  "textures": {
-    "front": "minecraft:block/dropper_front_vertical",
-    "side": "minecraft:block/dropper_side_vertical",
-    "bottom": "minecraft:block/dropper_bottom_vertical"
-  }
-}

@@ -8,7 +8,7 @@ export default defineConfig([
     "dist/**",
     "node_modules/**",
     ".matcha-cache/**",
-    "public/minecraft/**",
+    "public/**",
   ]),
   eslint.configs.recommended,
   ...tseslint.configs.recommended,

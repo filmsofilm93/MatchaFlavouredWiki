@@ -1,7 +1,0 @@
-{
-    "parent": "block/cross",
-    "textures": {
-        "particle": "block/dead_bush",
-        "cross": "block/dead_bush"
-    }
-}

@@ -1,20 +1,20 @@
 {
   "name": "matcha-flavoured-wiki",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "license": "CC-BY-NC-SA-4.0",
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "node scripts/dev-with-updates.mjs",
-    "dev:plain": "vite --host 0.0.0.0 --port 3001 --strictPort",
+    "dev": "vite --host 0.0.0.0 --port 3001 --strictPort",
     "update": "node scripts/update-matcha.mjs",
     "update:check": "node scripts/update-matcha.mjs --check",
+    "audit": "node scripts/audit-pipeline.mjs",
     "build": "vite build",
-    "build:pages": "BASE_PATH=/MatchaFlavouredWiki/ vite build",
+    "build:pages": "vite build --base=/MatchaFlavouredWiki/",
     "preview": "vite preview --host 0.0.0.0 --port 3001 --strictPort",
-    "test": "npm run build:pages && node --test tests/rendered-html.test.mjs",
+    "test": "npm run build:pages && node --test \"tests/*.test.mjs\"",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
@@ -30,7 +30,7 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
     "eslint": "10.8.0",
-    "fflate": "^0.8.3",
+    "fflate": "0.8.3",
     "globals": "14.0.0",
     "prettier": "3.9.6",
     "typescript": "5.9.3",

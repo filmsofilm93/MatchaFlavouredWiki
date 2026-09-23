@@ -185,7 +185,9 @@ export function buildStructures({ resources, text, items }) {
       lootTables: [...loot].map(([table, info]) => ({ table, containers: info.containers, ...(info.fromCode ? { fromCode: true } : {}), templates: [...new Set(info.templates)].slice(0, 40) })),
       fixedItems: [...fixed].map(([key, count]) => ({ key, count })),
       spawners: [...spawners].map(([entity, count]) => ({ entity, name: text.entityName(entity), count })),
-      entities: [...entities].filter(([entity]) => !/item_frame|armor_stand|painting|marker/.test(entity)).map(([entity, count]) => ({ entity, name: text.entityName(entity), count })),
+      entities: [...entities]
+        .filter(([entity]) => !/item_frame|armor_stand|painting|marker|_display$|:item$|interaction|leash_knot/.test(entity))
+        .map(([entity, count]) => ({ entity, name: text.entityName(entity), count })),
       vaults: dedupeVaults(vaults),
     });
   }

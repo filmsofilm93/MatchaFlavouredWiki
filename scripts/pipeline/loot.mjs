@@ -333,11 +333,22 @@ export class Loot {
         break;
       case "alternatives":
       case "sequence": {
+        // alternatives: the first child whose conditions pass is used.
+        // sequence: children are used in order until one fails.
+        // A child with a non-random condition (a tool, a block state...) may
+        // or may not pass, so it does not block the children after it; those
+        // are labelled with the condition they need to fail.
         let remaining = 1;
+        const otherwise = [];
         for (const child of entry.children) {
-          const reach = entry.type === "alternatives" ? remaining * child.factor : remaining * child.factor;
-          for (const [key, info] of this.entryDrops(child, depth + 1)) add(key, info.p * reach, { ...info, labels: [...entry.labels, ...child.labels, ...info.labels] });
-          remaining = entry.type === "alternatives" ? remaining * (1 - child.factor) : remaining * child.factor;
+          const reach = remaining * child.factor;
+          const labels = [...entry.labels, ...child.labels, ...otherwise];
+          for (const [key, info] of this.entryDrops(child, depth + 1)) add(key, info.p * reach, { ...info, labels: [...labels, ...info.labels] });
+          const conditional = child.labels.length > 0;
+          if (entry.type === "alternatives") {
+            if (conditional) otherwise.push(`Not: ${child.labels.join(", ")}`);
+            else remaining *= 1 - child.factor;
+          } else if (!conditional) remaining *= child.factor;
           if (remaining <= 0) break;
         }
         break;

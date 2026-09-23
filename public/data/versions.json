@@ -1,0 +1,4608 @@
+{
+  "schema": 2,
+  "default": "release-1.12.2-beta",
+  "versions": [
+    {
+      "id": "release-1.12.2-beta",
+      "kind": "release",
+      "file": "data/release-1.12.2-beta.json",
+      "version": "1.12.2-beta",
+      "label": "1.12.2-beta",
+      "name": "Progression, Polish, Prerelease",
+      "minecraft": "26.2",
+      "published": "September 19, 2026",
+      "files": [
+        {
+          "filename": "Matcha_RP_1_12_2_pre.zip",
+          "sha1": "9f93234b4eaf37fa91370b5ac91da2c38066a6a0",
+          "loaders": [
+            "minecraft"
+          ]
+        },
+        {
+          "filename": "Matcha_DP_1_12_2_pre.zip",
+          "sha1": "f4818ac07b8822a5408e24212d09c84e9f2e79a5",
+          "loaders": [
+            "datapack"
+          ]
+        }
+      ],
+      "icon": "tex/65af7ebdfd49e22a.png"
+    },
+    {
+      "id": "github-main",
+      "kind": "github",
+      "file": "data/github-main.json",
+      "version": "1.12.2",
+      "label": "GitHub main (unreleased, 5bf7c3e)",
+      "name": "GitHub main (unreleased)",
+      "minecraft": "26.2",
+      "published": "September 23, 2026",
+      "commit": "5bf7c3e22adaabf2416c83b709842cb9a053cb95",
+      "icon": "tex/65af7ebdfd49e22a.png"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.12.2-beta",
+      "name": "Progression, Polish, Prerelease",
+      "published": "September 19, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "beta",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "Credits"
+        },
+        {
+          "type": "bullet",
+          "text": "Hashiru: Optimisations"
+        },
+        {
+          "type": "bullet",
+          "text": "NamlessJU: Various coding things, translations"
+        },
+        {
+          "type": "bullet",
+          "text": "Nat: Translation project lead, and other stuff"
+        },
+        {
+          "type": "bullet",
+          "text": "Imtlx: New Angler's Almanac, Fishing Sounds, Translation, and Github help"
+        },
+        {
+          "type": "bullet",
+          "text": "Vee Vaicekauskas: Background musics (Check out their bandcamp!: https://par4.bandcamp.com/)"
+        },
+        {
+          "type": "bullet",
+          "text": "DeBlezyBestie: Music Discs"
+        },
+        {
+          "type": "bullet",
+          "text": "Bingbongbooper: Food Ideas (Their YT!: https://www.youtube.com/@bingbongbooper)"
+        },
+        {
+          "type": "bullet",
+          "text": "HapppySpud: Nether World Gen Gravel Remover, Post-Smithing Enchants, Random Asylum Seekers"
+        },
+        {
+          "type": "bullet",
+          "text": "Linkershim: Optimisations, Multiplayer Support and various other coding things"
+        },
+        {
+          "type": "bullet",
+          "text": "Pepurion: Optimisaitons, Rose Models"
+        },
+        {
+          "type": "bullet",
+          "text": "Fayranchia: Bug fixes"
+        },
+        {
+          "type": "bullet",
+          "text": "ReinIsNOTaDev: Optimisations, and Github Workflow nonsese"
+        },
+        {
+          "type": "bullet",
+          "text": "Fpekal: Bug fixes, optimisations, and working on 26.3 port"
+        },
+        {
+          "type": "bullet",
+          "text": "FloofShade: Item update trigger"
+        },
+        {
+          "type": "bullet",
+          "text": "EastMonster: Bug fixes"
+        },
+        {
+          "type": "bullet",
+          "text": "Voxybuns: Custom emojis and their implimentation"
+        },
+        {
+          "type": "bullet",
+          "text": "milo256: Dyanmic Multiplayer Sleep"
+        },
+        {
+          "type": "bullet",
+          "text": "All of the translation volunteers"
+        },
+        {
+          "type": "bullet",
+          "text": "Thank you so much everyone!"
+        },
+        {
+          "type": "paragraph",
+          "text": "This symbol (👥) means the feature was changed/added per community feedback, or brought to attention by community bug reporters."
+        },
+        {
+          "type": "paragraph",
+          "text": "This symbol (💻) means the feature was changed/added by community code contributors."
+        },
+        {
+          "type": "paragraph",
+          "text": "This symbol (🖌️) means the art was added by community artists (music is art)"
+        },
+        {
+          "type": "heading",
+          "text": "Everything is Broken!!"
+        },
+        {
+          "type": "bullet",
+          "text": "ITS OKAY! I promise"
+        },
+        {
+          "type": "bullet",
+          "text": "Hold the broken item in your hand and run:"
+        },
+        {
+          "type": "bullet",
+          "text": "/trigger updateitem"
+        },
+        {
+          "type": "bullet",
+          "text": "The broken item should update. If it doesn't please report that to the github. But, if you'd like a quick fix and want to throw away the broken item use"
+        },
+        {
+          "type": "bullet",
+          "text": "/loot give @s loot"
+        },
+        {
+          "type": "bullet",
+          "text": "And start to type in the name of the broken item and it should autofill. Ex. The Divine Comedy is called matcha:treasure/divinecomedy"
+        },
+        {
+          "type": "heading",
+          "text": "WHY!?"
+        },
+        {
+          "type": "bullet",
+          "text": "In order to make the pack easier to use for other devlopers, and to maintain its own consistency, a TON of items had to move around. This meant namespace changes for almost everything. So the previous models either minecraft:x or main:x have been moved to matcha:x"
+        },
+        {
+          "type": "heading",
+          "text": "But I don't care and I dont want to deal with it"
+        },
+        {
+          "type": "bullet",
+          "text": "Fair. Just have both the most recent RP and the old RP on at the same time, with the most recent one being placed on top. This will cover up any broken items and make them seem normal. Just know that enchants will still be broken unless you use the trigger"
+        },
+        {
+          "type": "heading",
+          "text": "Changelog"
+        },
+        {
+          "type": "heading",
+          "text": "Major Additions and Changes"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum & Adamant Reworks (See Below)"
+        },
+        {
+          "type": "bullet",
+          "text": "New Intrinsic/Effect Icons! (They look awesome, 💻/🖌️, Voxybuns)"
+        },
+        {
+          "type": "bullet",
+          "text": "Wither Effect is VERY nasty now (Easy mode is exempt)"
+        },
+        {
+          "type": "bullet",
+          "text": "Shakudo Chestplate no longer cleanses wither"
+        },
+        {
+          "type": "bullet",
+          "text": "Please bring milk or bread to Hell, please its very important"
+        },
+        {
+          "type": "bullet",
+          "text": "Wither skeleton feet stabbies won't work anymore, but you should try to do it anyways ;)"
+        },
+        {
+          "type": "bullet",
+          "text": "Crystal hearts are now \"used\" instead of \"forced\" on players, since the new death system provides enough incentive"
+        },
+        {
+          "type": "bullet",
+          "text": "They also double as cheap totems (at max hearts), and great healing items when < max health, so have fun with them"
+        },
+        {
+          "type": "bullet",
+          "text": "Progression Polish"
+        },
+        {
+          "type": "bullet",
+          "text": "Blast furnace recipe tweaked, Raw Diamonds now exist, and require blast furnaces to smelt"
+        },
+        {
+          "type": "bullet",
+          "text": "So no more naturally-occuring free diamonds should appear on surface structures"
+        },
+        {
+          "type": "bullet",
+          "text": "This should extend the copper and iron age a bit more, and when you finally have a blast furnace, feel good to finally be able to USE the diamonds you collected"
+        },
+        {
+          "type": "bullet",
+          "text": "Trigger Update system (💻, FloofShade)"
+        },
+        {
+          "type": "heading",
+          "text": "New Death System"
+        },
+        {
+          "type": "bullet",
+          "text": "I am moving forward with the experimental death system. There has been so much postitive feedback for it, that it is staying. If you don't like it, I have some tips:"
+        },
+        {
+          "type": "bullet",
+          "text": "Try to slow down. Make sure you're equiped enough, with enough food, tools, and weapons at your disposal before you go trying to progress. Progressing fast will make you loose hearts faster than progressing slow."
+        },
+        {
+          "type": "bullet",
+          "text": "Play on Easy. In easy mode, you won't go below 10 hearts"
+        },
+        {
+          "type": "bullet",
+          "text": "Dont play on Hard! Hard is meant to be unfair. Its only for people like me who enjoy getting one-tapped by husks. I except to die at LEAST 3 times at the final boss of any game before I beat it. Anything less than that is cheap to me"
+        },
+        {
+          "type": "heading",
+          "text": "Where is 26.3??"
+        },
+        {
+          "type": "bullet",
+          "text": "26.3 is a major data-pack-breaking update. Its taking a long time to get things sorted out with the new syntax. Especially beucase matcha is so big. It will take time to come out. But trust me we are working on it. No one is more excited about yellow leaves than me, trust."
+        },
+        {
+          "type": "heading",
+          "text": "Tweaks & Small Additions"
+        },
+        {
+          "type": "bullet",
+          "text": "Enderman can only pick up melon, pumpkins, and TNT (💻, Linkershim)"
+        },
+        {
+          "type": "bullet",
+          "text": "Multiplayer support improvements! (💻, Linkershim)"
+        },
+        {
+          "type": "bullet",
+          "text": "Trim Colours added"
+        },
+        {
+          "type": "bullet",
+          "text": "Yet to add: Electrum, Shakudo, Hepatizon, Silver"
+        },
+        {
+          "type": "bullet",
+          "text": "If you have better textures send them to the github, I ran out of ideas for these"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Sturdy Leather's Safe Fall Distance (1 -> 2)"
+        },
+        {
+          "type": "bullet",
+          "text": "Sturdy Leather can now be repaired with tattered leather"
+        },
+        {
+          "type": "bullet",
+          "text": "Sturdy Leather Boots now have a step height intrinsic (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Feather Falling is better now (base damage reduction 12% -> 24%; max damage reduction 48% -> 72%)"
+        },
+        {
+          "type": "bullet",
+          "text": "Heart Decrementing is now only local not global (Per player not per world, I made this imagining a small group of friends playing together. Not large servers, this change was made to help with that, difficulty is still set at 5 hearts, but since this can be changed I dont think its a big issue)"
+        },
+        {
+          "type": "bullet",
+          "text": "Opal Earrings now only give Conduit Power when in water (quick patch job probably needs optimisation)"
+        },
+        {
+          "type": "bullet",
+          "text": "Zephyr enchantment reworked so that its 3 levels (👥, freshdoktor) (💻, Imtlx)"
+        },
+        {
+          "type": "bullet",
+          "text": "Elegy of the Abbey and Crete updated to their new versions"
+        },
+        {
+          "type": "bullet",
+          "text": "Bulk Blocks now unpack directly into your inventory (💻, Linkershim)"
+        },
+        {
+          "type": "bullet",
+          "text": "All Mason trades are now Bulk Blocks (💻, Linkershim)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bulk Dirt added to Mason Trade"
+        },
+        {
+          "type": "bullet",
+          "text": "Bulk Blocks now have distinct models"
+        },
+        {
+          "type": "bullet",
+          "text": "Diamond, Amethyst, and Lapis Earrings (They don't do anything but they ARE very cute) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver is now found in deepdarks (sculk covers most of them, so why not?) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Hard mode husks are slightly slower (But still faster than normal mode) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Lily pads can now be cloned (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Chains can now be climbed"
+        },
+        {
+          "type": "bullet",
+          "text": "Taiga Grass colour slightly changed to be a little less ugly"
+        },
+        {
+          "type": "bullet",
+          "text": "Mobs spawned from spawners no longer drop anything (💻, HapppySpud)"
+        },
+        {
+          "type": "bullet",
+          "text": "Withers can now only be spawned on the surface of the overworld"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver added to ominous vault loot"
+        },
+        {
+          "type": "bullet",
+          "text": "Trash removed from trial spawners and vaults"
+        },
+        {
+          "type": "bullet",
+          "text": "Many LTs re-buffed! Because diamonds are now raw, it allows me to give more rewards without worrying about progression breaking so badly that people end up not having fun c:"
+        },
+        {
+          "type": "bullet",
+          "text": "ALL Loottables will be rebalanced, cleaned up, and made more unique for each one, however, I don't have the time to do that right now"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver can now be found in Ancient City Chests"
+        },
+        {
+          "type": "bullet",
+          "text": "Ruined portal LT nerfed, to prevent gold from being obtainable pre-iron (tech. pre-copper)."
+        },
+        {
+          "type": "bullet",
+          "text": "This may be nerfed more depending on how many people I see use this to skip iron"
+        },
+        {
+          "type": "bullet",
+          "text": "If some people do it? Its fine, fun little shortcut you can do"
+        },
+        {
+          "type": "bullet",
+          "text": "If a lot of people do it? Something's gone wrong"
+        },
+        {
+          "type": "bullet",
+          "text": "The Quran and Tanakh added to trial chamber loot (Temp fix)"
+        },
+        {
+          "type": "bullet",
+          "text": "Post-dragon, Abbeys can still spawn mobs"
+        },
+        {
+          "type": "bullet",
+          "text": "Ofuda trades now require Crystal hearts"
+        },
+        {
+          "type": "bullet",
+          "text": "Cyan and Normal Rose can now be placed in item frame with their own models (💻/🖌️, pepurion)"
+        },
+        {
+          "type": "bullet",
+          "text": "Day/Night extender now uses timelines (💻, ReinIsNOTaDev)"
+        },
+        {
+          "type": "bullet",
+          "text": "Trims now supported on custom armours (💻, Tralomine)"
+        },
+        {
+          "type": "bullet",
+          "text": "Sleeping at night will wake you up in morning, but sleeping in the day still skips 12 hours (💻, milo256)"
+        },
+        {
+          "type": "bullet",
+          "text": "Amnestics no longer reset villager XP BUT beucase of how villager trading work, they won't re-unlock the new items until you trade with them for each level at least once (Best I can do rn)"
+        },
+        {
+          "type": "heading",
+          "text": "Cooking Changes & Additions"
+        },
+        {
+          "type": "heading",
+          "text": "Electrum & Warding"
+        },
+        {
+          "type": "bullet",
+          "text": "Netherite and Electrum count for piglin-safe armours (👥, CHECK WHO SUGGESTED THIS)"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum Equipment can no longer burn in lava or fire (since its technically netherite now)"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding now \"Stacks\" with others of its same \"type\" (that sounds confusing, let me explain)"
+        },
+        {
+          "type": "bullet",
+          "text": "If you hold a ✟ 1 item in your mainhand, and a ✟ 2 in your off-hand, it will apply a ✟ 3 level effect"
+        },
+        {
+          "type": "bullet",
+          "text": "This cannot exceed ✟ 3 without electrum armour, ✟ 4 is reserved for the electrum set bonus effect"
+        },
+        {
+          "type": "bullet",
+          "text": "✟ 4 has other benefits, it can slow husks and even pierce copper armour's warding resistance"
+        },
+        {
+          "type": "bullet",
+          "text": "Wearing ✟ 1 and holding ✟ 1 will not create a ✟ 2 effect, ✟ always prefers to check armour over held items."
+        },
+        {
+          "type": "bullet",
+          "text": "So If you hold a ✟ 3 and are wearing ✟ 2, it will have a ✟ 3 effect. If you are wearing ✟ 3 and holding ✟ 2, will will have a ✟ 3 effect"
+        },
+        {
+          "type": "bullet",
+          "text": "Some minor things have been changed, like the particle effect working on babies, unique particles for slowness v damage, and the way warding works, no longer constant, instead running on a timer"
+        },
+        {
+          "type": "bullet",
+          "text": "✟ 1 & 2 - effect/1s"
+        },
+        {
+          "type": "bullet",
+          "text": "✟ 3 & 4 - effect/0.5s"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding removed from Electrum Tools, the focus should be on their Fortune properties"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding Shield nerfed from ✟ 2 -> ✟ 1 since warding now stacks"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding will prioritise certain things in-order (💻, Linkershim)"
+        },
+        {
+          "type": "bullet",
+          "text": "Copper-wearing mobs will be targeted first, included armour stand, they act as a magic lightning rod, nullifing its effects"
+        },
+        {
+          "type": "bullet",
+          "text": "Secondarily, the Wither"
+        },
+        {
+          "type": "bullet",
+          "text": "Lastly, the closest undead mob"
+        },
+        {
+          "type": "heading",
+          "text": "Adamant & DOOM!"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant's intrinisc has been reworked into DOOM! (👥, CHECK WHO SUGGESTED THIS, AND EMAIL IF ITS OKAY TO CREDIT)"
+        },
+        {
+          "type": "bullet",
+          "text": "Doom is an intrinic of adamant armour, which clears weakness every three seconds from nearby mobs, when the effect is cleared, it deals armour-piercing damage"
+        },
+        {
+          "type": "bullet",
+          "text": "𐕣 3 -> 1.5 hearts ; 𐕣 16 (Full set + Bonus) -> 8 hearts"
+        },
+        {
+          "type": "bullet",
+          "text": "These numbers will likley be changed when I get some more feedback"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant's Weapon intrinic applies weakness to mobs"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant's Tool intrinsic auto-smelts mined blocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Yes, this means using tipped weakness arrows is a really useful thing now, but I'll add a better recipe for that later (A way to get lingering potions I think)"
+        },
+        {
+          "type": "bullet",
+          "text": "I think this fits Adamant's apocryphal title much more, and ties in with its hell-based theming"
+        },
+        {
+          "type": "heading",
+          "text": "Design Decisions/Ethos Moving Forward"
+        },
+        {
+          "type": "bullet",
+          "text": "Dolabras are shifting from being treated as an Axe (weapon), Axe (tool), and Pickaxe hyrbid to an Axe (tool) and Pickaxe hyrbid. So damage will go down for all of them, weapon-based enchants removed, and tool-based enchants improved"
+        },
+        {
+          "type": "bullet",
+          "text": "A tier's armour, tool, and weapon intriniscs should be more varried and distinct. This will be the ethos going forward. (Look at Adamant for the best example of this)"
+        },
+        {
+          "type": "heading",
+          "text": "Bugs"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Ophaned\" villagers can only be children (💻, HapppySpud)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fortune now works on: Tomatoes, Glow berry vines, Chorus Plant (I think some of this was vanilla-intended, but I added it in regardless)"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding's (✟ x) effects were inconsistent at various levels, this was fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Earrings no longer give knockback resistance"
+        },
+        {
+          "type": "bullet",
+          "text": "Elegy of the Abbe can no longer be crafted"
+        },
+        {
+          "type": "bullet",
+          "text": "Shakudo Elytra Bonus was not working (not sure how this was deleted)"
+        },
+        {
+          "type": "bullet",
+          "text": "Water bottles no longer dupe in creative"
+        },
+        {
+          "type": "bullet",
+          "text": "Oak and Dark Oak leaf LT updated to include electrum fortune"
+        },
+        {
+          "type": "bullet",
+          "text": "Lily pad item Texture fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding stone particles updated to match new warding ones"
+        },
+        {
+          "type": "bullet",
+          "text": "Spawners no logner kill you when you place a block on them, only when you try to use a spawn egg on it (💻, HapppySpud)"
+        },
+        {
+          "type": "bullet",
+          "text": "Copper torches now consistent with soul torches (💻, MrHatsy)"
+        },
+        {
+          "type": "bullet",
+          "text": "Allays did not spawn in The Abbey, they now spawn on generation instead"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Bonfire Lit\" Advancement works now"
+        },
+        {
+          "type": "bullet",
+          "text": "Post-dragon, abbey mobs would vanish, this is no longer true"
+        },
+        {
+          "type": "bullet",
+          "text": "Snowballs and Enderpearls sometimes didn't stack to 64 (💻, HapppySpud)"
+        },
+        {
+          "type": "bullet",
+          "text": "Massive lag spikes after ender dragon is killed, this bug was identified and...fixed? (💻, HapppySpud)"
+        },
+        {
+          "type": "bullet",
+          "text": "Happpy IDed the bug and I assume it is fixed, but we still need testing to make sure"
+        },
+        {
+          "type": "bullet",
+          "text": "Many bugs for Crystal hearts, Doom, etc, more and more (💻, Linkershim)"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed Beacon kindling from rooted dirt group (💻, fpekal)"
+        },
+        {
+          "type": "bullet",
+          "text": "fix another fishing typo that makes the advancement not unlockable (💻, Tralomine)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pride Banners and shields REfixed (💻, Fayranchia)"
+        },
+        {
+          "type": "heading",
+          "text": "Texture Changes"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed Redstone Particles"
+        },
+        {
+          "type": "bullet",
+          "text": "Poplar Leaves, Log & Plank textures added"
+        },
+        {
+          "type": "bullet",
+          "text": "All Vertical Slab textures added (👥, specifically barce & fwhip's video)"
+        },
+        {
+          "type": "bullet",
+          "text": "Chisleled Sandstone Texture (🖌️, MrHatsy)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nether Portal is now Purple (🖌️, LambS0up) (👥, Cosmoxnautica)"
+        },
+        {
+          "type": "bullet",
+          "text": "Skeletons (for Lore)"
+        },
+        {
+          "type": "heading",
+          "text": "Removed"
+        },
+        {
+          "type": "bullet",
+          "text": "Estus Flask, I want food to be most important, encourage players to actually make farms and ranches"
+        },
+        {
+          "type": "heading",
+          "text": "Technical Changes"
+        },
+        {
+          "type": "bullet",
+          "text": "Moved all assets and data into \"matcha\" namespace. Main no longer exists (Technically it does for enchantment updates but it will be removed entirely soon)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Many suggestions I have taken note of but have not added yet, EX. craftable fortune III, but this is being pushed back to the next update (scope creep is real)"
+        },
+        {
+          "type": "paragraph",
+          "text": "There are also plenty of changes I forgot here. Beucase this move from main was so chaotic, a lot got lost in the crossfire. If a bug was fixed from the previous alpha, or fixed from the internal moving of things around, it was really hard to tell when all was said and done. Hopefully this won't happen again."
+        }
+      ]
+    },
+    {
+      "version": "1.12.1-alpha",
+      "name": "Experimental: Death System",
+      "published": "September 1, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "alpha",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "What is an experimental Update?"
+        },
+        {
+          "type": "bullet",
+          "text": "Instead of releasing updates and scrambling to hotfix them, Im going to do pre-releases, for people who don't mind encountering bugs, and want to help polish things up"
+        },
+        {
+          "type": "bullet",
+          "text": "This is similar to that, but theres one major thing I want to \"experiment\" on--the death system. This feature, depending on feedback, may not end up in the final 1.13 update"
+        },
+        {
+          "type": "bullet",
+          "text": "Ignore \"With Songs\"! I forgot to delete that"
+        },
+        {
+          "type": "heading",
+          "text": "I NEED FEEDBACK ON"
+        },
+        {
+          "type": "bullet",
+          "text": "I've heard the spawn mechanics (Safe surface / Only Undead Surface) were causing significant performance issues for some people. I've tried to modify this system to make sure that mobs are not only despawned but ENSURE they die. Please let me know if this has helped!"
+        },
+        {
+          "type": "bullet",
+          "text": "The New Death System ESPECIALLY if you LIKE IT. People are more likley to submit feedback reports if they DON'T like something, so to help with sampling bias, if you do enjoy it, please let me know"
+        },
+        {
+          "type": "heading",
+          "text": "Special Thanks & Credits"
+        },
+        {
+          "type": "bullet",
+          "text": "Hashiru: Optimisations"
+        },
+        {
+          "type": "bullet",
+          "text": "NamlessJU: Various coding things, translations"
+        },
+        {
+          "type": "bullet",
+          "text": "Nat: Translation project lead, and other stuff"
+        },
+        {
+          "type": "bullet",
+          "text": "Imtlx: New Angler's Almanac, Fishing Sounds, Translation, and Github help"
+        },
+        {
+          "type": "bullet",
+          "text": "Vee Vaicekauskas: Background musics (Check out their bandcamp!: https://par4.bandcamp.com/)"
+        },
+        {
+          "type": "bullet",
+          "text": "DeBlezyBestie: Music Discs (Check out their YT!: https://www.youtube.com/@deblezyboi)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bingbongbooper: Food Ideas (Their YT!: https://www.youtube.com/@bingbongbooper)"
+        },
+        {
+          "type": "bullet",
+          "text": "HapppySpud: Nether World Gen Gravel Remover, Post-Smithing Enchants, Random Asylum Seekers"
+        },
+        {
+          "type": "bullet",
+          "text": "All of the translation volunteers"
+        },
+        {
+          "type": "bullet",
+          "text": "Thank you so much everyone!"
+        },
+        {
+          "type": "paragraph",
+          "text": "This symbol (👥) means the feature was changed/added per community feedback, or brought to attention by community bug reporters."
+        },
+        {
+          "type": "heading",
+          "text": "Major Additions and Changes"
+        },
+        {
+          "type": "bullet",
+          "text": "IF YOU LIVE IN AN ABBEY AND HAVE WARDING STONES IN IT, REMOVE THEM BEFORE UPDATING"
+        },
+        {
+          "type": "bullet",
+          "text": "SMITHING NO LONGER REQUIRES BASE-METALS (See Tool & Enchantment Tweaks)"
+        },
+        {
+          "type": "bullet",
+          "text": "Smithing Enchanted Equipment no longer removes currently existing enchants (Made by HapppySpud!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Hearts, Death, Currency and Advancements have been reworked"
+        },
+        {
+          "type": "bullet",
+          "text": "Hearts can now go below 10, and the amount is determined by the progress you've made (Easy mode is exempt from this)"
+        },
+        {
+          "type": "bullet",
+          "text": "Advancements now reward players with Hearts, Obol, or difficulty"
+        },
+        {
+          "type": "bullet",
+          "text": "So it may not be a good idea, as soon as you spawn in, to grab every diamond, iron, and silver you see, you may end up in a difficult you aren't ready for"
+        },
+        {
+          "type": "bullet",
+          "text": "Killing the dragon no longer changes the difficulty in normal, instaed it is determined by how much progress you have made"
+        },
+        {
+          "type": "bullet",
+          "text": "Advancemnts that give you rewards will be revoked from you on-update. (Except for fishing and Steal all prayers, becuase those are hard to get) That way, you can get the rewards"
+        },
+        {
+          "type": "bullet",
+          "text": "Obols no longer drop from undead mobs"
+        },
+        {
+          "type": "bullet",
+          "text": "The Weaponsmith (Grindstone) Villager now buys non-renewable resources (LMK if there are more, not copper or iron)"
+        },
+        {
+          "type": "bullet",
+          "text": "Major Lang Support has come to the pack, but due to datapack limitations, this means the new items will not stack with the old ones (Things like Bread, Empanadas, etc)"
+        },
+        {
+          "type": "bullet",
+          "text": "The only work around I could do for this, is scanning the player inventory/using advancemnts to remove old items and add new ones."
+        },
+        {
+          "type": "bullet",
+          "text": "I do not think a feature like this would be worth the time (so much time), or computational expense...MAYBE"
+        },
+        {
+          "type": "bullet",
+          "text": "There have been complaints about mod compatibility. Something like this may be the only solution, I want to look into this to see if It would be worth doing."
+        },
+        {
+          "type": "bullet",
+          "text": "Please Mojang let Loot tables be usable in recipe and villager trade outputs (I beg you)"
+        },
+        {
+          "type": "bullet",
+          "text": "Cooking Additions and Changes (See Below)"
+        },
+        {
+          "type": "bullet",
+          "text": "Tool & Enchantment Tweaks (See Below)"
+        },
+        {
+          "type": "bullet",
+          "text": "Ore & World Generation (See Below)"
+        },
+        {
+          "type": "bullet",
+          "text": "Three new music discs by DeBlezyBestie"
+        },
+        {
+          "type": "bullet",
+          "text": "Angler's Almanac (Made by Imtlx!)"
+        },
+        {
+          "type": "bullet",
+          "text": "A new background track, \"Abbey\" by Vee Vaicekauskas"
+        },
+        {
+          "type": "bullet",
+          "text": "Optimisations to Sleeping, Armour, Heart Containers, Item Particles, Mob Spawning and some other stuff I think (See Below, made by Hashiru!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husks Tweaked"
+        },
+        {
+          "type": "bullet",
+          "text": "I've attempted to make the husks more visually distinct from zombies (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk Jockeys (Husks on Camel Husks) have been removed, but camel husks still spawn at night as normal (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk Speed increased a little bit"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk spawn rates buffed, but max group count lowered (husks were too rare for my tastes, they should be a new interesting combat addition to caving, not something rare you see every now and then)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk Health decreased 25% in normal (40 -> 30)"
+        },
+        {
+          "type": "bullet",
+          "text": "Blessing: Prayer of Midas (Craftable Looting) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Bonfire Lit\" Advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "Github exists now (check modrinth desc)"
+        },
+        {
+          "type": "bullet",
+          "text": "Mod compatibility"
+        },
+        {
+          "type": "bullet",
+          "text": "I'm testing a system that makes mod-given apples and sweet berries into matcha flavoured ones. I am concerned about performance issues with this."
+        },
+        {
+          "type": "bullet",
+          "text": "I may wait to implement something like this until we get the slot source thing. Beucase that may make it much cheaper to detect and replace these sorts of things."
+        },
+        {
+          "type": "bullet",
+          "text": "Also, non-matcha divine fragments get removed as well"
+        },
+        {
+          "type": "bullet",
+          "text": "All assets and items are being MOVED (namespaces) from main/minecraft to matcha"
+        },
+        {
+          "type": "bullet",
+          "text": "This will break some items. I've only moved a few so far, im waiting for slot source to move all of them. But the Golden music disc, all the books, will apear broken, pop it in your inventory and it will update."
+        },
+        {
+          "type": "bullet",
+          "text": "Fishing updated to be ever-green (aka, post-1.13 fish will be able to stack with 1.13 fish...hopefully) But this means old fish won't be able to be traded with new fisherman trades"
+        },
+        {
+          "type": "heading",
+          "text": "Tweaks & Small Additions"
+        },
+        {
+          "type": "bullet",
+          "text": "Cobblestone recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Cobbled Deepslate recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Arrow Recipe (4 -> 8)"
+        },
+        {
+          "type": "bullet",
+          "text": "Added #main:lifestealexceptions (For Sanguine Sword, AKA no more healing from boats, minecarts, etc.) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Sponges added to Kilning, Smelting (speed 50) since Sponges cannot be dried in the nether"
+        },
+        {
+          "type": "bullet",
+          "text": "Dandelions can now be cloned (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Crying Obsidian Recipe buffed (1 -> 2)"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant Claymore Attack Speed buffed (0.5 -> 1.0)"
+        },
+        {
+          "type": "bullet",
+          "text": "Cats now spawn in Jungles and Sparse Jungles (👥) (I forgot that ocelots can't be made into cats anymore! I'm sorry. Ill add a villager trade for pets in the future)"
+        },
+        {
+          "type": "bullet",
+          "text": "Cat Morning Gift LT added, if you have ideas for better loot they could give that would make sense, lmk"
+        },
+        {
+          "type": "bullet",
+          "text": "Hardcore Hearts added"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding enchants are now exclusive with each other (AKA You cannot have Warding 1 and Warding 2 on the same sword)"
+        },
+        {
+          "type": "bullet",
+          "text": "Divine Fragments can be bought from the Mouthpiece with a Crystal Heart and Echo Shard (Can't be done by crafting since they're poison potatoes) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed \"Bloodrage\" message from Enchant"
+        },
+        {
+          "type": "bullet",
+          "text": "Trailblaze now compatible with Mud Bricks Slabs, Stairs, and Dirt Slabs"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Trailblaze speed (0.0105 / lvl -> 0.0155 / lvl)"
+        },
+        {
+          "type": "bullet",
+          "text": "Concrete Mass crafting recipe unlocks now require a concrete powder instead of a water bottle"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk mandatory reinforcement rate removed (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Drowned now require y-level 43 to spawn instead of sea level, for safe surface (post-ender dragon spawn mechanics) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Petrified Oak Slabs (Dirt Slabs) are now shovel mineable (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Glass can now be stonecut (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Poplar Added to Stonecutting"
+        },
+        {
+          "type": "bullet",
+          "text": "Poplar Sapling recipe added"
+        },
+        {
+          "type": "bullet",
+          "text": "Estus Ash added to Junk pool (For peaceful players) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Tweaked treasure pool for fishing"
+        },
+        {
+          "type": "bullet",
+          "text": "Nautilus Shells added to buried Treasure LT (fishing and Normal)"
+        },
+        {
+          "type": "bullet",
+          "text": "Christian Fan fiction rates for fishing buried treasure nerfed (since hearts can be fished directly)"
+        },
+        {
+          "type": "bullet",
+          "text": "Wheat drops Straw instead of Tall dry grass (So Villagers can pick it up) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fishing different items gives different sounds! (Made by Imtlx!)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Volume for these sounds is controled by Record/Music Disc Slider"
+        },
+        {
+          "type": "bullet",
+          "text": "Apple drop rate is now higher than vanilla (base 0.5% -> 0.75% ; max fortune 2.5% -> 4%) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "I still want apples to be a little bit hard to come by, but let me know what you think"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed Black dye recipe and Buffed its output for ink sacs and wither rose (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Wearing Unenchanted Elytra will replace them with Matcha Elytra (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "This WILL NOT happen if the elytra is smithed or enchanted"
+        },
+        {
+          "type": "bullet",
+          "text": "Snowy Foxes now drop their own snowy pelt instead of the red one"
+        },
+        {
+          "type": "bullet",
+          "text": "Melons can now be uncrafted (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Baby Zombies, Husks, Drowned are now weak (2 hearts) in Easy (Oversight by me, Sorry)"
+        },
+        {
+          "type": "bullet",
+          "text": "Trapped Chests are now crafted with Electric Wire instead of tripwire hooks (to make them cheaper if you just want the dark look, like me!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Ladder recipe buffed (3 -> 8)"
+        },
+        {
+          "type": "bullet",
+          "text": "Chiseled Bookshelves can now be made by stonecutting"
+        },
+        {
+          "type": "bullet",
+          "text": "Leather has different Safe Fall Distance Icon (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bonus Chest Added (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Cinnabar added to Mason Trading (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Crying Obsidian is now a valid portal block (Will only work post-autumn drop)"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding stones can no longer be placed in Abbeys"
+        },
+        {
+          "type": "bullet",
+          "text": "Craftable Bad Omen"
+        },
+        {
+          "type": "bullet",
+          "text": "Asylum Seeker Applications are now random (Made by HapppySpud!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Abbey Tower now guarantees Quran or Tanakh"
+        },
+        {
+          "type": "heading",
+          "text": "Cooking Changes & Additions"
+        },
+        {
+          "type": "bullet",
+          "text": "Most foods will not stack with previously made/found foods (Datapack limitation)"
+        },
+        {
+          "type": "bullet",
+          "text": "Lang support added for all foods AND their effect tooltips (LT, Recipes, Trades)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pumpkin Curry & it's stock (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Oil (Sunflower or Cocoa-Bean-derived)"
+        },
+        {
+          "type": "bullet",
+          "text": "Seitan (Since I can't add soybeans)"
+        },
+        {
+          "type": "bullet",
+          "text": "Dino Nuggets (Ptero, Stego, Brachio, Tricero) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nopales"
+        },
+        {
+          "type": "bullet",
+          "text": "Bubbling Mead (👥) (Throwable Speed pot)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fish and Chips (👥, Bingbongbooper)"
+        },
+        {
+          "type": "bullet",
+          "text": "Ice Cream (👥, Bingbongbooper)"
+        },
+        {
+          "type": "bullet",
+          "text": "Lumpia (👥, Bingbongbooper)"
+        },
+        {
+          "type": "bullet",
+          "text": "Apple Cinnamon Oatmeal (👥, Bingbongbooper)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bunuelos"
+        },
+        {
+          "type": "bullet",
+          "text": "Luck works, I've added the quality field to all chest loottables and even some other things. So Yes, luck will actually affect your gameplay"
+        },
+        {
+          "type": "bullet",
+          "text": "All Curries (and Ramen) now have vegetarian options (seitan!)"
+        },
+        {
+          "type": "bullet",
+          "text": "All Curries (and Ramen) recipes updated to include Oil"
+        },
+        {
+          "type": "bullet",
+          "text": "Gimmari, Pupusa now updated to include Oil"
+        },
+        {
+          "type": "bullet",
+          "text": "Gimmari Buffed (8:00 -> 10:00 gills ; ❤❤❤ -> ❤❤❤❤❤)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pad Thai Buffed (5:00 -> 10:00) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Baked Pumpkin Buffed (10s -> 30s)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Latke (❤❤❤❤❤❤❤❤ -> ❤❤❤❤❤❤)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pickled Warped Fungus changed to be throwable (More splash potions coming in the future)"
+        },
+        {
+          "type": "bullet",
+          "text": "Throwable Icon now appears on all throwable foods"
+        },
+        {
+          "type": "bullet",
+          "text": "All throwable foods now have proper colours and particle effects (they look pretty cool!)"
+        },
+        {
+          "type": "heading",
+          "text": "Tool & Enchantment Tweaks"
+        },
+        {
+          "type": "bullet",
+          "text": "SMITHING NO LONGER REQUIRES BASE-METALS"
+        },
+        {
+          "type": "bullet",
+          "text": "In previous versions, to make a shakudo hoe, you needed: Copper Ingot + Copper Hoe + Shakudo Alloy"
+        },
+        {
+          "type": "bullet",
+          "text": "From this version on, you would instead do: BLANK + Copper Hoe + Shakudo Alloy"
+        },
+        {
+          "type": "bullet",
+          "text": "(I didn't realise the \"template\" field could be empty)"
+        },
+        {
+          "type": "bullet",
+          "text": "Admant has been reworked"
+        },
+        {
+          "type": "bullet",
+          "text": "Instead of each piece giving soul hearts, instead it gives health boost hearts"
+        },
+        {
+          "type": "bullet",
+          "text": "The Set bonus still gives soul hearts, but only 2"
+        },
+        {
+          "type": "bullet",
+          "text": "This was to make adamant less OP (in bad way) but still OP (in a good way)"
+        },
+        {
+          "type": "bullet",
+          "text": "The hope is that, while the soul heart buffer is great for minimising small amounts of damage, it won't be so much that the player never needs to bother with eating"
+        },
+        {
+          "type": "bullet",
+          "text": "Through play-testing we (you and I) will determine if the soul heart refresh rate needs to be further nerfed"
+        },
+        {
+          "type": "bullet",
+          "text": "The Divinity enchantment has been removed from all tools and weapons, instead replaced with sharpness or efficiency"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum was slightly nerfed (SB: ❤❤❤❤ -> ❤❤)"
+        },
+        {
+          "type": "bullet",
+          "text": "The following tweaks will only apply to NEWLY crafted tools (datapack limitation)"
+        },
+        {
+          "type": "bullet",
+          "text": "Only Diamond, Electrum, and Adamant can now mine obsidian"
+        },
+        {
+          "type": "bullet",
+          "text": "Obsidian mining speed for Diamond+ tool tiers is SIGNIFICANTLY faster (9 -> 35 ; 12 -> 55 ; 12 -> 55)"
+        },
+        {
+          "type": "bullet",
+          "text": "Hepatizon Mining Speed Buffed (To make it worth using after obtaining Adamant)"
+        },
+        {
+          "type": "bullet",
+          "text": "Axe, Shovel, Pickaxe (~13 -> 20) (Pickaxe can insta-mine stone at eff V without Haste)"
+        },
+        {
+          "type": "bullet",
+          "text": "Mattock, Dolabra (~12? -> 15)"
+        },
+        {
+          "type": "bullet",
+          "text": "Repairing Equipment in the crafting menu is now disabled (can't modify this with datapacks, can't use custom items in crafting either, so its best this way)"
+        },
+        {
+          "type": "bullet",
+          "text": "Electurm, Shakudo, Adamant Intrinsics are now exlusive with each other (AKA you cannot give an electurm sword the Life steal intrinsic of a Shakudo Sword)"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver Sword, Warding Sword, Warding Shield, can now only be repaired with Nazars or Lapis"
+        },
+        {
+          "type": "bullet",
+          "text": "Fortune III can now only be obtained from Electrum"
+        },
+        {
+          "type": "bullet",
+          "text": "Fortune cannot be combined in an anvil to get a higher level, it caps at 1"
+        },
+        {
+          "type": "bullet",
+          "text": "Nor can you find naturally-occurring Fortune III books from chest"
+        },
+        {
+          "type": "bullet",
+          "text": "So the ONLY WAY to obtain Fortune III, is from electrum"
+        },
+        {
+          "type": "bullet",
+          "text": "Butcher's Knife removed from smithing"
+        },
+        {
+          "type": "bullet",
+          "text": "Steel Claymore added (Lmk what you think, I'll add more claymores if people like them)"
+        },
+        {
+          "type": "bullet",
+          "text": "Shakudo Armour nerfed (3 -> 1)"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant Armour durability nerfed (1500 -> 1000)"
+        },
+        {
+          "type": "bullet",
+          "text": "ALL Alloyed equipment has a \"Repaired With:\" Tooltip, which shows what items can be used to repair it"
+        },
+        {
+          "type": "bullet",
+          "text": "Repairing materials made consistent across all alloys, and tweaked (Mostly more expensive)"
+        },
+        {
+          "type": "bullet",
+          "text": "WHY??: Electrum is hard to get, but you use more abundant materials to repair it. I chose to make Electrum/Adamant only repairable with diamond blocks. The hope being, that players will not choose to ALWAYS wear these, and opt for things like Hepatizon or Shakudo. Maybe only wearing Electrum/Adamant when caving or taking-on dungeons. This was the original intent of having Shakudo and Hepatizon in the first place--horizontal progression--VIABLE and interesting choices for the player, even in late-game. Its yet to be seen if these tweaks are succesful to that end."
+        },
+        {
+          "type": "bullet",
+          "text": "I am aware of the enchantment override when smithing, ITS FIXED!(?)"
+        },
+        {
+          "type": "bullet",
+          "text": "I have NO IDEA how HapppySpud did this, I need to look through the code, but I tested it, it works, so..."
+        },
+        {
+          "type": "bullet",
+          "text": "Thank you, HapppySpud, for your work, and may you be blessed by Daedalus himself"
+        },
+        {
+          "type": "heading",
+          "text": "Ore and World Generation"
+        },
+        {
+          "type": "bullet",
+          "text": "These changes can only be seen in newly-generated chunks"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver spawns less on the surface now--WAIT WAIT, Hold on, keep listening (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver can be found in every biome, rarley"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver can be found doubly (triply??) often in Mountain Biomes, the deeper you are the more likley you'll find these desposits."
+        },
+        {
+          "type": "bullet",
+          "text": "High-elevation silver is still there! Just less common than it once was."
+        },
+        {
+          "type": "bullet",
+          "text": "Coal spawns in very large amounts at deepslate level beneath deserts"
+        },
+        {
+          "type": "bullet",
+          "text": "Quartz now spawns at much higher elevations, and in larger amounts (Good source of glass) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Beaches now spawn blue orchids and cornflowers (because I think the blue flowers look nice on the sand)"
+        },
+        {
+          "type": "bullet",
+          "text": "Hellspore (Nether wart) now spawns in Soul Sand Valleys and Wastes (Made by HapppySpud!) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "HapppySpud found a way to use trees to make nether wart patches with soul sand beneath! I wasn't able to figure that out."
+        },
+        {
+          "type": "bullet",
+          "text": "I want to learn more about features in the future so I can make the patches that perfectly fit for me, but this is an amazing feature they made so its staying in"
+        },
+        {
+          "type": "bullet",
+          "text": "Gravel removed from Hell (Made by HapppySpud!)"
+        },
+        {
+          "type": "heading",
+          "text": "Bugs"
+        },
+        {
+          "type": "heading",
+          "text": "Multiplayer Bugs"
+        },
+        {
+          "type": "bullet",
+          "text": "Clay Fetish now works for all players"
+        },
+        {
+          "type": "bullet",
+          "text": "Bloodrage no longer applies to all players"
+        },
+        {
+          "type": "bullet",
+          "text": "Anemos now only applies to weilder"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant and Electrum enchantments do not apply to all players (im pretty sure, lmk)"
+        },
+        {
+          "type": "heading",
+          "text": "General"
+        },
+        {
+          "type": "bullet",
+          "text": "Pride Flags now render on shields (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Canto I Title and Desc now proper (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Zombie Nautilus removed from Warding Stone and Warding Targets (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Raw Estus can no longer be used in brewing stands (👥) (#minecraft:item/brewingfuel)"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed Morsel Stew, Green Curry, Paneer Makhani (outdated recipes, not the real ones) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Dripleaf cloning now gives glass bottle back"
+        },
+        {
+          "type": "bullet",
+          "text": "Bastion Stable Golden Apple is now a \"real\" one (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Smithing Steel Shears now grants \"Sturdy Steel\" Advancement (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "\"You're Rich!\" advancement desc and title swapped back (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Crafting mud now gives the glass bottle back (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Iron Sword Attack speed is now the same as the tooltip claims (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Tinder Lang Added (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Gapple absorbtion now matches tooltip (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Cactus can now be cooked (I'm sorry, I forgot I removed this vanilla feature) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fishing now gives 85/5 fish to junk in designated biomes (My patch made it worse and would give junk 50% of the time, sorry)"
+        },
+        {
+          "type": "bullet",
+          "text": "Non-designated biomes are things like the end, mooshroom islands, Lush caves, ect. These wil have fish added to them later"
+        },
+        {
+          "type": "bullet",
+          "text": "Sugar from Honey now gives the same as vanilla (2 -> 3)"
+        },
+        {
+          "type": "bullet",
+          "text": "Flow Armour Trim fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Camel Husks now drop Leather"
+        },
+        {
+          "type": "bullet",
+          "text": "Cracked Stone Brick variants can now be blasted"
+        },
+        {
+          "type": "bullet",
+          "text": "Enchanted Golden Apples now have the correct path in Ruined Portals (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Zephyr whilst under slow falling effect no longer spams sound (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Zephyr Wind burst is now quieter"
+        },
+        {
+          "type": "bullet",
+          "text": "Soul Kindling LT added (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Sweet Berry Danish Recipe and Trade are now the same (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Stable Voids now stack to 64 from Trial Chamber Chests"
+        },
+        {
+          "type": "bullet",
+          "text": "Magma Cubes now drop Phosphor lamps upon being killed by frogs (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pink concrete can now be mass-crafted (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Witch LT fixed; sulfur chunks and benzene removed (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Performance issues regarding skeletons having both punch 1 and punch 2 have been fixed (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "I heard this was a problem for some people. All potential punch is removed from the bow before adding it back on."
+        },
+        {
+          "type": "bullet",
+          "text": "Gold Ingots can now be blasted from Nether Gold Ore (Gilded Hellstone) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Log and Plank-derived sticks now in same crafting group (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "All Hoes and Shears can now mine Glow Lichen (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Leather Armour now actually gives armour"
+        },
+        {
+          "type": "bullet",
+          "text": "Ancient Debris can no longer be cooked in an oven (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Summoning Items (Asylum Applications, Warding Stones, baby animals etc) can no longer be used on spawners (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Wooden Pickaxe item name component removed (I have no idea why I did this) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Creaking drops a bunch of resin if you kill him so you won't have to farm it as much"
+        },
+        {
+          "type": "bullet",
+          "text": "Copper can no longer be smelted in the oven (Not hot enough)"
+        },
+        {
+          "type": "bullet",
+          "text": "Blocked Stone cooking (only kilning)"
+        },
+        {
+          "type": "bullet",
+          "text": "Blocked Terracotta, Quartz, idk a bunch of stuff from Cooking (moved over to Blasting or Kilning)"
+        },
+        {
+          "type": "bullet",
+          "text": "Old Growth Spruce Taiga added to Fishing Pool (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Ender Chest recipe changed to make things easier and more consistent in the future"
+        },
+        {
+          "type": "bullet",
+          "text": "Blessing recipe unlocks didn't work? Maybe I just broke something during development but I caught this in my play-through"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant Sword and Dolabra Atck Cooldown/Damage now matches tool tip"
+        },
+        {
+          "type": "heading",
+          "text": "Recipe Unlocks Fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Red and Brown Mushroom from their corresponding blocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Dirt Slab and Dirt from its slab"
+        },
+        {
+          "type": "bullet",
+          "text": "Amethyst Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Quartz Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Cobblestone Blasting, Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Stone Blasting, Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Sand Blasting, Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Basalt Kilining"
+        },
+        {
+          "type": "bullet",
+          "text": "Sandstone Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Red Sandstone Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Crying Obsidian"
+        },
+        {
+          "type": "bullet",
+          "text": "Clay from Mud and Water Bottle"
+        },
+        {
+          "type": "bullet",
+          "text": "Terracotta Kilning"
+        },
+        {
+          "type": "bullet",
+          "text": "Resin Bricks"
+        },
+        {
+          "type": "bullet",
+          "text": "Curries from Curry Stocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Ice Uncrafting & Crafting"
+        },
+        {
+          "type": "bullet",
+          "text": "Packed Ice Uncrafting"
+        },
+        {
+          "type": "bullet",
+          "text": "Blue Ice Uncrafting"
+        },
+        {
+          "type": "bullet",
+          "text": "Dirt, Dead Bush, Dry Short, Dry Tall Grass cooking"
+        },
+        {
+          "type": "bullet",
+          "text": "Stone and Cobble from Mossy"
+        },
+        {
+          "type": "bullet",
+          "text": "Deepslate stuff"
+        },
+        {
+          "type": "bullet",
+          "text": "Stone brick stuff"
+        },
+        {
+          "type": "bullet",
+          "text": "Hellbricks"
+        },
+        {
+          "type": "bullet",
+          "text": "ALL Kilning, Blasting, Cooking (Hopefully) and blocked everything that didn't belong AND added some stuff for consistency (Ex. Cracked Deepslate Bricks blastable into Cobbled Deepslate)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bamboo Variants and fixed up some recipes (Mosaic mostly)"
+        },
+        {
+          "type": "bullet",
+          "text": "Banners"
+        },
+        {
+          "type": "bullet",
+          "text": "Amethyst Block uncrafting"
+        },
+        {
+          "type": "bullet",
+          "text": "TNT"
+        },
+        {
+          "type": "heading",
+          "text": "Texture Changes"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed Charcoal from normal Campfire Texture (I'll fix the soul sand one later)"
+        },
+        {
+          "type": "bullet",
+          "text": "Lapis Lazuli, Lapis Block, and Nazar Changed (LMK on the Lapis Block, im iffy about that one)"
+        },
+        {
+          "type": "bullet",
+          "text": "Originally made by (Zergologist)! I edited their textures to my taste, but they made an awesome lapis lazuli and I wanted to put it in."
+        },
+        {
+          "type": "bullet",
+          "text": "You'll find their original lapis block texture in there \"lapisblockORG\" try it out and tell me what you think. I found it had a bit too much contrast for me? But I dont think mine is much better. I'm not great with block textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed Smithing Table UI AGAIN, to make it more clear...hopefully"
+        },
+        {
+          "type": "bullet",
+          "text": "Deepslate Coal Ore now has normal deepslate coal ore on top and bottom"
+        },
+        {
+          "type": "bullet",
+          "text": "Flower pot cross errors fixed (rescale)  (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Purple Grass colours removed (Made by Movpasd!) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "I did this on purpose, using purple in unused biome colours, so I could tell if any biomes weren't done. But some mods, like terralith, use those unused colours."
+        },
+        {
+          "type": "bullet",
+          "text": "Movpasd made a gradated version of my biome colour map, which is now in the pack proper"
+        },
+        {
+          "type": "bullet",
+          "text": "All Jewellery updated to a higher resolution, not far enough to be un-vanilla, but they look much better!"
+        },
+        {
+          "type": "bullet",
+          "text": "The amber earring and opal earring textures were orginally made by (INSERT NAME HERE). I edited them to my taste, and after learning the resolution could be higher, updated the jewellery that they didn't do."
+        },
+        {
+          "type": "bullet",
+          "text": "Axiom, and Easy Shulkers UI now have textures in the pack! (Made by: roliuu!!)"
+        },
+        {
+          "type": "bullet",
+          "text": "I will add my version of JBT's Hammer when I get the chance! Roliuu showed me, through their work, how to modify mod textures and now im excited to do it"
+        },
+        {
+          "type": "bullet",
+          "text": "Ender chest texture changed to match its item (I'll make a better texture in the future!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husks are now white, to make them distinct from zombies (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Coal texture changed to look more laminated (I'll polish up and see what I can do with it, but the banded design is staying)"
+        },
+        {
+          "type": "bullet",
+          "text": "Copper Eye now closes when shot"
+        },
+        {
+          "type": "heading",
+          "text": "Removed"
+        },
+        {
+          "type": "bullet",
+          "text": "Weakness Splash, Invisibility, and Poison Splash poition from Cleric"
+        },
+        {
+          "type": "bullet",
+          "text": "ALL potions will eventually be removed from the cleric trade and he will serve a different function. The Potions were/are place holders before a corresponding food is added"
+        },
+        {
+          "type": "heading",
+          "text": "Denied/Put on Back-burner Requests"
+        },
+        {
+          "type": "bullet",
+          "text": "Invisible Armour Stands"
+        },
+        {
+          "type": "bullet",
+          "text": "I really liked this idea, but in survival theres no way to \"kill\" and invisible armour stand, you have to be in creative. So I don't think it would work out. I could add work-arounds for this, but i think its best to just get an armour poser mod since they're light-weight and corruption adverse."
+        },
+        {
+          "type": "bullet",
+          "text": "Trim material Updates"
+        },
+        {
+          "type": "bullet",
+          "text": "Trim materials require each item to have a providestrimmaterial component. For a feature thats not widley used, I can't justify spending my time reworking every loot table and crafting recipe for this. But I do want to get to it in the future. But maybe instead by adding a new \"Trim\" Item, crafted from the ingots or something that lets players do this. Or replace metal trims entirley with just dye colours instead. Who knows. All I know is for now is, Its better I spend my time working on other things"
+        },
+        {
+          "type": "bullet",
+          "text": "Crystal Hearts should only be used when I want them to be"
+        },
+        {
+          "type": "bullet",
+          "text": "Crystal hearts are used as soon as the player gets it so that they feel the pressure to make it out of whatever dungeon/cave alive. It increases the stakes, and I think that makes caving/adventuring more interesting."
+        },
+        {
+          "type": "bullet",
+          "text": "Enchantments/Recipes/etc should be explained more"
+        },
+        {
+          "type": "bullet",
+          "text": "I think certain things should be as clear as possible. Smithing for example should be."
+        },
+        {
+          "type": "bullet",
+          "text": "I don't think enchantments should be explained much at all. I want players to be curious and explore what an enchant does. I want players to ask their friends \"What the cross symbol mean?\" I think that stuff is fun."
+        },
+        {
+          "type": "bullet",
+          "text": "I want all enchants to be iconographic in the future. This will make things less clear (maybe) but will also make them universal and essoteric. Im flip-flopping if this should be ONLY intrinic enchantments right now, or even stuff like Silk Touch. For now, im sticking with intrinsic enchants ONLY should be iconographic."
+        },
+        {
+          "type": "bullet",
+          "text": "If you have ideas for the Safe Fall Distance +1 enchant let me know. Right now its a shield and a down arrow but I need to think of something better, beucase it looks like defense is going down."
+        },
+        {
+          "type": "bullet",
+          "text": "Change the coal ore! It so ugly pls 😭"
+        },
+        {
+          "type": "bullet",
+          "text": "I like the coal :c"
+        },
+        {
+          "type": "bullet",
+          "text": "Coal forms in bands in real life, which is why it looks that way. And I think it really sells the deposit as just a slab in the middle of the rock like that. In the future I could add more coal variants so it changes the size of the deposit, but i like the bands, I want to keep them that way. I kept the coal ore normal on top so players could see it. I tried with nothing on top and it made it too hard to see. I could also change the coal to be a solid block (Like a coal block but slighly different texture) And I may go futher and change generation to make them a solid, linear disc, but I dont think its too important rn"
+        },
+        {
+          "type": "heading",
+          "text": "Technical Changes"
+        },
+        {
+          "type": "bullet",
+          "text": "All recipes moved into main:recipes/\\, all recipe unlocks updated accordingly (I have to move them again to matcha:\\ 😔)"
+        },
+        {
+          "type": "bullet",
+          "text": "Gamerules are now set on first load, so they can be changed, EX. Keep inventory is only set to true on the first load, or when a new player joins for the first time"
+        },
+        {
+          "type": "bullet",
+          "text": "Ive learned a lot about programming etiquette over the past few months. First of all, Thank you for putting up with my unreadable nonsense. Moving forward I am going to try and abide by programtic conventions and datapack manners. While not everything has been changed yet, I'm working on doing a couple thing"
+        },
+        {
+          "type": "heading",
+          "text": "Pre Releases"
+        },
+        {
+          "type": "bullet",
+          "text": "I think this will be better for UX, feedback, and an opportunity to patch major bugs before suggesting everyone update"
+        },
+        {
+          "type": "heading",
+          "text": "Version Numbers"
+        },
+        {
+          "type": "bullet",
+          "text": "I will try and follow the convention of x.y.z"
+        },
+        {
+          "type": "bullet",
+          "text": "x Major"
+        },
+        {
+          "type": "bullet",
+          "text": "y Minor"
+        },
+        {
+          "type": "bullet",
+          "text": "z Patch"
+        },
+        {
+          "type": "bullet",
+          "text": "With one caveat. I think I am going to be much more liberal about when I choose to ordaine an update as \"Major\" or \"Minor\" as compared to most computer science people. If I clean up a lot of code, do major optimisations for example, I see that as minimally affecting the user experience, thus, it would be a \"Patch\" update. But If introduce something that dramatically changes the player experience and progression, I want to call that a \"Major\" update. This may not be how most people would do things. But I want to try to communicate to the audience, through version numbers, how much they should pay attention to something."
+        },
+        {
+          "type": "heading",
+          "text": "Minecraft vs Namespace"
+        },
+        {
+          "type": "bullet",
+          "text": "At the begining minecraft vs namespace was entirley random. Some things I would put in minecraft just beucase I didn't think about it, or know where it should go. Kanoarob helped me understand the difference between these two things, and gave me insight into the proper datapack etiquette."
+        },
+        {
+          "type": "bullet",
+          "text": "Moving forward my namespace (called matcha) will contain only new additions, and Minecraft will contain only overrides"
+        },
+        {
+          "type": "bullet",
+          "text": "I'm working on moving everything to the Matcha namespace"
+        },
+        {
+          "type": "bullet",
+          "text": "Not everything has been moved over yet! (Esp. textures) I'm sure there are things I forgot or still misunderstand, I'm still learning. But I will do my best"
+        },
+        {
+          "type": "heading",
+          "text": "Unused Comments"
+        },
+        {
+          "type": "bullet",
+          "text": "I have unused commands that have been commented out, ALL over my code. I do this during bug testing to try and find the best solution to a problem. But I've heard it can make my code hard to understand. So"
+        },
+        {
+          "type": "bullet",
+          "text": "From now on, I will remove any unused code even if its commented, unless it has an explanation attached"
+        },
+        {
+          "type": "bullet",
+          "text": "Some commands, under the heart system for example, are commented out, but I now have explanations as to what they do and why they are commented out. I'm not great with datapacks. It can take me a long time to develop some system. So leaving them there for me to come back to in the future, to reference or modify, is really helpful for me. I don't want to delete a command that took me a couple hours to figure out, because If I want to revisit it in the future, thats another few hours gone. I know that can be frustrating, but It really does help me, so I hope you'll allow me some breathing room there."
+        },
+        {
+          "type": "heading",
+          "text": "Translation Support"
+        },
+        {
+          "type": "bullet",
+          "text": "From now on, all advancements, items, descriptions, etc will have translation support"
+        },
+        {
+          "type": "bullet",
+          "text": "I have been working with natroute and imtlx (and many other volunteers) to help matcha flavoured support translation. I'm positive there are items I've missed. But we have what we have for now! If you'd like to help, go to the lang files, theres a txt there that can give you a discord to help Nat and the rest!"
+        },
+        {
+          "type": "bullet",
+          "text": "Natroute, Imtlx, and Nameless Ju have helped me so so much, not only on translation but also in supporting me on my journey to learning more about datapacks and commands. They have been so helpful, and their insight has allowed me to clean up this code for all of you"
+        },
+        {
+          "type": "heading",
+          "text": "The Dreaded ticking functions"
+        },
+        {
+          "type": "bullet",
+          "text": "From now on, I will avoid ticking functions as much as possible"
+        },
+        {
+          "type": "bullet",
+          "text": "A lot of my design is very very old, from when I was first learning, and I relied on ticking functions a lot. I still do. I am trying to imagine ways around them and have been somewhat successful. I want to make it so I will only use ticking functions as a last-resort, because I understand they can significantly impact performance."
+        },
+        {
+          "type": "bullet",
+          "text": "When I made the abbey, I managed to use the player shooting target advancement in order to trigger the marker scans. This is the kind of thing I want to keep doing. Try to limit scans using advancements instead of ticks."
+        },
+        {
+          "type": "heading",
+          "text": "Optimisations"
+        },
+        {
+          "type": "bullet",
+          "text": "I forgot I left a ticking function for abbey nonsense, this was removed and now uses the \"hitcoppereye\" advancement instead"
+        },
+        {
+          "type": "bullet",
+          "text": "Hashiru gave me a lot of optimisations for the pack, very kind of them. They reworked armour and particles so that they don't need ticking functions anymore. I wil use their system from now on"
+        },
+        {
+          "type": "bullet",
+          "text": "Hashiru also reworked the warding stone and heart containers to be better as well!"
+        },
+        {
+          "type": "bullet",
+          "text": "I optimised the Spawn Mechanics by using predicates, Hashiru showed me that predicates work faster than nbt data things. I also went through and made sure that each mob type check was only done ONCE. This should help as well"
+        },
+        {
+          "type": "heading",
+          "text": "Cleanup"
+        },
+        {
+          "type": "bullet",
+          "text": "MAJOR clean-up needs to be done on the code, and I will do this, when I move everything over. There are some functions that are redundant or do not use new systems (beacon kindling particles) I will do that during the move"
+        },
+        {
+          "type": "bullet",
+          "text": "I will make the onfirstload actually run on the first load, but I want this patch out first"
+        }
+      ]
+    },
+    {
+      "version": "1.12",
+      "name": "Armour Performance Issue Hotfix",
+      "published": "August 12, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "release",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "I know its poor form to release so many patches so quickly together. Im trying, guys."
+        },
+        {
+          "type": "paragraph",
+          "text": "Thank you to the bug reporters"
+        },
+        {
+          "type": "heading",
+          "text": "Bugs"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum, Adamant, and Shakudo caused severe performance issues in Multiplayer"
+        },
+        {
+          "type": "bullet",
+          "text": "I tested this on a multiplayer server and it seemed to work, lmk"
+        },
+        {
+          "type": "bullet",
+          "text": "Ominous Trial Keys did not drop from Ominous Spawners in Abbey"
+        },
+        {
+          "type": "bullet",
+          "text": "I band-aid fixed this by making them a 20% chance to drop from spawners when selecting a key item"
+        },
+        {
+          "type": "bullet",
+          "text": "And to make sure people don't feel too upset, ill just add a recipe to make ominous keys craftable"
+        },
+        {
+          "type": "bullet",
+          "text": "This isn't a great fix, but trial spawners can be really finicky, especially when using them in structures"
+        },
+        {
+          "type": "bullet",
+          "text": "In future I'll go through the NBT to see if somehow the default loottablestoeject when ominous was overriden. I don't want to right now I really just want to take a break from all this, it has been a hard month"
+        },
+        {
+          "type": "bullet",
+          "text": "potions/ wasn't deleted"
+        },
+        {
+          "type": "bullet",
+          "text": "TNT recipe unlocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Crystal hearts weren't removing proper (Typo in Crystal heart system)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bronze and Shakudo Spear cooldowns are now accurate to what the tooltip claims"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed buried treasure (What the Hell, why not, still not as crazy as it used to be)"
+        },
+        {
+          "type": "bullet",
+          "text": "BUffed Fishing Buried Treasure (A little, since the treasure chest rates are nerfed, it feels fair that the loot can be more)"
+        },
+        {
+          "type": "bullet",
+          "text": "Amber earrings were craftable in smithing table (Leftover from bugtesting)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk Slowed Down a bit (Normal Mode)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk Spawn Rate lowered (80 -> 50)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk base damage lowered (Normal Mode 15 -> 10 ; Hard 20 -> 15)"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk reinforcement rates lowered (I accidentally put this way too high) (Normal )"
+        },
+        {
+          "type": "bullet",
+          "text": "Husk does not have increased attack range to vanilla, im not sure why people thought they did"
+        },
+        {
+          "type": "bullet",
+          "text": "True Darkness"
+        },
+        {
+          "type": "bullet",
+          "text": "I'm keeping True Darkness, I like it, and it doesn't stop my videos from being hard to see, imo, BUT IF YOU DON'T"
+        },
+        {
+          "type": "bullet",
+          "text": "Go to your datapack folder location, MatchaFlavouredX -> data -> minecraft -> dimensiontype"
+        },
+        {
+          "type": "bullet",
+          "text": "Delete the overworld.json"
+        },
+        {
+          "type": "bullet",
+          "text": "rename the overworldnotruedarkness.txt to overworld.json"
+        },
+        {
+          "type": "bullet",
+          "text": "Restart the world server"
+        },
+        {
+          "type": "bullet",
+          "text": "Dark Nether"
+        },
+        {
+          "type": "bullet",
+          "text": "People have been complaining about Dark Hell, I like Hell being Dark but I understand some people dont like not being able to see (I do I think its fun)"
+        },
+        {
+          "type": "bullet",
+          "text": "So as a compromise I've increased the Nether Ambient Light Level (0.1 -> 0.3) So dark areas won't be as dark"
+        },
+        {
+          "type": "bullet",
+          "text": "Villager-traded hearts cannot be eaten anymore"
+        },
+        {
+          "type": "bullet",
+          "text": "The Anvil texture thing isn't a bug, I did it so I could build with brick-coloured anvils"
+        },
+        {
+          "type": "bullet",
+          "text": "Duped Lang for Enus to other english-speakers. More Lang support upcoming, I promise, Im just really overwhelmed right now and I want a break"
+        },
+        {
+          "type": "heading",
+          "text": "Small Tweaks"
+        },
+        {
+          "type": "bullet",
+          "text": "Estus flasks are fine, they're really important for harder modes, so I'll leave them. But I won't add the advancement back since it doesn't lead into anything"
+        }
+      ]
+    },
+    {
+      "version": "1.11",
+      "name": "Recipe Hotfix",
+      "published": "August 11, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "release",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "I accidentally deleted all the recipes...sorry"
+        },
+        {
+          "type": "paragraph",
+          "text": "I fixed it now"
+        }
+      ]
+    },
+    {
+      "version": "1.10",
+      "name": "Abbey, Multiplayer and Update Support",
+      "published": "August 10, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "release",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "1.04 was deleted, there were too many bugs to justify keeping it up, and the multiplayer was so badly broken I didn't want to release a new patch quite yet. So I've taken some extra time to try and iron-out multiplayer. This is very hard for me, because I dont play multiplayer often"
+        },
+        {
+          "type": "paragraph",
+          "text": "Thank you to ALL the bug reporters, especially the ones who suggest command changes."
+        },
+        {
+          "type": "paragraph",
+          "text": "(Dude/Gal/Enby King-Queen who fixed my sleeping not working on first load-in THANK YOU. I'm such a stupid prick I can't believe I didn't see that)"
+        },
+        {
+          "type": "paragraph",
+          "text": "This symbol (👥) means the feature was changed/added per community feedback."
+        },
+        {
+          "type": "heading",
+          "text": "Major Additions and Changes"
+        },
+        {
+          "type": "bullet",
+          "text": "The Abbey"
+        },
+        {
+          "type": "bullet",
+          "text": "Papal Outpost"
+        },
+        {
+          "type": "bullet",
+          "text": "Multiplayer Support"
+        },
+        {
+          "type": "bullet",
+          "text": "Player Update Support"
+        },
+        {
+          "type": "bullet",
+          "text": "Actual Casual Player Support (Set the game to Easy! Re-log, restart the server, or /reload after you change it NO MORE FAST ZOMBIES, YAY!) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Many Mob Tweaks & Difficulty Support (If you are playing on HARD, SET IT BACK TO NORMAL, unless you want to be angry, Re-log, restart the server, or /reload after you change it)"
+        },
+        {
+          "type": "bullet",
+          "text": "Beating the Ender Dragon Increases the game difficulty"
+        },
+        {
+          "type": "bullet",
+          "text": "Beacon Kindling (Wandering Trader Summoner) (👥, largely requested, but Josax had this idea in particular, shout-out!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Villager Amnestic (Lets villagers update from version to version)"
+        },
+        {
+          "type": "bullet",
+          "text": "Undead Wearing Copper Armour are immune to Warding (The Warding Stone and Set Bonus Electrum bypasses this effect, don't worry villagers are still safe)"
+        },
+        {
+          "type": "bullet",
+          "text": "Withers can no longer be spawned in the End (Killing withers under the nest is boring)"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding Stones now target Pillagers"
+        },
+        {
+          "type": "bullet",
+          "text": "The Tanakh, The Quran, and their corresponding Villager Trades (Prayer of Exodus, and the Prayer of The Prophet)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Electrum (and made Set bonus more clear?)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Shakudo, New ability and each peice grants per equipment bonus"
+        },
+        {
+          "type": "bullet",
+          "text": "Added Shakudo Elytra (I plan to buff/rework all equipment when I add their corresponding Elytra)"
+        },
+        {
+          "type": "bullet",
+          "text": "Shakudo is now more expensive (3 -> 18 Au : 6 -> 36 Cu)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Hepatizon"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Hepatizon Laurel"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Hepatizon Elytra (And improved item texture)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Adamant's Set Bonus (a little bit)"
+        },
+        {
+          "type": "bullet",
+          "text": "Weaponsmith Villager Trades added (See Player Update Support)"
+        },
+        {
+          "type": "bullet",
+          "text": "Crystal Hearts are cheaper (27 -> 8 Diamond, I want more people to engage with the death system)"
+        },
+        {
+          "type": "bullet",
+          "text": "Archaeologist now sells Abbey and Papal Outpost Maps (with the new map textures, prepping for autumn drop c: )"
+        },
+        {
+          "type": "bullet",
+          "text": "5 New Foods"
+        },
+        {
+          "type": "bullet",
+          "text": "Pizza (Cheese, Mushroom, and Meat) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Kontomire-Dandelion Stew (DON'T BE MAD--listen--ferns were the closest thing I could think of to cocoyam)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pad Thai (Again, I tried) (👥, Josax specifically)"
+        },
+        {
+          "type": "bullet",
+          "text": "1 new Secret Food"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed Herobrine"
+        },
+        {
+          "type": "heading",
+          "text": "Tweaks & Small Additions"
+        },
+        {
+          "type": "bullet",
+          "text": "Ofuda are now non-stackable (To avoid using all at once when applying them in an anvil) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Zombie Horse, Skeleton Horse, Camel Husk all removed from Warding Stone targets, and Warding Targets entity type tag (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Creepers no longer spawn in forests, only underground (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Freezing Water Nerfed (1/2 Heart Damage instead of full Heart per \"tick\") (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Wandering Trader pays more for Creator Music Disc (5c)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fisherman buys fish for less now (cheaper for player, See Below) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Echo Eel and Pale Fish Buffed (I didn't realise lakes don't generate in those biomes) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nautilus and Zombie Nautilus shell drop rate buffed (Zombies drop more than friendlies) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nautilus Shells added to Archaeology"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Piglin Brute drop rates (not too much)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Bastion Treasure"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed Igloo Structure to reflect no potions (And show off a secret recipe)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed egg-derived Dough (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Added Crystal Hearts to Mineshaft Loot"
+        },
+        {
+          "type": "bullet",
+          "text": "Rennamed Traversal to Trailblaze (Only in Lang) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Prayer of The Light recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Prayer of Man recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Tweaked Prayer of Aeolus recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed the orders of some advancements and things to make them more clear? Or more organised idk"
+        },
+        {
+          "type": "bullet",
+          "text": "Avesta added to Desert Well Loot pool"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Avesta chance in Desert pyramid 50% -> 33%"
+        },
+        {
+          "type": "bullet",
+          "text": "Tinder can now be mde with bush, fern, and short grass (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Respawn Anchors now work in the Overworld"
+        },
+        {
+          "type": "bullet",
+          "text": "Blaze no longer drop Raw Estus (They aren't undead, so it doesn't make sense for them to)"
+        },
+        {
+          "type": "bullet",
+          "text": "Small and Big dripleaf can now be cloned (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "All cloned recipes buffed (2/n -> 4/n)"
+        },
+        {
+          "type": "bullet",
+          "text": "The Blast Furnace has a pretty UI"
+        },
+        {
+          "type": "bullet",
+          "text": "Quartz can be kilned into Glass (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Amethyst can be kilned into Tinted Glass"
+        },
+        {
+          "type": "bullet",
+          "text": "Rooted dirt can be made from hanging roots and dirt (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Sleeping for any amount now sets the weather to clear (👥) (I like the rain so I didn't put this in originally)"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed some enchantments to be only emojis , its not consistent rn ill get to it later. I know this may make some things less clear, but I think I like it that way"
+        },
+        {
+          "type": "bullet",
+          "text": "Bread, Milk, and Honey Ginger Tea have new Cleanse Emojis (Translation compatible! c:) (This means old ones won't stack with the new ones)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bread Chest LT updated to match new Bread"
+        },
+        {
+          "type": "bullet",
+          "text": "Secret Meal advancement updated (Can't tell you what, its a secret)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pale Garden no longer spawns hostile mobs"
+        },
+        {
+          "type": "bullet",
+          "text": "Fire and Smoke Particles added to Raw Estus (I thought it was cute idk)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fire and Soul Fire Particles Variants (I FOUND THIS BY ACCIDENT ITS CRAZY COOL)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed spawn rate for Monster Rooms (Basic dungeons) (deep 4 -> 8, normal 10 -> 15)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fetishes can now be traded with the Archaeologist"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Zombie Raw Estus drop rate (~50% -> ~33%)"
+        },
+        {
+          "type": "bullet",
+          "text": "Tweaked Husk drop rates (Obol ~10% compared to Zombie at ~5%)"
+        },
+        {
+          "type": "bullet",
+          "text": "Wandering Trader can now buy up to 6 Discs and sell up to 4 Refugees (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "True Darkness is BACK! (A lot of people said they liked it because it was scary. Let me know if I should change it back or keep it lol) (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Coal Deposit drop rates (stone 1-2 deepslate 2-4)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Malachite recipe (2 -> 4)"
+        },
+        {
+          "type": "bullet",
+          "text": "Cheaper Bookshelves and less books dropped when mined (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Sturdy Leather Gambeson to be equal to Gold Chestplate (4 -> 5)"
+        },
+        {
+          "type": "bullet",
+          "text": "Tweaked Steel Chestplate to be consistent with all other Steel Armour (⛊6 -> ⛊7 ; ⛨2 -> ⛨1 )"
+        },
+        {
+          "type": "bullet",
+          "text": "Updated Raw Estus Texture"
+        },
+        {
+          "type": "bullet",
+          "text": "Smoke particle textures!"
+        },
+        {
+          "type": "bullet",
+          "text": "Zombie Horses are now consistent with all other Dead (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Tomato, Melon, Honey, and Carrot recipes now unlocked with raw food, instead of just cooked (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "All food (Except curries) cook faster in the oven"
+        },
+        {
+          "type": "bullet",
+          "text": "Globe Banner Pattern can now be crafted with cornflower and paper (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Anemos is forbidden from being on a Mace"
+        },
+        {
+          "type": "bullet",
+          "text": "Increased anvil xp timer from 15s to 30, and increased levels from 50 to 100"
+        },
+        {
+          "type": "bullet",
+          "text": "Advancements"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Demonic Emissary\" Advancement (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "\"A True Community\" Advancement (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Icarus' Folly\" Advancement (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "\"A Miraculous Discovery!\" Advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Archaeologist in Training\" Advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Wings of Eros\" Advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "Splashes"
+        },
+        {
+          "type": "bullet",
+          "text": "Ft. Apollo: Our Fave Problematic King!"
+        },
+        {
+          "type": "bullet",
+          "text": "Made for the Girls and Gays!"
+        },
+        {
+          "type": "bullet",
+          "text": "Ft. The Divine Comedy! Hashem's Favourite Fan Fiction!"
+        },
+        {
+          "type": "bullet",
+          "text": "Ft. Paradise Lost! Satan's Favourite Fan Fiction!"
+        },
+        {
+          "type": "bullet",
+          "text": "Shout-out to all the Enbies in Chat!"
+        },
+        {
+          "type": "bullet",
+          "text": "Tastes like grass! In a good way!"
+        },
+        {
+          "type": "bullet",
+          "text": "Check out Waxmuffin!"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed some splashes that aren't hitting anymore"
+        },
+        {
+          "type": "heading",
+          "text": "Bugs"
+        },
+        {
+          "type": "heading",
+          "text": "Multiplayer Bugs"
+        },
+        {
+          "type": "bullet",
+          "text": "Crystal hearts work now"
+        },
+        {
+          "type": "bullet",
+          "text": "Anvils and Anvil XP works now"
+        },
+        {
+          "type": "bullet",
+          "text": "Amber Earrings Fixed"
+        },
+        {
+          "type": "heading",
+          "text": "General"
+        },
+        {
+          "type": "bullet",
+          "text": "Beds now work on first load-in"
+        },
+        {
+          "type": "bullet",
+          "text": "Snow works now (Snowballs stack to 64)"
+        },
+        {
+          "type": "bullet",
+          "text": "Hot Wet Fishing Climate Fixed (Previously, Hot Dry overrode it)"
+        },
+        {
+          "type": "bullet",
+          "text": "Puerquito and Pupusa Lang added"
+        },
+        {
+          "type": "bullet",
+          "text": "Iron Chain can now be crafted from Iron Ingot in Stonecutter"
+        },
+        {
+          "type": "bullet",
+          "text": "Golden Apple in bastionother LT fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Stray LT added"
+        },
+        {
+          "type": "bullet",
+          "text": "Skeleton Obol Drop rate nerfed to match all other mobs"
+        },
+        {
+          "type": "bullet",
+          "text": "Bogged Obol Drop rate nerfed to match all other mobs"
+        },
+        {
+          "type": "bullet",
+          "text": "Acacia Wood and Oak Wood can now be crafted"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum Advancement referenced Titanium, has been changed to Diamond"
+        },
+        {
+          "type": "bullet",
+          "text": "Pickled Potatoes no longer give res"
+        },
+        {
+          "type": "bullet",
+          "text": "Glow Berry Mash works now"
+        },
+        {
+          "type": "bullet",
+          "text": "Cake Effects work now, and has a proper tooltip"
+        },
+        {
+          "type": "bullet",
+          "text": "Magma Cubes now drop Magma Blocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Enchanted Golden Apples now have proper tooltip from Ruined Portals"
+        },
+        {
+          "type": "bullet",
+          "text": "Water can no longer be placed inside of Hell (Guys please I just want flowers in the nether stop being naughty)"
+        },
+        {
+          "type": "bullet",
+          "text": "Trial Chamber SPAWNER Loot tables (I didn't know these existed I was only modifying the rewards)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Trial Chamber Loot (Waaaay too many obol from stupid pots)"
+        },
+        {
+          "type": "bullet",
+          "text": "Gnocchi Lang"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Alaska Blackfish\" Did not register for \"catcheverything\" Advancement (I typoed Alaksa, my bad)"
+        },
+        {
+          "type": "bullet",
+          "text": "Windcharges shot with Anemos now register enchanted player as the one who \"Owns\" it. (This means if you kill someone with Anemos, it will count)"
+        },
+        {
+          "type": "bullet",
+          "text": "Gold Shovel, Iron Shovel, Iron Mattock, Copper Mattock now drop snowballs (and technically all correct for drops #mineableshovel) This only applies to NEWLY made tools"
+        },
+        {
+          "type": "bullet",
+          "text": "Wooden Pickaxes mine everything except for higher-tier ores now, and durability is 200 instaed of 600"
+        },
+        {
+          "type": "bullet",
+          "text": "Opah can now be traded with Fisherman"
+        },
+        {
+          "type": "bullet",
+          "text": "Sweet Berry Mash no longer in Strongold Corridor Chests"
+        },
+        {
+          "type": "bullet",
+          "text": "I am aware of chain iron farms...Im leaving it in. If people aren't melting golems, I'm happy. Though in future, I might make it so you can only do this via steel. So it at least takes a carbon sink, lmk what you think."
+        },
+        {
+          "type": "bullet",
+          "text": "Bugged food is gone (squid ink pasta, golden pie etc) All were from earlier versions of the pack and I had forgotten to delete their recipes"
+        },
+        {
+          "type": "bullet",
+          "text": "People can eat crystal hearts and I dont know how? I haven't been able to replicate this bug and all crystal hearts have the !consumable tag so Idk whats going on"
+        },
+        {
+          "type": "heading",
+          "text": "Recipe Unlocks Fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Glass Bottle"
+        },
+        {
+          "type": "bullet",
+          "text": "Tinted Glass"
+        },
+        {
+          "type": "bullet",
+          "text": "Spyglass"
+        },
+        {
+          "type": "bullet",
+          "text": "Item Frame"
+        },
+        {
+          "type": "bullet",
+          "text": "Jukebox"
+        },
+        {
+          "type": "bullet",
+          "text": "Gravel"
+        },
+        {
+          "type": "bullet",
+          "text": "Chemistry Stand"
+        },
+        {
+          "type": "bullet",
+          "text": "Mass Mud, Mass Concrete"
+        },
+        {
+          "type": "bullet",
+          "text": "Tall Grass, Large Fern"
+        },
+        {
+          "type": "bullet",
+          "text": "Black Dye"
+        },
+        {
+          "type": "bullet",
+          "text": "Invisible Item Frame"
+        },
+        {
+          "type": "bullet",
+          "text": "Puerquito"
+        },
+        {
+          "type": "bullet",
+          "text": "Pupusa"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed Hay Block unlocking Yellow wool recipe unlocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Phosphor recipes unlock from obtaining glow lichen, and phosphor crafting also unlocks from obtaining phosphor"
+        },
+        {
+          "type": "bullet",
+          "text": "Cheese unlocks from Milk Bucket AND Milk Bottle recipes (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Saddle and Leather Horse Armour uncrafting"
+        },
+        {
+          "type": "bullet",
+          "text": "Benzene now unlocked when getting benzene OR Hellspore"
+        },
+        {
+          "type": "heading",
+          "text": "Player Update Support"
+        },
+        {
+          "type": "bullet",
+          "text": "IF YOU WANT THE NEW WEAPON/ARMOUR TWEAKS, use a WEAPONSMITH (Grindstone Villager)"
+        },
+        {
+          "type": "bullet",
+          "text": "You can trade with them to melt down your alloyed equipment into its component parts, and rebuild them. It will NOT give you back any enchantments, so please, just cheat those in, if you can."
+        },
+        {
+          "type": "bullet",
+          "text": "I've included a way to track the version number players were last on, and when they load into a world with a different version, the game will REVOKE all recipe unlock advancements. That means, if I add new recipes or tweak things, if you grab the primary material again, it will unlock"
+        },
+        {
+          "type": "bullet",
+          "text": "EX. Jukeboxes are made with Hepatizon. But in your world you already have Hepatizon. Now, with this system, if you grab hepatizon again in the new update, the recipe will unlock, instead of you just never getting it."
+        },
+        {
+          "type": "bullet",
+          "text": "Villager Amnestics reset villager trades, so they can change update-to-update when needed. If you already have a weaponsmith, pop him a little forget-me-not to unlock the new trades."
+        },
+        {
+          "type": "bullet",
+          "text": "I will add some sort of enchantment stripper in the future. I don't know what this would look like yet (Send me suggestions?) Right now im thinking some sort of special cauldron you could make, throw the item in and then it would spit out lower-tier enchants? Probably would cost something expensive, right? But that doens't feel fair for players that played in the past and need the new updated gear."
+        },
+        {
+          "type": "heading",
+          "text": "Fishing Balances (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "I've lowered the fish required by quite a bit:"
+        },
+        {
+          "type": "bullet",
+          "text": "⭐ 24 -> 12"
+        },
+        {
+          "type": "bullet",
+          "text": "⭐⭐ 12 -> 8"
+        },
+        {
+          "type": "bullet",
+          "text": "⭐⭐⭐  8 -> 4"
+        },
+        {
+          "type": "bullet",
+          "text": "⭐⭐⭐⭐ 1 - No change"
+        },
+        {
+          "type": "bullet",
+          "text": "Normal Buried Treasure has been nerfed heavily"
+        },
+        {
+          "type": "bullet",
+          "text": "Fishing Buried Treasure has been nerfed"
+        },
+        {
+          "type": "bullet",
+          "text": "Fishing outside of pre-designated biomes no longer gives insane loot (junk pool at 85 weight as fallback)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fishing treasure loot table modified so that chests and hearts are more rare (Enchanted Fishing rods are more common though)"
+        },
+        {
+          "type": "bullet",
+          "text": "WHY?!? I want people who like fishing to be rewarded, I don't want people who don't enjoy fishing to put up with it just to get loot."
+        },
+        {
+          "type": "bullet",
+          "text": "Also players who just start the world have no need for that much iron, I want them caving and using copper tools at first. Copper is cool, let them have more time with it."
+        },
+        {
+          "type": "heading",
+          "text": "Mob Tweaks & Difficulty Support (👥)"
+        },
+        {
+          "type": "bullet",
+          "text": "Setting the gamemode changes the behaviour, health, and damage of mobs"
+        },
+        {
+          "type": "bullet",
+          "text": "If the game is too hard, change it to easy, if its too easy, change it to hard! (make sure you re-log, restart or /reload after you do this)"
+        },
+        {
+          "type": "bullet",
+          "text": "Beating the ender dragon increases the difficulty of the world you're playing in, but you can change this back if you don't want it"
+        },
+        {
+          "type": "bullet",
+          "text": "Easy: Is very easy, and essentially vanilla mob behaviour. Weaker Silverfish, spiders, and skeletons"
+        },
+        {
+          "type": "bullet",
+          "text": "Normal: Fast (not as fast as they used to be) and weak zombies. Really tough Husks, Spiders make webs, skeletons have half health"
+        },
+        {
+          "type": "bullet",
+          "text": "Hard: IS VERY HARD!!! Fast (original Fast) zombies, REALLY tough husks, spiders make webs, skeletons have a little more than half health. This one might be so hard it isn't fun but I thought a few people would get a kick out of it."
+        },
+        {
+          "type": "bullet",
+          "text": "My most controversial change, zombies, have been nerfed...slightly"
+        },
+        {
+          "type": "bullet",
+          "text": "Zombies right now fill both the tank and striker niche. I think this is sloppy design. Even though, yes it is cool, I think we need to look at WHY players like fast zombies. I think one reason in particular: it makes night and caves scary again."
+        },
+        {
+          "type": "bullet",
+          "text": "So, how can we make zombies more fair, more interesting, yet, just as deadly? My solution is to split them up into Tanks and Strikers. Normal zombies will retain striker speed (a little less at first but they get faster as difficulty increases) but have less health. Tank zombies, Husks, will spawn everywhere, are very slow, and very very buff. Zombies will try to distract you with smaller, quicker blows while the husk advances, and once he gets to you, its all over."
+        },
+        {
+          "type": "bullet",
+          "text": "Husks now spawn in all biomes"
+        },
+        {
+          "type": "bullet",
+          "text": "Baby Zombies have less health (👥)"
+        },
+        {
+          "type": "heading",
+          "text": "The Abbey and Papal Outposts (👥)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Abbey is my first real structure, so I've had a rough time figuring everything out. Things are a bit jank, but It should still be fun! Which is the most important thing, I suppose. I hope to add more structures like this in the future, all revolving around their own special mechanics. Classic Zelda nonsense."
+        },
+        {
+          "type": "bullet",
+          "text": "Abbeys are the bastion of the overworld (hopefully). Bastions provide adamant scrap, Abbeys provide silver."
+        },
+        {
+          "type": "bullet",
+          "text": "Abbeys are uncommon, use a cartographer villager (Archaeologist) to help find one (or /locate structure minecraft:abbeyovergrown)"
+        },
+        {
+          "type": "bullet",
+          "text": "I hope to add more Abbey variants in the future, and more rooms when i get ideas for more puzzles."
+        },
+        {
+          "type": "bullet",
+          "text": "Abbeys are late-mid to late-game dungeon, so be prepared, Josax and I had a lot of trouble with it, though Wax seemed to be completely fine. I personally wouldn't attempt it without Full diamond gear and good food."
+        },
+        {
+          "type": "bullet",
+          "text": "DONT WEAR STEEL! Blast resistance makes the dungeon boring :c"
+        },
+        {
+          "type": "bullet",
+          "text": "I originally made these dungeons as rare as woodland mansions (accidentally) I've since made them more common, let me know how you feel about the rarity"
+        },
+        {
+          "type": "paragraph",
+          "text": "Papal outposts will register as Pillager Outposts (I got lazy, it was crunch time, leave me alone)"
+        },
+        {
+          "type": "bullet",
+          "text": "Easy early-game access to a small amount of divine fragments and crystal hearts. They also provide potatoes and carrots"
+        },
+        {
+          "type": "bullet",
+          "text": "Much more common than Abbeys"
+        },
+        {
+          "type": "bullet",
+          "text": "I hope to use the Pillager outposts as a way to reverse-engineer how my structures could look in the future. There some cool tech there I want to explore"
+        },
+        {
+          "type": "heading",
+          "text": "Removed"
+        },
+        {
+          "type": "bullet",
+          "text": "Enchanting Table (I thought this was blocked, I feel it may have made a lot of people confused)"
+        },
+        {
+          "type": "bullet",
+          "text": "Enchanting"
+        },
+        {
+          "type": "bullet",
+          "text": "Vanilla Fire Charge recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Estus Flasks (It was a cute reference but people were abusing it, maybe in the future Ill add a less OP version)"
+        },
+        {
+          "type": "heading",
+          "text": "Technical Changes"
+        },
+        {
+          "type": "heading",
+          "text": "Removed Some unused files"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/function/environmental/initialstalking"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/function/environmental/playersteppingsound"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/function/environmental/playersteppingsoundadv"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/predicate/invillageonoakcoarsedirtinside"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/predicate/invillageonoakgrassblock"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/predicate/invillageonoakgravelinside"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/predicate/invillageonoakplanksinside"
+        },
+        {
+          "type": "bullet",
+          "text": "removed minecraft/loottable/gameplay/fishing/treasure/"
+        },
+        {
+          "type": "bullet",
+          "text": "main/function/mechanic/estus/ created"
+        },
+        {
+          "type": "bullet",
+          "text": "main/function/mechanic/wardingstone/ created"
+        },
+        {
+          "type": "bullet",
+          "text": "rennamed advancement/mechanics/inventorychanged to /checkanvilinteraction"
+        },
+        {
+          "type": "bullet",
+          "text": "removed function/mechanic/checkanvilinteractiondelayed"
+        },
+        {
+          "type": "bullet",
+          "text": "created function/mechanic/heatcontainer/ and moved relevant files there"
+        },
+        {
+          "type": "bullet",
+          "text": "removed crafting/recipe/chickennoodlesoup"
+        },
+        {
+          "type": "bullet",
+          "text": "removed crafting/recipe/nametag"
+        },
+        {
+          "type": "bullet",
+          "text": "removed loottable/adventureold/"
+        },
+        {
+          "type": "bullet",
+          "text": "removed minecraft/predicate/"
+        },
+        {
+          "type": "bullet",
+          "text": "removed assets/minecraft/textures/entity/horse/armor"
+        },
+        {
+          "type": "bullet",
+          "text": "Added \"commandblockoutput false\" to gamerules"
+        },
+        {
+          "type": "bullet",
+          "text": "removed crafting/recipe/goldenpie"
+        },
+        {
+          "type": "bullet",
+          "text": "removed crafting/recipe/squidinkpasta"
+        },
+        {
+          "type": "bullet",
+          "text": "removed crafting/recipe/stuffedmushrooms"
+        },
+        {
+          "type": "bullet",
+          "text": "removed \"sends telemetry event\" from enternether advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "fixed killvillager advancement (entitytype thing)"
+        },
+        {
+          "type": "bullet",
+          "text": "removed data/potions/"
+        },
+        {
+          "type": "bullet",
+          "text": "removed main/advancements/tutorial/obtainestusflask"
+        },
+        {
+          "type": "bullet",
+          "text": "I'm sure there's stuff I forgot"
+        },
+        {
+          "type": "paragraph",
+          "text": "I learned that apparently recipes can have sub-folders...so yeah. I guess I'll get to that eventually but thats a lot of files I have to go in and re-name 😔"
+        },
+        {
+          "type": "paragraph",
+          "text": "This is my first ever datapack! There's going to be mistakes like this. I've never taken a comp sci class, the only exposure I've had to comp sci was through bio and chem. I'm learning how to make things better though. Thank you for bearing with me. 🙇"
+        },
+        {
+          "type": "heading",
+          "text": "Lang Support"
+        },
+        {
+          "type": "bullet",
+          "text": "ALL Advancement Lang support added"
+        },
+        {
+          "type": "bullet",
+          "text": "More Lang support upcoming (Item descriptions and enchants). I didn't realise this would break out of the English-speaking world so soon. I'll have to dedicate a lot of time to lang stuff, but from now on i'll only use the translate feature."
+        },
+        {
+          "type": "bullet",
+          "text": "I AM GOING TO MAKE A SPREADSHEET we can all edit together, Ill be posting that here to the modrinth page so keep your eyes out. You can add your credits there."
+        },
+        {
+          "type": "bullet",
+          "text": "Do not edit the enus column (except in case of typo), thats mine. I know some things are spelled weird, thats how I like spelling them. Like, \"Favour\" or \"Crystallised\" or something."
+        },
+        {
+          "type": "bullet",
+          "text": "Cleanse, Cleanse Maleffect added (I plan to do this with all Item descriptions OR make them all iconographic AND translation compatible, to compensate for cultural diffs)"
+        },
+        {
+          "type": "heading",
+          "text": "Lang Additions & Tweaks"
+        },
+        {
+          "type": "bullet",
+          "text": "Axolotl"
+        },
+        {
+          "type": "bullet",
+          "text": "Amnestic"
+        },
+        {
+          "type": "bullet",
+          "text": "All Advancements"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed spelling errors on \"Pearlescent\" and \"Crystallised\""
+        },
+        {
+          "type": "bullet",
+          "text": "Prayer of God-King, is still labeled as such in the Lang (to preserve update consistency) however the translation was changed to \"Prayer of The Light\" the Prayer of Ahura Mazda was changed to \"Prayer of the God-King\""
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed \"Bruschetta\" Spelling"
+        },
+        {
+          "type": "bullet",
+          "text": "Rennamed \"Palatinate\" to \"Shakudo\" and \"Bronze\" to \"Hepatizon\" ONLY in the Lang (To do otherwise would result in previous players having broken items)"
+        },
+        {
+          "type": "bullet",
+          "text": "Updated all Langs for Explorer Maps"
+        },
+        {
+          "type": "bullet",
+          "text": "Rennamed \"Uncraftable Potion\" to \"Water Bottle\" to help with crafting recipes for players"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed \"Blask Seabass\" typo"
+        },
+        {
+          "type": "bullet",
+          "text": "Rennamed Turtle Shell to Turtle Shellmet (Just for cuteness factor, translators feel free to ignore)"
+        },
+        {
+          "type": "bullet",
+          "text": "Kontomire Stew"
+        },
+        {
+          "type": "bullet",
+          "text": "Beacon Campfire"
+        },
+        {
+          "type": "bullet",
+          "text": "Set Bonus"
+        },
+        {
+          "type": "bullet",
+          "text": "Per Equipment Bonus"
+        },
+        {
+          "type": "bullet",
+          "text": "Elytra Bonus"
+        },
+        {
+          "type": "bullet",
+          "text": "Smith Shakudo Elytra, Title and Desc"
+        },
+        {
+          "type": "bullet",
+          "text": "Shakudo Regen"
+        },
+        {
+          "type": "bullet",
+          "text": "Shakudo Regen Bonus"
+        },
+        {
+          "type": "bullet",
+          "text": "Shakudo Elytra Regen Bonus"
+        },
+        {
+          "type": "heading",
+          "text": "Github and Easier Rewrites for Creators"
+        },
+        {
+          "type": "bullet",
+          "text": "I really want to make my work accessible, Ive seen a lot of requests for that. And I will get to it."
+        },
+        {
+          "type": "bullet",
+          "text": "HOWEVER, right now I want to make sure the gameplay is as bug-free as possible FIRST, and then I can move on to opening it up, and optimising things."
+        },
+        {
+          "type": "bullet",
+          "text": "I also miss working on videos :/"
+        }
+      ]
+    },
+    {
+      "version": "1.03",
+      "name": "Steel, Electrum, and Trial Chambers",
+      "published": "July 27, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "release",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "While I've attempted to add some support for tutorialisation--I have to admit, watching people be confused, trying to figure stuff out on their own is very very fun. And I think its fun to not know how everything works. To be forced to experiment. Somethings shouldn't require that, like steel and smithing, those should be as intuitive as possible. But I dont mind players being confused, and I think it makes the game better. So, some things, I will not give advancements for (Jewellery, Special Books, Villages, Fetishes (that one im iffy on), etc.), and I think its cooler that way."
+        },
+        {
+          "type": "paragraph",
+          "text": "ADDED"
+        },
+        {
+          "type": "bullet",
+          "text": "Secret Ingredient and Secret Meal Advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "Carbon-Rich Iron, and it's advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding Stones CANNOT be placed in Trial Chambers (try it, I dare you ;) )"
+        },
+        {
+          "type": "bullet",
+          "text": "Clay can now be cooked on campfires (no real reason, just thought it was cute)"
+        },
+        {
+          "type": "bullet",
+          "text": "Charocal to Kiln Recipes"
+        },
+        {
+          "type": "bullet",
+          "text": "All Glazed Terracottas to Kiln Recipes"
+        },
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Darkness in overworld was stark and made the darkness VERY dark...I fixed it but I kinda miss it, what do yall prefer?"
+        },
+        {
+          "type": "bullet",
+          "text": "Chest recipe was duped (Original vanilla one was unblocked), now there are two chest recipes (logs or planks) in the same grouping"
+        },
+        {
+          "type": "bullet",
+          "text": "Sticks from Logs unlocks properly"
+        },
+        {
+          "type": "bullet",
+          "text": "Short dry grass can be reverse crafted from tall dry grass now"
+        },
+        {
+          "type": "bullet",
+          "text": "Wool can now be reverse crafted from carpet (and recipes unlock) now"
+        },
+        {
+          "type": "bullet",
+          "text": "Yellow bed and carpet can no longer be crafted from hay bales (Vestiage of an old texture, my bad)"
+        },
+        {
+          "type": "bullet",
+          "text": "Golden Steamed Carrots Lang fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Anvil Smithing Error Sprite Added"
+        },
+        {
+          "type": "bullet",
+          "text": "Blocked Vanilla Netherite Recipes"
+        },
+        {
+          "type": "bullet",
+          "text": "Killing Wither Skeletons with looting made them drop heads LESS, thats fixed now"
+        },
+        {
+          "type": "bullet",
+          "text": "Iron Lanterns and Chains now unlock when getting ingots"
+        },
+        {
+          "type": "bullet",
+          "text": "Soul Lanterns, Kindling, and Torches, now unlock when getting soulfirebasedblocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Divine Fragments are in Trial Chambers now"
+        },
+        {
+          "type": "bullet",
+          "text": "Increased Odds of Mace drops from Trial Chambers"
+        },
+        {
+          "type": "bullet",
+          "text": "Apples now heal what they say they heal"
+        },
+        {
+          "type": "bullet",
+          "text": "Bruschetta works now"
+        },
+        {
+          "type": "paragraph",
+          "text": "TWEAKS"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum now uses Divine Fragments to craft, like Adamant"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Blaze Drops (slightly)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Frozen Water Effects (No more blindness. Darkness and slowness length decreased)"
+        },
+        {
+          "type": "bullet",
+          "text": "Nerfed Silver Sword, Warding Sword, and Warding Shield"
+        },
+        {
+          "type": "bullet",
+          "text": "Tweaked Smithing table texture to make smithing system more clear (hopefully)"
+        },
+        {
+          "type": "bullet",
+          "text": "Sapling from Leaf recipes all tweaked so that getting the LOGS unlocks it instead of the leaves (Some players were frustrated that they couldn't get saplings, and never picked up leaves)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fortune NO LONGER works on spawners. I think early game should be defined by the rarity of this material. 4 Fragments per spawner is just too much. After watching some videos of people play this, I realise how easy and elytra and nether fortresses can make it. And as it stands, warding helps a lot with the wither, so I'll need to tweak these things first before I can think about re-adding fortune to spawners."
+        },
+        {
+          "type": "bullet",
+          "text": "Removed \"F off! in a nice way!\" splash because I think some people might not find it as funny as I did, and I don't want to make anyone sad :c"
+        },
+        {
+          "type": "bullet",
+          "text": "Added some splashes that I think are pretty funny, but I'm also autistic, leave me alone"
+        },
+        {
+          "type": "bullet",
+          "text": "Steel and Iron Dolabras now have proper attack speed (labelled stat was different than the real stat)"
+        },
+        {
+          "type": "bullet",
+          "text": "Anvil can no longer be crafted from iron blocks (I dont want players spending too many resources on stuff if they don't have to)"
+        },
+        {
+          "type": "paragraph",
+          "text": "STEEL AND ELECTRUM CHANGES"
+        },
+        {
+          "type": "bullet",
+          "text": "Steel has an intermediary item now, Carbon-Rich Iron"
+        },
+        {
+          "type": "bullet",
+          "text": "Originally I wanted to have the carbon cost represented by the cooking time. But wating that long isn't very fun. So I added a new item that still takes the carbon sink, but can be made faster. Remeber, Coal blocks can also be made from charcoal"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum is OP (in a good way), and to represent that end-game classification, I made it mirror the Adamant recipe, and gave it the enchanted effect"
+        }
+      ]
+    },
+    {
+      "version": "1.02",
+      "name": "Tutorialisation Hotfix",
+      "published": "July 26, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "release",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Another hot fix after I got home from work. I just wanted to try and make tutorialisation easier."
+        },
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Two in One\" advancement fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed Brick duping"
+        },
+        {
+          "type": "bullet",
+          "text": "Wheat Seeds now drop when using a hoe on grass"
+        },
+        {
+          "type": "bullet",
+          "text": "Lapis now gives Blue Dye recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Chest recipe now unlocks properly"
+        },
+        {
+          "type": "bullet",
+          "text": "Old Shulker recipe removed and proper one unlocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Malachite now unlocks upon getting Calcite"
+        },
+        {
+          "type": "paragraph",
+          "text": "TWEAKS"
+        },
+        {
+          "type": "bullet",
+          "text": "Steel takes less time to blast"
+        },
+        {
+          "type": "bullet",
+          "text": "Steel advancement re-worded to make it more clear how to make it."
+        },
+        {
+          "type": "bullet",
+          "text": "Campfire, Food, and Warding Weapons advancements re-worded to make them more clear."
+        },
+        {
+          "type": "bullet",
+          "text": "Added Fishing Advancement"
+        },
+        {
+          "type": "bullet",
+          "text": "Rearraanged advancements to be more clear (hopefully)"
+        },
+        {
+          "type": "bullet",
+          "text": "Packed Mud recipe now uses short, instead of tall, dry grass (cheaper)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fortune works on Spawners now"
+        }
+      ]
+    },
+    {
+      "version": "1.01",
+      "name": "Desert Hotfix",
+      "published": "July 26, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "release",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Deserts are now Deserts"
+        },
+        {
+          "type": "bullet",
+          "text": "Spruce and Dark Prismarine Stairs can now be crafted in a crafting table"
+        },
+        {
+          "type": "bullet",
+          "text": "Lang for enus duped for enca, enau, and engb (Support for more english languages)"
+        }
+      ]
+    },
+    {
+      "version": "1.0",
+      "name": "Finally Done",
+      "published": "July 24, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "release",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "ADDED"
+        },
+        {
+          "type": "bullet",
+          "text": "\"Golden\" Music Disc, composed by Ciren added in memory of my dog, Dakota, who recently died. The Disc is still a demo, so please give me time to get the final version in, and Ciren, thank you so much."
+        },
+        {
+          "type": "bullet",
+          "text": "Bookshelf and Chiseled Bookshelf Textures"
+        },
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Sweet Berry Jam is no longer in Bastion Chests"
+        },
+        {
+          "type": "bullet",
+          "text": "Coal now unlocks coal torches and coal block"
+        },
+        {
+          "type": "bullet",
+          "text": "Bread found in chests is now the same as bread made by players"
+        },
+        {
+          "type": "bullet",
+          "text": "Red Sand can now be reverse crafted from Red Sandstone"
+        },
+        {
+          "type": "bullet",
+          "text": "Red Sand recipe is now given when collecting iron nugget"
+        },
+        {
+          "type": "bullet",
+          "text": "Brown Sandstone can now be reverse crafted into normal Sandstone and recipe unlocks updated"
+        },
+        {
+          "type": "bullet",
+          "text": "Endstone Bricks are now Brown Sandstone"
+        },
+        {
+          "type": "bullet",
+          "text": "Endstone Bricks recipe now blocked"
+        },
+        {
+          "type": "bullet",
+          "text": "Bricks can now be reverse crafted into brick(s)"
+        },
+        {
+          "type": "bullet",
+          "text": "Brick has recipe unlocks now from Terracotta and Bricks"
+        },
+        {
+          "type": "bullet",
+          "text": "Wool now gives recipe unlock for String"
+        },
+        {
+          "type": "bullet",
+          "text": "Froglights are now Phosphor Lamps"
+        },
+        {
+          "type": "bullet",
+          "text": "Phosphor recipes now unlock properly"
+        },
+        {
+          "type": "bullet",
+          "text": "Sand now gives Quartz Recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Quartz Blocks now give Quartz Recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Clock Recipe changed"
+        },
+        {
+          "type": "bullet",
+          "text": "Gold, Copper, and Iron Compass now unlock properly"
+        },
+        {
+          "type": "bullet",
+          "text": "Bell recipe now unlocks properly"
+        },
+        {
+          "type": "bullet",
+          "text": "Deserts no logner have flowers"
+        },
+        {
+          "type": "bullet",
+          "text": "Desert and Badlands Sky and fog colours have been changed, lmk if its too much"
+        },
+        {
+          "type": "bullet",
+          "text": "Many little last-minute recipe unlocks and advancement fixes"
+        }
+      ]
+    },
+    {
+      "version": "0.7-alpha",
+      "name": "Food System Polish & Bug Fixes",
+      "published": "July 20, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "alpha",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "I made a last-minute mistake, changing a lot of the food recipes to make some of the more complex foods use the cooked ingredients from the simple prep foods. This was a big headache, as spawn eggs, even without entity data cannot be eaten. So I shuffled a lot of items around to accommodate this."
+        },
+        {
+          "type": "paragraph",
+          "text": "Due to this, I will not add any more food ingredients until Mojang allows us to just add our own items and blocks with datapacks, which, I asuume will be done within the next two years."
+        },
+        {
+          "type": "paragraph",
+          "text": "ADDED"
+        },
+        {
+          "type": "bullet",
+          "text": "A proper title screen, panorama, and some splashes (Some are cringe, ill fix it later)"
+        },
+        {
+          "type": "bullet",
+          "text": "Six new secret foods"
+        },
+        {
+          "type": "bullet",
+          "text": "Flour and Bag of Flour"
+        },
+        {
+          "type": "bullet",
+          "text": "Braised Mushrooms, Stroganoff, and Pickled Mushrooms"
+        },
+        {
+          "type": "bullet",
+          "text": "Braised Toadstool, Toadstool Stroganoff, and Pickled Toadstools"
+        },
+        {
+          "type": "bullet",
+          "text": "Crimson, Warped, Red, and Brown Mushroom item textures have been added and redone"
+        },
+        {
+          "type": "bullet",
+          "text": "Crimson and Warped Fungus can be used to make Red and Cyan dye respectively."
+        },
+        {
+          "type": "bullet",
+          "text": "Cakes Heal when eaten, and Cake recipe updated"
+        },
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed all Mushroom Stew, Suspicious Stews, and Pumpkin Pie recipes"
+        },
+        {
+          "type": "bullet",
+          "text": "Dough and Bread now give proper recipes"
+        },
+        {
+          "type": "bullet",
+          "text": "All Nether-x is now Hell-x"
+        },
+        {
+          "type": "bullet",
+          "text": "All Foods now show the effect icon when eaten"
+        },
+        {
+          "type": "bullet",
+          "text": "Dried Kelp can now be crafted into blocks and reverse crafted whilst maintaining its properties"
+        },
+        {
+          "type": "bullet",
+          "text": "Preserve Everything Achievement updated"
+        },
+        {
+          "type": "bullet",
+          "text": "Cook Food Achievement updated"
+        },
+        {
+          "type": "paragraph",
+          "text": "TWEAKS"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed all French Toasts"
+        },
+        {
+          "type": "bullet",
+          "text": "Glow Berry, Sweet Berry, Apple, Pumpkin, Popped Chorus and Chocolate recipes all now use the cooked initial ingredient for the foods."
+        },
+        {
+          "type": "bullet",
+          "text": "(Eg. you cook apples before you can can them. You cook pumpkin before you bake it into an empanada)"
+        },
+        {
+          "type": "bullet",
+          "text": "Hot Buttered Apple is now Baked apple, with a much better texture IMO"
+        },
+        {
+          "type": "bullet",
+          "text": "Updated steamed carrot texture (its not great tbh)"
+        },
+        {
+          "type": "bullet",
+          "text": "Bread now cleanses maleffects"
+        },
+        {
+          "type": "bullet",
+          "text": "Dough can no longer be eaten"
+        },
+        {
+          "type": "paragraph",
+          "text": "Its getting really close to being done, 1.0 should be released on the 24th, as well as the design video. Thank you all so much for being there, and YOU for reading this c:"
+        }
+      ]
+    },
+    {
+      "version": "0.6-alpha",
+      "name": "Polish",
+      "published": "July 17, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "alpha",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "ADDED"
+        },
+        {
+          "type": "bullet",
+          "text": "Villages! But not what you would expect"
+        },
+        {
+          "type": "bullet",
+          "text": "Dry Hands Music Disc"
+        },
+        {
+          "type": "bullet",
+          "text": "XP is not shown unless you interact with an anvil, since I can't remove XP requirements for anvil repairing"
+        },
+        {
+          "type": "bullet",
+          "text": "Catch Everything! Achievement"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding Stones now heal villager friends! (Wolves, Cats, Villagers, Wandering Traders, Players, Iron and Snow Golems) and buffed regen range from 10 to 16."
+        },
+        {
+          "type": "bullet",
+          "text": "Sand, Red Sand, and Packed mud, now support vegetation (Grass on sand! Yes!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Pumpkin and Melon Stem Textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Glow Lichen Textures (Cave-worm-like for ceiling!)"
+        },
+        {
+          "type": "bullet",
+          "text": "Iron and Steel Recipe Unlocks"
+        },
+        {
+          "type": "bullet",
+          "text": "All craftable Music Discs Added and recipe unlocks for them and disc fragments fixed"
+        },
+        {
+          "type": "bullet",
+          "text": "Flower pots made more cute"
+        },
+        {
+          "type": "bullet",
+          "text": "Baby Amrmour textures (some of them, I got lazy)"
+        },
+        {
+          "type": "bullet",
+          "text": "New secret recipe found in a chest somewhere"
+        },
+        {
+          "type": "bullet",
+          "text": "Chiseled Blocks can no longer be crafted with slabs and must be done using the stonecutter"
+        },
+        {
+          "type": "bullet",
+          "text": "All slabs can be crafted back into their original block"
+        },
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Broken Bronze Elytra Didn't have a texture"
+        },
+        {
+          "type": "bullet",
+          "text": "Translation support for Bronze Elytra"
+        },
+        {
+          "type": "bullet",
+          "text": "Added Demter's Prayer to crafting achievement"
+        },
+        {
+          "type": "bullet",
+          "text": "Golden Carrot Cupcakes now do proper healing"
+        },
+        {
+          "type": "bullet",
+          "text": "Zombies weren't dropping anything?? (entitytype thing) So I went through and made sure all the LT were working"
+        },
+        {
+          "type": "bullet",
+          "text": "Made sure all foods has conisitent particle consume effects or not"
+        },
+        {
+          "type": "bullet",
+          "text": "After many many headaches, I THINK the new hostile mob spawing mechanics are working fully. (Only Undead spawn in open areas in the overworld. After the dragon is killed, no hostile mobs spawn above sea level, or in open areas. And all other dimensions have normal spawn rules)"
+        },
+        {
+          "type": "bullet",
+          "text": "Zombie piglins and Piglins don't drop their armour or tools"
+        },
+        {
+          "type": "paragraph",
+          "text": "TWEAKS"
+        },
+        {
+          "type": "bullet",
+          "text": "Ender Eye in portal is purple (I left the frames green? I think it looks better than purple but lmk)"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed Divine Fragment from Librarian Trade (done to disincentivise mob farms)"
+        },
+        {
+          "type": "bullet",
+          "text": "Iron Golem proper texture added (Even the Shem, though it hard to see, and I might have accidently spelled amesh instead of amet but Im too lazy to fix it)"
+        },
+        {
+          "type": "bullet",
+          "text": "Removed my Glazed Red Terracotta Texture"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed Silve Ore Texture"
+        },
+        {
+          "type": "bullet",
+          "text": "Made Diamond Deepslate Ore consistent with all other deepslate"
+        },
+        {
+          "type": "bullet",
+          "text": "Improved Bar Textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed all Bed Textures (Hopefully in future, I can make the beds more cute)"
+        },
+        {
+          "type": "bullet",
+          "text": "Jewellery is now unbreakable (This was done so that repairing is less confusing, I think late-game items like this shouldn't need repairing regardless)"
+        },
+        {
+          "type": "bullet",
+          "text": "Adjusted Flower and Decorated Pot Colours to look more like my brick colour"
+        },
+        {
+          "type": "bullet",
+          "text": "Raw and Cooked Morsel are now Raw and Cooked Flesh, and I updated the texture"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed Tomato Soup to Grilled Tomatoes, and Pickled Tomatoes to Sundried Tomatoes"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed up nether brick textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Paintings have spruce as frame colour."
+        },
+        {
+          "type": "bullet",
+          "text": "I changed Zetterstrand's Match to have a darker, less saturated frame"
+        },
+        {
+          "type": "bullet",
+          "text": "All fence posts, signs, and boat textures are consistent with each other and their corresponding planks"
+        },
+        {
+          "type": "paragraph",
+          "text": "VILLAGE DETAILS"
+        },
+        {
+          "type": "bullet",
+          "text": "I want to have all structures given the villager treatment"
+        },
+        {
+          "type": "bullet",
+          "text": "I think the minecraft world should feel abandoned until YOU come along, so villagers at your base makes sense, it should feel alive. But the rest of the world shouldn't"
+        },
+        {
+          "type": "bullet",
+          "text": "So probably that means pillager towers will be redone and some other things that make the world feel too inhabited. But Im really running out of time so I just did villages and tried to move on."
+        }
+      ]
+    },
+    {
+      "version": "0.5-alpha",
+      "name": "Fishing Overhaul",
+      "published": "June 29, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "alpha",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "We're close to a full release, I have no plans to add new features for the next update, instead focusing on bug-fixes, polish, and UX. I want to get this thing out, that means I have to quit getting excited at fun new things I can add."
+        },
+        {
+          "type": "paragraph",
+          "text": "ADDED"
+        },
+        {
+          "type": "bullet",
+          "text": "Translation Support for all Foods, Fish, Enchantments, Blessings, Bedrock Buster, Warding Stone, and Many other Items"
+        },
+        {
+          "type": "bullet",
+          "text": "Golden Apple integration (Proper tooltip & Texture)"
+        },
+        {
+          "type": "bullet",
+          "text": "Wandering Trader now buys Music Discs"
+        },
+        {
+          "type": "bullet",
+          "text": "Frost Protection Enchantment (Grants immunity to frozen water at level III)"
+        },
+        {
+          "type": "bullet",
+          "text": "Mournful Clay Statue (Sets the weather to rain)"
+        },
+        {
+          "type": "bullet",
+          "text": "Cheerful Clay Statue (Sets the weather to clear)"
+        },
+        {
+          "type": "bullet",
+          "text": "Mace properly added and retextured"
+        },
+        {
+          "type": "bullet",
+          "text": "All blessing textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Overworld mobs no longer drop equipment they're holding"
+        },
+        {
+          "type": "bullet",
+          "text": "Tridents added to warm and cold ocean ruins"
+        },
+        {
+          "type": "bullet",
+          "text": "Polished all chest loottables to be translation compatible"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Ghast Tear drop rate"
+        },
+        {
+          "type": "bullet",
+          "text": "Evokers now drop divine fragments"
+        },
+        {
+          "type": "bullet",
+          "text": "Overhauled Fishing System"
+        },
+        {
+          "type": "bullet",
+          "text": "Cooked Pufferfish"
+        },
+        {
+          "type": "bullet",
+          "text": "Fried Egg"
+        },
+        {
+          "type": "bullet",
+          "text": "Sculk Vein & Echo Shard textures"
+        },
+        {
+          "type": "bullet",
+          "text": "(Almost) All flower item textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Leaves no longer drop saplings or sticks, saplings are made from crafting instead (this was done to minimise inventory clutter)"
+        },
+        {
+          "type": "paragraph",
+          "text": "FISHING DETAILS"
+        },
+        {
+          "type": "bullet",
+          "text": "Caught fish have rarities, which correspond to the amount they are worth when sold. Cod and Salmon cannot be killed and sold, only if caught will they be valid."
+        },
+        {
+          "type": "bullet",
+          "text": "Freshwater Biomes have been grouped into five types: Cold, Cool, Temperate, Hot Wet, and Hot Dry"
+        },
+        {
+          "type": "bullet",
+          "text": "Saltwater Biomes have been grouped into five types: Cold, Cool, Temperate, Warm, Hot"
+        },
+        {
+          "type": "bullet",
+          "text": "Each biome/water type have 5 fish, two common, one uncommon, one rare, and one epic."
+        },
+        {
+          "type": "bullet",
+          "text": "Some biomes have special groupings, I want more in the future, right now the swamps are under a special grouping but do not have unique fish, instead currently pulling from other biomes. They do have unique junk though!"
+        },
+        {
+          "type": "bullet",
+          "text": "This was done to better balance the selling system, so each biome will be just as \"efficient\" to fish in as any other"
+        },
+        {
+          "type": "bullet",
+          "text": "AKA you'll make the same amount of money by fishing anywhere (except a few rare biomes)"
+        },
+        {
+          "type": "bullet",
+          "text": "I pumped out the textures as fast as I could, so some are great, and some are trash (I might have recoloured pre-existing fish for some 🤷 im sorry ik ik)"
+        },
+        {
+          "type": "bullet",
+          "text": "The Fisherman selling system has been reworked so you have to sell lower-tier fish before you can sell higher tier fish, this was to prevent fish-related \"spoilers\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Future Fishing Plans"
+        },
+        {
+          "type": "bullet",
+          "text": "I want a new legendary fish tier caught only under specific conditions (Raining, night, full moon, etc)"
+        },
+        {
+          "type": "bullet",
+          "text": "I want more unique fish for magical biomes (sulfur caves, pale garden, deep dark etc) and unique biomes (swamp, coral reefs)"
+        },
+        {
+          "type": "bullet",
+          "text": "I need to find some way to add a \"ping\" sound when the fishing bobber finds a fish, but this will be a really difficult task I think, and it may not be possible without mods (I can't find any nbt data for the fishing bobber if it has caught something)"
+        },
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Glow jam now gives glass bottles when eaten"
+        },
+        {
+          "type": "bullet",
+          "text": "Golden Carrot recipe now unlocked when obtaining Gold Nugget"
+        },
+        {
+          "type": "bullet",
+          "text": "Milk bottle recipe now given when obtianing milk"
+        },
+        {
+          "type": "bullet",
+          "text": "Blocked Vanilla End Rod recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Fishing isn't broken anymore"
+        },
+        {
+          "type": "bullet",
+          "text": "Nautilus Shells no longer give the Stabilised Estus recipe"
+        },
+        {
+          "type": "bullet",
+          "text": "Chicken jockeys now drop the lava chicken disc"
+        },
+        {
+          "type": "bullet",
+          "text": "Cooking Food on a campfire now gives appropriate recipes"
+        },
+        {
+          "type": "bullet",
+          "text": "St. Clement's Prayer now works"
+        },
+        {
+          "type": "bullet",
+          "text": "Minecart Texture now works"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed Invisible Item Frame Texture, Recipe, and Recipe unlock"
+        },
+        {
+          "type": "bullet",
+          "text": "Killing Dragon Advancement now works (entitytype thing)"
+        },
+        {
+          "type": "bullet",
+          "text": "Killing Ender dragon will now banish evil even if the player who killed it is not on the server. Each new player who kills the ender dragon for the first time will create a new Divine Favour."
+        },
+        {
+          "type": "bullet",
+          "text": "Estus is no longer processed if in creative (To band-aid fix major bug)"
+        },
+        {
+          "type": "bullet",
+          "text": "Crazy bug that caused major performance crash in the end, fixed it!"
+        },
+        {
+          "type": "paragraph",
+          "text": "TWEAKS"
+        },
+        {
+          "type": "bullet",
+          "text": "Sweet Berry Jam isn't honey anymore, it caused too many issues"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Golden Apple Foods"
+        },
+        {
+          "type": "bullet",
+          "text": "Optimised Freezing Water mechanic"
+        },
+        {
+          "type": "bullet",
+          "text": "Optimised Happy Ghast Horn"
+        },
+        {
+          "type": "bullet",
+          "text": "Optimised Estus"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Icarus' prayer to feather falling II"
+        },
+        {
+          "type": "bullet",
+          "text": "Oak, Acacia, Dark Oak, Jungle Sapling Textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Cauldron Texture"
+        },
+        {
+          "type": "bullet",
+          "text": "Crytal Hearts Added to Fishing LT"
+        },
+        {
+          "type": "bullet",
+          "text": "Increased Happy Ghast Horn range"
+        },
+        {
+          "type": "bullet",
+          "text": "Rose, Lilac, Peony block Textures (Theyre not great but whatever)"
+        },
+        {
+          "type": "bullet",
+          "text": "Mob griefing rule is no longer set to false, ill let players decide what they prefer."
+        },
+        {
+          "type": "bullet",
+          "text": "Many many minor polish things (recipes, unlocks, datapack organisation)"
+        }
+      ]
+    },
+    {
+      "version": "0.4-alpha",
+      "name": "Sulfur Update!",
+      "published": "June 17, 2026",
+      "minecraft": [
+        "26.2"
+      ],
+      "channel": "alpha",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "ADDED"
+        },
+        {
+          "type": "bullet",
+          "text": "Translation Support for all armour and tools"
+        },
+        {
+          "type": "bullet",
+          "text": "Sturdy Leather Armour"
+        },
+        {
+          "type": "bullet",
+          "text": "Chainmail Armour"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum & Steel Spears"
+        },
+        {
+          "type": "bullet",
+          "text": "Silver Sword"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding Sword"
+        },
+        {
+          "type": "bullet",
+          "text": "Warding Shield"
+        },
+        {
+          "type": "bullet",
+          "text": "Wooden Cross"
+        },
+        {
+          "type": "bullet",
+          "text": "Compatible equipment for all chest loot tables and buffed them"
+        },
+        {
+          "type": "bullet",
+          "text": "Pilgin Bartering LT (Only works with mobgriefing off)"
+        },
+        {
+          "type": "bullet",
+          "text": "Gems can now be sold to the Jewler"
+        },
+        {
+          "type": "bullet",
+          "text": "Water wake particles for boats"
+        },
+        {
+          "type": "bullet",
+          "text": "Sulfurous Hellstone emits particles when stepped on"
+        },
+        {
+          "type": "bullet",
+          "text": "Support for new sulfur blocks with existing sulfur chunks"
+        },
+        {
+          "type": "bullet",
+          "text": "Sulfur Goo (Reskinned slimeball)"
+        },
+        {
+          "type": "bullet",
+          "text": "I saw that Electrum armour if held/worn by non-players still wards the dead...but i think Ill leave that bug for now, it seems like a feature?"
+        },
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed Shakudo Armour (It wasn't able to be crafted for some reason)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed Shakudo Sword and made Sanguine enchantment not work on armour stands"
+        },
+        {
+          "type": "bullet",
+          "text": "Leather and Tattered leather now gives proper recipe unlocks"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed Electrum Tools and Weapons (Warding on them did not work)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed Sulfurous Quartz so that it drops both sulfur and quartz."
+        },
+        {
+          "type": "paragraph",
+          "text": "TWEAKS"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Prometheus' Prayer to unbreaking II"
+        },
+        {
+          "type": "bullet",
+          "text": "Buffed Bronze Spear to Lunge III"
+        },
+        {
+          "type": "bullet",
+          "text": "Leather and Adamant armour item textures have been added"
+        },
+        {
+          "type": "bullet",
+          "text": "Baby Zombie and Zombie Villager Textures"
+        },
+        {
+          "type": "bullet",
+          "text": "Adamant Spear Texture"
+        },
+        {
+          "type": "bullet",
+          "text": "Leather, Gold, and Steel Armour now has white name text"
+        },
+        {
+          "type": "bullet",
+          "text": "Made all Armours consistent in durability and protection (Leather < Copper < Gold, Sturdy < Iron, Shakudo, Bronze, Steel < Diamond, Electrum < Adamant)"
+        },
+        {
+          "type": "bullet",
+          "text": "Piglin Brute Adamant Scrap drop rate nerfed (slightly) and now drop divine fragments as well"
+        },
+        {
+          "type": "bullet",
+          "text": "Skeletons and Zombies no longer drop armour or weapons they're holding"
+        },
+        {
+          "type": "bullet",
+          "text": "Cave spiders are fast now, but only have 2 hearts."
+        },
+        {
+          "type": "bullet",
+          "text": "Creepers now have 8 hearts"
+        },
+        {
+          "type": "bullet",
+          "text": "Made sulfur cubes more cute"
+        },
+        {
+          "type": "bullet",
+          "text": "Sulfur is now sulfur chunk, texture slightly changed"
+        },
+        {
+          "type": "bullet",
+          "text": "Sulfur ores changed to match vanilla sulfur blocks (including Sulfurous Hellstone)"
+        },
+        {
+          "type": "paragraph",
+          "text": "REMOVED"
+        },
+        {
+          "type": "bullet",
+          "text": "Electrum Horse Armour (for the time being)"
+        },
+        {
+          "type": "bullet",
+          "text": "\"You cannot eat right now\" Warning"
+        }
+      ]
+    },
+    {
+      "version": "v0.3-alpha",
+      "name": "v0.3-alpha",
+      "published": "June 10, 2026",
+      "minecraft": [
+        "26.1.2"
+      ],
+      "channel": "alpha",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "BUGS"
+        },
+        {
+          "type": "bullet",
+          "text": "Nether Light levels fixed (Ambient light was 0)"
+        },
+        {
+          "type": "bullet",
+          "text": "Re-added \"ping\" sound for zephyr enchantment"
+        },
+        {
+          "type": "bullet",
+          "text": "Let hoes mine Froglights and Wool"
+        },
+        {
+          "type": "bullet",
+          "text": "Re-blocked original vanilla recipes"
+        },
+        {
+          "type": "paragraph",
+          "text": "FEATURES"
+        },
+        {
+          "type": "bullet",
+          "text": "Changed Heart Containers to Crystal Hearts and refined hp system"
+        },
+        {
+          "type": "bullet",
+          "text": "Crystal Heats can be crafted, no longer drop from zombies, and can be found in various loot chests"
+        }
+      ]
+    },
+    {
+      "version": "v0.2-alpha",
+      "name": "v0.2-alpha",
+      "published": "June 9, 2026",
+      "minecraft": [
+        "26.1.2"
+      ],
+      "channel": "alpha",
+      "featured": false,
+      "blocks": [
+        {
+          "type": "bullet",
+          "text": "Jake's Built Tool's Assets was accidentally packaged with my Pack, so the previous version of this pack was DELETED. (I'm so sorry JBT)"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed villager trades"
+        },
+        {
+          "type": "bullet",
+          "text": "Fixed Fishing and added a few more"
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-09-23T04:55:36.775Z"
+}

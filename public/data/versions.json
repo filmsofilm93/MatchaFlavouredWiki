@@ -34,11 +34,11 @@
       "kind": "github",
       "file": "data/github-main.json",
       "version": "1.12.2",
-      "label": "GitHub main (unreleased, ac3ccbd)",
+      "label": "GitHub main (unreleased, 6e1db88)",
       "name": "GitHub main (unreleased)",
       "minecraft": "26.2",
-      "published": "September 23, 2026",
-      "commit": "ac3ccbd8a291100b2b756b9a45f8cecb84b49be7",
+      "published": "September 24, 2026",
+      "commit": "6e1db887849f55f92a2b0091223330298b3bc97b",
       "icon": "tex/65af7ebdfd49e22a.png"
     }
   ],
@@ -4604,5 +4604,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-09-23T21:28:26.376Z"
+  "updatedAt": "2026-09-24T21:29:11.072Z"
 }

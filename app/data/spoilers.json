@@ -2,7 +2,7 @@
   "schema": 2,
   "about": "Spoiler flags for the display layer only. The data files always contain everything. Edit spoiler/reason/hint freely (or set manual: true); edited entries are kept when the flags are regenerated. Hints are shown in Spoiler-free mode and must not name the thing they hide.",
   "versions": ["release-1.12.2-beta","github-main"],
-  "counts": {"item":{"total":1928,"spoiler":107},"recipe":{"total":1170,"spoiler":105},"advancement":{"total":176,"spoiler":131},"loot":{"total":859,"spoiler":93},"structure":{"total":35,"spoiler":5},"mechanic":{"total":48,"spoiler":3},"enchantment":{"total":79,"spoiler":6}},
+  "counts": {"item":{"total":1928,"spoiler":107},"recipe":{"total":1171,"spoiler":105},"advancement":{"total":176,"spoiler":131},"loot":{"total":859,"spoiler":93},"structure":{"total":35,"spoiler":5},"mechanic":{"total":48,"spoiler":3},"enchantment":{"total":79,"spoiler":6}},
   "entries": {
     "item:minecraft:acacia_boat": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "item:minecraft:acacia_chest_boat": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
@@ -4176,6 +4176,7 @@
     "recipe:matcha:food/oven/cooked_porkchop": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "recipe:matcha:food/oven/dried_kelp": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "recipe:matcha:food/oven/popped_chorus_fruit": {"spoiler":true,"reason":"Result is a spoiler item; Uses spoiler ingredient minecraft:chorus_fruit","hint":"Made at the Oven.","sig":"4b71339c07"},
+    "recipe:minecraft:red_nether_bricks": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "loot:matcha:food/matcha/apple_empanada": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "loot:matcha:food/matcha/baked_apple": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "loot:matcha:food/matcha/baked_golden_apple": {"spoiler":true,"reason":"Every item in it is a spoiler","hint":"A loot pool with a hidden reward.","sig":"4cc43a18a3"},

@@ -2,7 +2,7 @@
   "schema": 2,
   "about": "Spoiler flags for the display layer only. The data files always contain everything. Edit spoiler/reason/hint freely (or set manual: true); edited entries are kept when the flags are regenerated. Hints are shown in Spoiler-free mode and must not name the thing they hide.",
   "versions": ["release-1.12.2-beta","github-main"],
-  "counts": {"item":{"total":1928,"spoiler":107},"recipe":{"total":1171,"spoiler":105},"advancement":{"total":176,"spoiler":131},"loot":{"total":859,"spoiler":93},"structure":{"total":35,"spoiler":5},"mechanic":{"total":48,"spoiler":3},"enchantment":{"total":79,"spoiler":6}},
+  "counts": {"item":{"total":1928,"spoiler":107},"recipe":{"total":1171,"spoiler":105},"advancement":{"total":176,"spoiler":131},"loot":{"total":862,"spoiler":96},"structure":{"total":35,"spoiler":5},"mechanic":{"total":48,"spoiler":3},"enchantment":{"total":79,"spoiler":6}},
   "entries": {
     "item:minecraft:acacia_boat": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "item:minecraft:acacia_chest_boat": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
@@ -4299,6 +4299,9 @@
     "loot:matcha:food/minecraft/salmon": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "loot:matcha:food/minecraft/sweet_berries": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
     "loot:matcha:food/minecraft/tropical_fish": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"},
+    "loot:matcha:treasure/cyan_rose_classic": {"spoiler":true,"reason":"Treasure table; Every item in it is a spoiler","hint":"A loot pool with a hidden reward.","sig":"5a5a7ff63e"},
+    "loot:matcha:treasure/porkchop_classic": {"spoiler":true,"reason":"Treasure table; Every item in it is a spoiler","hint":"A loot pool with a hidden reward.","sig":"5a5a7ff63e"},
+    "loot:matcha:treasure/rose_classic": {"spoiler":true,"reason":"Treasure table; Every item in it is a spoiler","hint":"A loot pool with a hidden reward.","sig":"5a5a7ff63e"},
     "mechanic:matcha:favorite_food": {"spoiler":false,"reason":"No spoiler signal","hint":"","sig":"a56f9a7542"}
   },
   "orphans": {}
